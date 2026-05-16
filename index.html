@@ -78,7 +78,8 @@
   /* ===== Reset & Base ===== */
   .rv-2 {
     font-family: 'Space Grotesk', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    max-width: 600px;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     background: var(--bg-primary);
@@ -173,7 +174,7 @@
   /* ===== Cards Grid ===== */
   .rv-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-bottom: 14px;
     position: relative;
@@ -481,7 +482,8 @@
   /* ===== Responsive ===== */
   @media (max-width: 480px) {
     .rv-2 { padding: 12px; }
-    .rv-cards { gap: 8px; }
+    .rv-cards { gap: 8px; grid-template-columns: 1fr; }
+    .rv-card-full { grid-column: span 1; }
     .rv-card { padding: 12px; }
     .rv-hero-title { font-size: 22px; }
     .rv-hero { padding: 32px 16px 24px; }
@@ -490,18 +492,29 @@
     .rv-btn { padding: 12px 14px; font-size: 13px; }
     .rv-notice-text, .rv-about-text, .rv-rate-text { font-size: 12px; }
   }
+  @media (min-width: 481px) and (max-width: 767px) {
+    .rv-2 { padding: 16px; max-width: 600px; }
+    .rv-cards { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (min-width: 768px) {
-    .rv-2 { max-width: 640px; padding: 24px; }
+    .rv-2 { padding: 24px 32px; }
     .rv-hero { padding: 48px 28px 36px; }
     .rv-hero-title { font-size: 32px; }
     .rv-hero-eagle { font-size: 64px; }
-    .rv-cards { gap: 14px; }
+    .rv-cards { gap: 16px; grid-template-columns: repeat(3, 1fr); }
+    .rv-card-full { grid-column: span 3; }
     .rv-card { padding: 20px; }
     .rv-model-num { font-size: 48px; }
     .rv-chart-wrap { height: 72px; }
+    .rv-btns { flex-direction: row; }
+    .rv-btn { flex: 1; }
   }
-  @media (min-width: 1024px) {
-    .rv-2 { max-width: 700px; }
+  @media (min-width: 1200px) {
+    .rv-2 { padding: 28px 48px; }
+    .rv-cards { gap: 18px; }
+    .rv-card { padding: 24px; }
+    .rv-hero-title { font-size: 36px; }
+    .rv-hero-eagle { font-size: 72px; }
   }
 </style>
 
