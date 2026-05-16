@@ -78,9 +78,9 @@
   /* ===== Reset & Base ===== */
   .rv-2 {
     font-family: 'Space Grotesk', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 16px;
+    padding: 20px;
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
@@ -103,51 +103,7 @@
     z-index: 1000;
   }
 
-  /* ===== Color Stripe Decorations ===== */
-  .rv-2::after {
-    content: '';
-    position: fixed;
-    top: 0; right: 0;
-    width: 8px; height: 100%;
-    background: repeating-linear-gradient(
-      180deg,
-      #FF6B9D 0px, #FF6B9D 20px,
-      #FFD93D 20px, #FFD93D 40px,
-      #4ECDC4 40px, #4ECDC4 60px,
-      #A8E6CF 60px, #A8E6CF 80px,
-      #C9B1FF 80px, #C9B1FF 100px
-    );
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* ===== Theme Toggle ===== */
-  .rv-theme-btn {
-    position: absolute;
-    top: 16px;
-    right: 28px;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    border: var(--border-w) solid var(--border-color);
-    background: var(--bg-card);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    z-index: 1001;
-    transition: all 150ms ease;
-    box-shadow: 2px 2px 0 var(--shadow-color);
-  }
-  .rv-theme-btn:hover {
-    transform: translateY(-2px) rotate(-5deg);
-    box-shadow: 3px 3px 0 var(--shadow-color);
-  }
-  .rv-theme-btn:active {
-    transform: translateY(1px);
-    box-shadow: 1px 1px 0 var(--shadow-color);
-  }
+  /* ===== Theme Toggle (hidden, only postMessage sync) ===== */
 
   /* ===== Hero Card ===== */
   .rv-hero {
@@ -523,18 +479,33 @@
   }
 
   /* ===== Responsive ===== */
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
+    .rv-2 { padding: 12px; }
     .rv-cards { gap: 8px; }
     .rv-card { padding: 12px; }
     .rv-hero-title { font-size: 22px; }
-    .rv-2::after { width: 4px; }
+    .rv-hero { padding: 32px 16px 24px; }
+    .rv-hero-eagle { font-size: 44px; }
+    .rv-model-num { font-size: 34px; }
+    .rv-btn { padding: 12px 14px; font-size: 13px; }
+    .rv-notice-text, .rv-about-text, .rv-rate-text { font-size: 12px; }
+  }
+  @media (min-width: 768px) {
+    .rv-2 { max-width: 640px; padding: 24px; }
+    .rv-hero { padding: 48px 28px 36px; }
+    .rv-hero-title { font-size: 32px; }
+    .rv-hero-eagle { font-size: 64px; }
+    .rv-cards { gap: 14px; }
+    .rv-card { padding: 20px; }
+    .rv-model-num { font-size: 48px; }
+    .rv-chart-wrap { height: 72px; }
+  }
+  @media (min-width: 1024px) {
+    .rv-2 { max-width: 700px; }
   }
 </style>
 
 <div class="rv-2" id="rvRoot">
-
-  <!-- Theme Toggle -->
-  <button class="rv-theme-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
 
   <!-- ===== HERO ===== -->
   <div class="rv-hero">
@@ -641,10 +612,10 @@
       <div class="rv-card-accent rv-accent-yellow"></div>
       <div class="rv-card-label">💻 terminal</div>
       <div class="rv-term">
-        <span class="p">$</span> <span class="c">register</span><br>
-        <span class="p">$</span> <span class="c">get_key</span><br>
-        <span class="p">$</span> <span class="c">enjoy</span> <span class="cm">🦅</span><br>
-        <span class="cm"># Tavo 宝子专属</span>
+        <span class="p">$</span> <span class="c">注册一下</span> <span class="cm">// 先来报个到</span><br>
+        <span class="p">$</span> <span class="c">拿个key</span> <span class="cm">// 白嫖第一步</span><br>
+        <span class="p">$</span> <span class="c">快乐白嫖</span> <span class="cm">// 🦅 起飞！</span><br>
+        <span class="p" style="color:var(--accent-purple);">#</span> <span class="tavo">Tavo 宝子专属通道</span>
       </div>
     </div>
 
@@ -672,46 +643,14 @@
 </div>
 
 <script>
-  // ===== 主题切换 =====
-  function toggleTheme() {
-    var root = document.getElementById('rvRoot');
-    var btn = root.querySelector('.rv-theme-btn');
-    var isDark = root.getAttribute('data-theme') === 'dark';
-    if (isDark) {
-      root.removeAttribute('data-theme');
-      btn.textContent = '🌙';
-      localStorage.setItem('rv-theme', 'light');
-    } else {
-      root.setAttribute('data-theme', 'dark');
-      btn.textContent = '☀️';
-      localStorage.setItem('rv-theme', 'dark');
-    }
-  }
-
-  // ===== 恢复本地存储的主题 =====
-  (function() {
-    var saved = localStorage.getItem('rv-theme');
-    var root = document.getElementById('rvRoot');
-    var btn = root.querySelector('.rv-theme-btn');
-    if (saved === 'dark') {
-      root.setAttribute('data-theme', 'dark');
-      btn.textContent = '☀️';
-    } else {
-      btn.textContent = '🌙';
-    }
-  })();
-
   // ===== 监听 NewAPI 经典主题的 postMessage 同步 =====
   window.addEventListener('message', function(e) {
     if (e.data && e.data.themeMode) {
       var root = document.getElementById('rvRoot');
-      var btn = root.querySelector('.rv-theme-btn');
       if (e.data.themeMode === 'dark') {
         root.setAttribute('data-theme', 'dark');
-        btn.textContent = '☀️';
       } else {
         root.removeAttribute('data-theme');
-        btn.textContent = '🌙';
       }
     }
   });
