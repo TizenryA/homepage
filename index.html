@@ -1,86 +1,83 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-  /* ===== CSS Variables - Theme System ===== */
+  /* ===== CSS Variables - Neo-Brutalism ===== */
   :root {
-    --bg-primary: #f7f8fa;
+    --bg-primary: #FFFDF7;
     --bg-card: #ffffff;
-    --bg-card-hover: #f0f1f5;
-    --bg-hero: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
-    --text-primary: #1e1f23;
-    --text-secondary: #6b6c72;
-    --text-muted: #9b9ca3;
-    --accent: #6366f1;
-    --accent-light: rgba(99, 102, 241, 0.1);
-    --accent-glow: rgba(99, 102, 241, 0.3);
-    --success: #22c55e;
-    --success-glow: rgba(34, 197, 94, 0.3);
-    --warning: #f59e0b;
-    --warning-glow: rgba(245, 158, 11, 0.3);
-    --border: #e5e6eb;
-    --shadow: 0 2px 8px rgba(0,0,0,0.06);
-    --shadow-hover: 0 4px 16px rgba(0,0,0,0.1);
+    --bg-card-hover: #fff9e6;
+    --bg-hero: #FFD93D;
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a4a5a;
+    --text-muted: #7a7a8a;
+    --accent: #FF6B9D;
+    --accent-blue: #4ECDC4;
+    --accent-green: #A8E6CF;
+    --accent-purple: #C9B1FF;
+    --accent-yellow: #FFD93D;
+    --border-color: #1a1a2e;
+    --border-w: 3px;
+    --shadow-offset: 4px;
+    --shadow-color: #1a1a2e;
+    --shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    --shadow-hover: 6px 6px 0 var(--shadow-color);
     --radius: 16px;
     --radius-sm: 12px;
-    --chart-line: #6366f1;
-    --chart-line-2: #a78bfa;
-    --chart-fill: rgba(99, 102, 241, 0.15);
-    --scanline-color: rgba(99, 102, 241, 0.02);
-    --scanline-static: rgba(0,0,0,0.03);
+    --radius-tag: 8px;
     --btn-text: #ffffff;
-    --btn-bg: #6366f1;
-    --btn-border: #6366f1;
-    --btn-secondary-text: #6366f1;
-    --btn-secondary-bg: transparent;
-    --btn-secondary-border: #6366f1;
-    --tag-bg: rgba(99,102,241,0.08);
-    --tag-text: #6366f1;
-    --code-bg: #f0f1f5;
-    --code-text: #6366f1;
-    --code-prompt: #8b5cf6;
-    --code-comment: #9b9ca3;
-    --footer-text: #9b9ca3;
+    --btn-bg: #FF6B9D;
+    --btn-border: #1a1a2e;
+    --btn-secondary-text: #1a1a2e;
+    --btn-secondary-bg: #4ECDC4;
+    --code-bg: #1a1a2e;
+    --code-text: #A8E6CF;
+    --code-prompt: #FFD93D;
+    --code-comment: #7a7a8a;
+    --footer-bg: #1a1a2e;
+    --footer-text: #ffffff;
+    --notice-bg: #FFE5EC;
+    --rate-bg: #E8F8F5;
+    --about-bg: #F3E8FF;
+    --sticker: #FF6B9D;
   }
 
   [data-theme="dark"] {
-    --bg-primary: #111114;
-    --bg-card: #1a1a1f;
-    --bg-card-hover: #222228;
-    --bg-hero: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #6366f1 100%);
-    --text-primary: #e8e8ed;
-    --text-secondary: #9898a0;
-    --text-muted: #5a5a63;
-    --accent: #818cf8;
-    --accent-light: rgba(129, 140, 248, 0.12);
-    --accent-glow: rgba(129, 140, 248, 0.25);
-    --success: #4ade80;
-    --success-glow: rgba(74, 222, 128, 0.25);
-    --warning: #fbbf24;
-    --warning-glow: rgba(251, 191, 36, 0.25);
-    --border: #2a2a30;
-    --shadow: 0 2px 8px rgba(0,0,0,0.3);
-    --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
-    --chart-line: #818cf8;
-    --chart-line-2: #a78bfa;
-    --chart-fill: rgba(129, 140, 248, 0.15);
-    --scanline-color: rgba(129, 140, 248, 0.02);
-    --scanline-static: rgba(255,255,255,0.015);
-    --btn-text: #ffffff;
-    --btn-bg: #6366f1;
-    --btn-border: #6366f1;
-    --btn-secondary-text: #818cf8;
-    --btn-secondary-bg: transparent;
-    --btn-secondary-border: #818cf8;
-    --tag-bg: rgba(129,140,248,0.1);
-    --tag-text: #818cf8;
-    --code-bg: #1e1e24;
-    --code-text: #c4b5fd;
-    --code-prompt: #818cf8;
-    --code-comment: #5a5a63;
-    --footer-text: #5a5a63;
+    --bg-primary: #16161a;
+    --bg-card: #23232a;
+    --bg-card-hover: #2d2d38;
+    --bg-hero: #E8B80A;
+    --text-primary: #f0f0f5;
+    --text-secondary: #b0b0c0;
+    --text-muted: #6a6a7a;
+    --accent: #FF6B9D;
+    --accent-blue: #4ECDC4;
+    --accent-green: #A8E6CF;
+    --accent-purple: #C9B1FF;
+    --accent-yellow: #FFD93D;
+    --border-color: #e0e0e8;
+    --shadow-color: #0a0a0f;
+    --shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    --shadow-hover: 6px 6px 0 var(--shadow-color);
+    --btn-text: #1a1a2e;
+    --btn-bg: #FF6B9D;
+    --btn-border: #e0e0e8;
+    --btn-secondary-text: #1a1a2e;
+    --btn-secondary-bg: #4ECDC4;
+    --code-bg: #111115;
+    --code-text: #A8E6CF;
+    --code-prompt: #FFD93D;
+    --code-comment: #5a5a6a;
+    --footer-bg: #111115;
+    --footer-text: #e0e0e8;
+    --notice-bg: #3a2028;
+    --rate-bg: #1a2e28;
+    --about-bg: #2a2040;
   }
 
   /* ===== Reset & Base ===== */
   .rv-2 {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-family: 'Space Grotesk', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
     max-width: 500px;
     margin: 0 auto;
     padding: 16px;
@@ -93,40 +90,32 @@
   }
   .rv-2 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ===== CRT Scanlines (保留) ===== */
+  /* ===== Noise Texture Overlay ===== */
   .rv-2::before {
-    content: '';
-    position: fixed;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      var(--scanline-color) 2px,
-      var(--scanline-color) 4px
-    );
-    animation: scanMove 8s linear infinite;
-    pointer-events: none;
-    z-index: 1000;
-  }
-  @keyframes scanMove {
-    0% { top: -100%; }
-    100% { top: 100%; }
-  }
-  .rv-2::after {
     content: '';
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ===== Color Stripe Decorations ===== */
+  .rv-2::after {
+    content: '';
+    position: fixed;
+    top: 0; right: 0;
+    width: 8px; height: 100%;
     background: repeating-linear-gradient(
-      0deg,
-      var(--scanline-static) 0px,
-      var(--scanline-static) 1px,
-      transparent 1px,
-      transparent 3px
+      180deg,
+      #FF6B9D 0px, #FF6B9D 20px,
+      #FFD93D 20px, #FFD93D 40px,
+      #4ECDC4 40px, #4ECDC4 60px,
+      #A8E6CF 60px, #A8E6CF 80px,
+      #C9B1FF 80px, #C9B1FF 100px
     );
     pointer-events: none;
     z-index: 999;
@@ -136,77 +125,92 @@
   .rv-theme-btn {
     position: absolute;
     top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
+    right: 28px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: var(--border-w) solid var(--border-color);
     background: var(--bg-card);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
     z-index: 1001;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow);
+    transition: all 150ms ease;
+    box-shadow: 2px 2px 0 var(--shadow-color);
   }
   .rv-theme-btn:hover {
-    transform: scale(1.1) rotate(15deg);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px) rotate(-5deg);
+    box-shadow: 3px 3px 0 var(--shadow-color);
+  }
+  .rv-theme-btn:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 var(--shadow-color);
   }
 
   /* ===== Hero Card ===== */
   .rv-hero {
     background: var(--bg-hero);
+    border: var(--border-w) solid var(--border-color);
     border-radius: var(--radius);
-    padding: 36px 20px 28px;
+    padding: 40px 20px 32px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 20px var(--accent-glow);
-  }
-  .rv-hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
-    animation: heroShimmer 6s ease-in-out infinite;
-  }
-  @keyframes heroShimmer {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(5%, 5%); }
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
   }
   .rv-hero-eagle {
-    font-size: 48px;
+    font-size: 56px;
     display: inline-block;
     position: relative;
     z-index: 1;
     animation: eagleFloat 3s ease-in-out infinite;
   }
   @keyframes eagleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
   }
   .rv-hero-title {
-    font-size: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
     font-weight: 700;
-    color: #ffffff;
+    color: #1a1a2e;
     letter-spacing: 2px;
     margin-top: 8px;
     position: relative;
     z-index: 1;
   }
   .rv-hero-sub {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: rgba(255,255,255,0.65);
-    letter-spacing: 3px;
-    margin-top: 4px;
+    color: rgba(26,26,46,0.7);
+    letter-spacing: 2px;
+    margin-top: 6px;
     position: relative;
+    z-index: 1;
+  }
+  /* Hero sticker decorations */
+  .rv-hero .sticker-1 {
+    position: absolute;
+    top: 12px; left: 16px;
+    font-size: 22px;
+    transform: rotate(-15deg);
+    z-index: 1;
+  }
+  .rv-hero .sticker-2 {
+    position: absolute;
+    bottom: 12px; right: 16px;
+    font-size: 20px;
+    transform: rotate(12deg);
+    z-index: 1;
+  }
+  .rv-hero .sticker-3 {
+    position: absolute;
+    top: 50%; right: 12px;
+    font-size: 16px;
+    transform: rotate(-8deg) translateY(-50%);
     z-index: 1;
   }
 
@@ -214,18 +218,20 @@
   .rv-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 14px;
     position: relative;
     z-index: 1;
   }
   .rv-card {
     background: var(--bg-card);
+    border: var(--border-w) solid var(--border-color);
     border-radius: var(--radius-sm);
     padding: 16px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    animation: cardIn 0.5s ease-out both;
+    transition: all 150ms ease;
+    box-shadow: var(--shadow);
+    position: relative;
+    animation: cardIn 0.4s ease-out both;
   }
   .rv-card:nth-child(1) { animation-delay: 0.05s; }
   .rv-card:nth-child(2) { animation-delay: 0.1s; }
@@ -236,24 +242,44 @@
   .rv-card:nth-child(7) { animation-delay: 0.35s; }
   .rv-card:nth-child(8) { animation-delay: 0.4s; }
   @keyframes cardIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .rv-card:hover {
+    transform: translateY(-3px) rotate(0.5deg);
     box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
+  }
+  .rv-card:active {
+    transform: translateY(1px);
+    box-shadow: 2px 2px 0 var(--shadow-color);
   }
   .rv-card-full { grid-column: span 2; }
 
   .rv-card-label {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--text-muted);
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
+
+  /* Card accent bars */
+  .rv-card-accent {
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 5px;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+  .rv-accent-pink { background: #FF6B9D; }
+  .rv-accent-yellow { background: #FFD93D; }
+  .rv-accent-blue { background: #4ECDC4; }
+  .rv-accent-green { background: #A8E6CF; }
+  .rv-accent-purple { background: #C9B1FF; }
 
   /* ===== Status ===== */
   .rv-status-row {
@@ -263,38 +289,27 @@
     margin-bottom: 8px;
   }
   .rv-status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--success);
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: #A8E6CF;
+    border: 2px solid var(--border-color);
     flex-shrink: 0;
-    position: relative;
   }
-  .rv-status-dot::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    background: var(--success);
-    opacity: 0.3;
-    animation: statusPulse 2s infinite;
+  .rv-status-dot.warn {
+    background: #FFD93D;
   }
-  @keyframes statusPulse {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.6); opacity: 0; }
-  }
-  .rv-status-dot.warn { background: var(--warning); }
-  .rv-status-dot.warn::after { background: var(--warning); }
   .rv-status-label {
     font-size: 13px;
     color: var(--text-primary);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* ===== Model Count ===== */
   .rv-model-num {
-    font-size: 36px;
-    font-weight: 800;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
     color: var(--accent);
     line-height: 1;
     margin-bottom: 4px;
@@ -302,15 +317,17 @@
   .rv-model-note {
     font-size: 11px;
     color: var(--text-muted);
+    font-weight: 500;
   }
 
   /* ===== Chart ===== */
   .rv-chart-wrap {
     width: 100%;
-    height: 60px;
+    height: 64px;
     overflow: hidden;
     border-radius: 8px;
-    background: var(--accent-light);
+    border: 2px solid var(--border-color);
+    background: var(--bg-primary);
     position: relative;
   }
   .rv-chart-scroll {
@@ -326,101 +343,191 @@
   .rv-chart-scroll svg { width: 50%; height: 100%; flex-shrink: 0; }
 
   /* ===== Notice ===== */
+  .rv-notice {
+    background: var(--notice-bg);
+  }
   .rv-notice-text {
     font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.8;
+    line-height: 1.9;
   }
   .rv-notice-text strong {
     color: var(--accent);
-    font-weight: 600;
+    font-weight: 700;
+  }
+  .rv-notice-text .rv-ban {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 2px;
   }
 
-  /* ===== About ===== */
+  /* ===== About / 定位 ===== */
+  .rv-about {
+    background: var(--about-bg);
+  }
   .rv-about-text {
     font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.8;
+    line-height: 1.9;
   }
   .rv-about-text .hl {
     color: var(--accent);
-    font-weight: 500;
+    font-weight: 700;
+  }
+  .rv-about-text .hl-blue {
+    color: var(--accent-blue);
+    font-weight: 700;
+  }
+  .rv-tag-new {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 1px 8px;
+    border-radius: var(--radius-tag);
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    animation: tagPop 2s ease-in-out infinite;
+  }
+  @keyframes tagPop {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+  }
+
+  /* ===== Rate Card ===== */
+  .rv-rate {
+    background: var(--rate-bg);
+  }
+  .rv-rate-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+  .rv-rate-text .hl-green {
+    color: #2d9c6a;
+    font-weight: 700;
+  }
+  [data-theme="dark"] .rv-rate-text .hl-green {
+    color: #A8E6CF;
+  }
+  .rv-rate-badge {
+    display: inline-block;
+    background: var(--accent-green);
+    color: #1a1a2e;
+    padding: 2px 10px;
+    border-radius: var(--radius-tag);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0 var(--shadow-color);
+    margin-top: 6px;
   }
 
   /* ===== Terminal ===== */
   .rv-term {
     background: var(--code-bg);
     border-radius: 8px;
+    border: 2px solid var(--border-color);
     padding: 12px 14px;
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 2;
     color: var(--code-text);
   }
-  .rv-term .p { color: var(--code-prompt); font-weight: 600; }
-  .rv-term .c { color: var(--text-primary); }
+  .rv-term .p { color: var(--code-prompt); font-weight: 700; }
+  .rv-term .c { color: #ffffff; }
   .rv-term .cm { color: var(--code-comment); font-style: italic; }
+  .rv-term .tavo { color: var(--accent-purple); font-weight: 600; }
 
   /* ===== Buttons ===== */
-  .rv-btns { display: flex; flex-direction: column; gap: 8px; }
+  .rv-btns { display: flex; flex-direction: column; gap: 10px; }
   .rv-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-radius: var(--radius-sm);
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.25s ease;
-    border: 1.5px solid var(--btn-border);
+    transition: all 150ms ease;
+    border: var(--border-w) solid var(--border-color);
     background: var(--btn-bg);
     color: var(--btn-text);
-    font-family: inherit;
+    box-shadow: var(--shadow);
   }
   .rv-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--accent-glow);
+    transform: translateY(-3px) rotate(-1deg);
+    box-shadow: var(--shadow-hover);
+  }
+  .rv-btn:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 var(--shadow-color);
   }
   .rv-btn-sec {
     background: var(--btn-secondary-bg);
     color: var(--btn-secondary-text);
-    border-color: var(--btn-secondary-border);
-  }
-  .rv-btn-sec:hover {
-    background: var(--accent-light);
   }
 
   /* ===== Tags ===== */
   .rv-tag {
     display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
+    padding: 2px 10px;
+    border-radius: var(--radius-tag);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 600;
-    background: var(--tag-bg);
-    color: var(--tag-text);
+    font-weight: 700;
+    background: var(--accent-yellow);
+    color: #1a1a2e;
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0 var(--shadow-color);
   }
 
   /* ===== Footer ===== */
-  .rv-footer-text {
+  .rv-footer {
+    background: var(--footer-bg);
+    border: var(--border-w) solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
     text-align: center;
-    font-size: 11px;
-    color: var(--footer-text);
-    padding: 16px 0 8px;
-    letter-spacing: 1px;
+    box-shadow: var(--shadow);
     position: relative;
     z-index: 1;
   }
+  .rv-footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--footer-text);
+    letter-spacing: 2px;
+  }
   .rv-footer-text span { margin: 0 4px; opacity: 0.5; }
+
+  /* ===== Decorative Stickers ===== */
+  .rv-sticker {
+    display: inline-block;
+    font-size: 14px;
+    transform: rotate(var(--r, -10deg));
+    margin: 0 2px;
+  }
 
   /* ===== Responsive ===== */
   @media (max-width: 400px) {
     .rv-cards { gap: 8px; }
     .rv-card { padding: 12px; }
-    .rv-hero-title { font-size: 20px; }
+    .rv-hero-title { font-size: 22px; }
+    .rv-2::after { width: 4px; }
   }
 </style>
 
@@ -431,9 +538,12 @@
 
   <!-- ===== HERO ===== -->
   <div class="rv-hero">
+    <span class="sticker-1">⚡</span>
+    <span class="sticker-2">✦</span>
+    <span class="sticker-3">🏷️</span>
     <div class="rv-hero-eagle">🦅</div>
     <div class="rv-hero-title">渡鸦の小站</div>
-    <div class="rv-hero-sub">▸ API RELAY ・ EST. 2025 ◂</div>
+    <div class="rv-hero-sub">▸ Tavo 专属公益 API 中转 ◂</div>
   </div>
 
   <!-- ===== Cards ===== -->
@@ -441,6 +551,7 @@
 
     <!-- Status -->
     <div class="rv-card">
+      <div class="rv-card-accent rv-accent-green"></div>
       <div class="rv-card-label">📡 status</div>
       <div class="rv-status-row">
         <div class="rv-status-dot"></div>
@@ -454,13 +565,15 @@
 
     <!-- Models -->
     <div class="rv-card" style="text-align:center;">
+      <div class="rv-card-accent rv-accent-pink"></div>
       <div class="rv-card-label">🤖 models</div>
       <div class="rv-model-num">?</div>
-      <div class="rv-model-note">少得可怜 别问了</div>
+      <div class="rv-model-note">国模持续上新 别问了</div>
     </div>
 
     <!-- Chart -->
     <div class="rv-card rv-card-full">
+      <div class="rv-card-accent rv-accent-blue"></div>
       <div class="rv-card-label">
         📊 sys.monitor — traffic
         <span class="rv-tag" style="margin-left:auto;">LIVE</span>
@@ -470,58 +583,75 @@
           <svg viewBox="0 0 300 60" preserveAspectRatio="none">
             <defs>
               <linearGradient id="cg1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="var(--chart-line)" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="var(--chart-line)" stop-opacity="0"/>
+                <stop offset="0%" stop-color="#4ECDC4" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0"/>
               </linearGradient>
             </defs>
             <path d="M0,40 L15,35 L30,42 L45,20 L60,32 L75,28 L90,38 L105,15 L120,30 L135,42 L150,25 L165,35 L180,18 L195,40 L210,30 L225,22 L240,38 L255,28 L270,42 L285,20 L300,35 L300,60 L0,60 Z" fill="url(#cg1)"/>
-            <polyline fill="none" stroke="var(--chart-line)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
-            <polyline fill="none" stroke="var(--chart-line-2)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
+            <polyline fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
+            <polyline fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
           </svg>
           <svg viewBox="0 0 300 60" preserveAspectRatio="none">
             <path d="M0,40 L15,35 L30,42 L45,20 L60,32 L75,28 L90,38 L105,15 L120,30 L135,42 L150,25 L165,35 L180,18 L195,40 L210,30 L225,22 L240,38 L255,28 L270,42 L285,20 L300,35 L300,60 L0,60 Z" fill="url(#cg1)"/>
-            <polyline fill="none" stroke="var(--chart-line)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
-            <polyline fill="none" stroke="var(--chart-line-2)" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
+            <polyline fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
+            <polyline fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
           </svg>
         </div>
       </div>
     </div>
 
     <!-- Notice -->
-    <div class="rv-card rv-card-full">
+    <div class="rv-card rv-card-full rv-notice">
+      <div class="rv-card-accent rv-accent-pink"></div>
       <div class="rv-card-label">⚠️ notice</div>
       <div class="rv-notice-text">
+        <span class="rv-ban">🚫 禁止</span> 酒馆（SillyTavern）与类脑社区用户接入，服务不对你开放。<br>
         站长技术很烂，服务器随时可能炸。<br>
-        模型少得可怜，<strong>仅作试用</strong>，别当主力。<br>
         出了问题大概率是站长的锅。<br>
         诸位轻蹬，感恩 🦅
       </div>
     </div>
 
-    <!-- About -->
-    <div class="rv-card">
-      <div class="rv-card-label">🪶 about</div>
+    <!-- About / 定位 -->
+    <div class="rv-card rv-about">
+      <div class="rv-card-accent rv-accent-purple"></div>
+      <div class="rv-card-label">🎯 定位</div>
       <div class="rv-about-text">
-        🦅 一只渡鸦搭的小破站<br>
-        专供各位大佬<br>
-        <span class="hl">试试水、玩一玩</span>
+        专供 <span class="hl-blue">Tavo 的宝子们</span><br>
+        试试水、玩一玩<br>
+        <span class="rv-tag-new">🔥 国模上新中</span><br>
+        <span style="font-size:11px;color:var(--text-muted);">站长很摆烂 更新随缘</span>
+      </div>
+    </div>
+
+    <!-- 倍率 -->
+    <div class="rv-card rv-rate">
+      <div class="rv-card-accent rv-accent-green"></div>
+      <div class="rv-card-label">💰 倍率</div>
+      <div class="rv-rate-text">
+        <span class="hl-green">雏鸟（ChuNiao）</span><br>
+        倍率更低 💸<br>
+        同等额度用更多 tokens
+        <div class="rv-rate-badge">性价比拉满 ✓</div>
       </div>
     </div>
 
     <!-- Terminal -->
-    <div class="rv-card">
+    <div class="rv-card rv-card-full">
+      <div class="rv-card-accent rv-accent-yellow"></div>
       <div class="rv-card-label">💻 terminal</div>
       <div class="rv-term">
         <span class="p">$</span> <span class="c">register</span><br>
         <span class="p">$</span> <span class="c">get_key</span><br>
-        <span class="p">$</span> <span class="c">enjoy</span> <span class="cm">🦅</span>
+        <span class="p">$</span> <span class="c">enjoy</span> <span class="cm">🦅</span><br>
+        <span class="cm"># Tavo 宝子专属</span>
       </div>
     </div>
 
     <!-- Buttons -->
     <div class="rv-card rv-card-full">
       <div class="rv-btns">
-        <a class="rv-btn" href="https://discord.gg/AUPDATW8Z9" target="_blank">
+        <a class="rv-btn" href="https://discord.gg/BBU8kZc2Y" target="_blank">
           🦅 进入服务器 ▸
         </a>
         <a class="rv-btn rv-btn-sec" href="https://zcv2jk.zeabur.app/embed.html" target="_blank">
@@ -533,8 +663,10 @@
   </div>
 
   <!-- Footer -->
-  <div class="rv-footer-text">
-    <span>▪</span> RAVEN STATION <span>▪</span> 随时跑路 <span>▪</span> 2025 <span>▪</span>
+  <div class="rv-footer">
+    <div class="rv-footer-text">
+      RAVEN STATION <span>▪</span> Tavo 专属 <span>▪</span> 随时跑路 <span>▪</span> 2025
+    </div>
   </div>
 
 </div>
