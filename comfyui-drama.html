@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎬 ComfyUI AI 短剧制作完全指南</title>
+<title>🎬 AI 短剧制作完全指南 — 在线模型方案</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
   
@@ -31,7 +31,6 @@
     overflow-x: hidden;
   }
   
-  /* ===== Hero ===== */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -75,7 +74,6 @@
     color: var(--accent);
   }
   
-  /* ===== Container & Sections ===== */
   .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 5rem 0; }
   .section-num {
@@ -90,18 +88,11 @@
     border-radius: 4px;
     margin-bottom: 1rem;
   }
-  h2 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    line-height: 1.3;
-  }
-  h2 .emoji { font-style: normal; }
+  h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.3; }
   h3 { font-size: 1.3rem; font-weight: 700; margin: 2rem 0 1rem; color: var(--accent2); }
   p, li { color: var(--text); font-size: 1rem; }
   p + p { margin-top: 1rem; }
   
-  /* ===== Cards ===== */
   .card {
     background: var(--card);
     border: 1px solid var(--card-border);
@@ -111,62 +102,23 @@
     transition: border-color 0.3s;
   }
   .card:hover { border-color: var(--accent); }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-  }
+  .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
   .card-header .icon {
-    width: 48px; height: 48px;
-    border-radius: 12px;
+    width: 48px; height: 48px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
+    font-size: 1.5rem; flex-shrink: 0;
   }
   .card-header h3 { margin: 0; color: var(--text); font-size: 1.15rem; }
   .card p { color: var(--text-dim); font-size: 0.95rem; }
   
-  /* ===== Grid ===== */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
   @media (max-width: 768px) {
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2rem; }
   }
   
-  /* ===== Steps ===== */
-  .steps { position: relative; margin: 2rem 0; }
-  .steps::before {
-    content: '';
-    position: absolute;
-    left: 23px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
-    opacity: 0.3;
-  }
-  .step {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    position: relative;
-  }
-  .step-num {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-    z-index: 1;
-  }
-  .step-content { flex: 1; padding-top: 0.3rem; }
-  .step-content h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .step-content p { color: var(--text-dim); font-size: 0.95rem; }
-  
-  /* ===== Flow Diagram ===== */
   .flow-diagram {
     background: var(--card);
     border: 1px solid var(--card-border);
@@ -188,46 +140,19 @@
     font-weight: 600;
     font-size: 0.9rem;
     text-align: center;
-    min-width: 140px;
-    position: relative;
+    min-width: 120px;
   }
-  .flow-arrow {
-    font-size: 1.5rem;
-    color: var(--text-dim);
-    flex-shrink: 0;
-  }
-  .flow-arrow.down {
-    display: block;
-    text-align: center;
-    width: 100%;
-    margin: 0.3rem 0;
-  }
+  .flow-arrow { font-size: 1.5rem; color: var(--text-dim); flex-shrink: 0; }
   
-  /* ===== Tables ===== */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0;
-    font-size: 0.9rem;
-  }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
   thead th {
-    text-align: left;
-    padding: 0.8rem 1rem;
-    font-weight: 700;
-    color: var(--accent);
-    border-bottom: 2px solid var(--card-border);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-align: left; padding: 0.8rem 1rem; font-weight: 700;
+    color: var(--accent); border-bottom: 2px solid var(--card-border);
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;
   }
-  tbody td {
-    padding: 0.7rem 1rem;
-    border-bottom: 1px solid var(--card-border);
-    vertical-align: top;
-  }
+  tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--card-border); vertical-align: top; }
   tbody tr:hover { background: rgba(124,92,252,0.04); }
   
-  /* ===== Code ===== */
   code {
     background: rgba(124,92,252,0.12);
     color: var(--accent);
@@ -246,28 +171,15 @@
     font-size: 0.85rem;
     line-height: 1.6;
   }
-  pre code {
-    background: none;
-    padding: 0;
-    color: var(--text-dim);
-  }
+  pre code { background: none; padding: 0; color: var(--text-dim); }
   
-  /* ===== Tags ===== */
-  .tag {
-    display: inline-block;
-    padding: 0.2rem 0.7rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin: 0.2rem;
-  }
+  .tag { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin: 0.2rem; }
   .tag-purple { background: rgba(124,92,252,0.15); color: #a78bfa; }
   .tag-pink { background: rgba(255,107,157,0.15); color: #ff6b9d; }
   .tag-green { background: rgba(0,212,170,0.15); color: #00d4aa; }
   .tag-orange { background: rgba(255,167,38,0.15); color: #ffa726; }
   .tag-blue { background: rgba(0,180,216,0.15); color: #00b4d8; }
   
-  /* ===== Tips ===== */
   .tip {
     border-left: 3px solid var(--accent3);
     background: rgba(0,212,170,0.06);
@@ -288,41 +200,34 @@
   }
   .warn strong { color: #ffa726; }
   
-  /* ===== SVG Flowchart ===== */
   .svg-flow { width: 100%; margin: 2rem 0; }
   .svg-flow text { font-family: 'Noto Sans SC', sans-serif; }
   
-  /* ===== Divider ===== */
   .divider {
     height: 1px;
     background: linear-gradient(to right, transparent, var(--card-border), transparent);
     margin: 3rem 0;
   }
   
-  /* ===== TOC ===== */
-  .toc {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 2rem;
-    margin: 2rem 0;
-  }
+  .toc { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; }
   .toc h3 { color: var(--text); margin-bottom: 1rem; }
   .toc-list { list-style: none; }
-  .toc-list li {
-    padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-  }
+  .toc-list li { padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
   .toc-list li:last-child { border: none; }
-  .toc-list a {
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-    font-size: 0.95rem;
-  }
+  .toc-list a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; font-size: 0.95rem; }
   .toc-list a:hover { color: var(--accent); }
   
-  /* ===== Footer ===== */
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .badge-hot { background: rgba(255,107,157,0.2); color: #ff6b9d; }
+  .badge-free { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .badge-api { background: rgba(124,92,252,0.2); color: #a78bfa; }
+  
   footer {
     text-align: center;
     padding: 3rem 2rem;
@@ -330,7 +235,6 @@
     font-size: 0.85rem;
     border-top: 1px solid var(--card-border);
   }
-  footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -339,13 +243,13 @@
 <div class="hero">
   <div class="hero-content">
     <div class="hero-emoji">🎬</div>
-    <h1>ComfyUI AI 短剧制作<br>完全指南</h1>
-    <p>从剧本到成片 —— 用 LLM 拆分小说、生成分镜提示词，ComfyUI 接入视频模型，自动化产出 AI 短剧</p>
+    <h1>AI 短剧制作<br>完全指南</h1>
+    <p>在线模型方案 —— LLM 拆分小说 + 生成分镜提示词，调用在线视频/图像 API，自动化产出 AI 短剧</p>
     <div class="hero-tags">
       <span>🧠 LLM 分镜</span>
-      <span>🎨 ComfyUI</span>
+      <span>☁️ 在线 API</span>
       <span>🎭 角色一致性</span>
-      <span>🎞️ AnimateDiff</span>
+      <span>🎞️ 视频生成</span>
       <span>🗣️ AI 配音</span>
       <span>⚡ 自动化流水线</span>
     </div>
@@ -359,9 +263,9 @@
   <h3>📑 目录</h3>
   <ol class="toc-list">
     <li><a href="#overview">🗺️ 整体架构总览</a></li>
-    <li><a href="#env">🛠️ 环境准备 & 模型清单</a></li>
+    <li><a href="#api-providers">☁️ 在线模型 API 选型</a></li>
     <li><a href="#llm">🧠 模块一：LLM 小说分割 & 提示词引擎</a></li>
-    <li><a href="#comfyui">🎨 模块二：ComfyUI 视频生成工作流</a></li>
+    <li><a href="#video-gen">🎞️ 模块二：在线视频/图像生成</a></li>
     <li><a href="#character">🎭 模块三：角色一致性方案</a></li>
     <li><a href="#pipeline">⚡ 模块四：自动化流水线代码</a></li>
     <li><a href="#postprocess">🔧 模块五：后处理 & 合成</a></li>
@@ -373,12 +277,11 @@
 <!-- ==================== 1. OVERVIEW ==================== -->
 <section id="overview">
   <span class="section-num">Chapter 01</span>
-  <h2><span class="emoji">🗺️</span> 整体架构总览</h2>
-  <p>AI 短剧制作的核心思路：<strong>LLM 当编剧 + 分镜师，ComfyUI 当摄影机，剪辑软件当导演台。</strong></p>
+  <h2>🗺️ 整体架构总览</h2>
+  <p>核心思路：<strong>LLM 当编剧 + 分镜师，在线 API 当摄影机，剪辑软件当导演台。</strong>全程无需本地 GPU，全部走在线模型 API。</p>
 
-  <!-- Main Pipeline Flow -->
   <div class="flow-diagram">
-    <svg class="svg-flow" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+    <svg class="svg-flow" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" style="stop-color:#7c5cfc;stop-opacity:1"/>
@@ -396,203 +299,202 @@
           <stop offset="0%" style="stop-color:#ffa726;stop-opacity:1"/>
           <stop offset="100%" style="stop-color:#ff6b9d;stop-opacity:1"/>
         </linearGradient>
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/>
-        </filter>
       </defs>
       
       <!-- Row 1: Input -->
       <rect x="340" y="20" width="220" height="56" rx="12" fill="#1a1a2e" stroke="#7c5cfc" stroke-width="1.5"/>
       <text x="450" y="54" text-anchor="middle" fill="#e4e4e7" font-size="15" font-weight="600">📖 小说文本输入</text>
       
-      <!-- Arrow -->
       <line x1="450" y1="76" x2="450" y2="106" stroke="#555" stroke-width="2"/>
       <polygon points="443,106 457,106 450,116" fill="#888"/>
       
-      <!-- Row 2: LLM Module -->
-      <rect x="280" y="120" width="340" height="80" rx="16" fill="url(#g1)" opacity="0.15" filter="url(#shadow)"/>
+      <!-- Row 2: LLM -->
+      <rect x="280" y="120" width="340" height="80" rx="16" fill="url(#g1)" opacity="0.15"/>
       <rect x="280" y="120" width="340" height="80" rx="16" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
-      <text x="450" y="150" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">🧠 LLM 分割引擎</text>
-      <text x="450" y="172" text-anchor="middle" fill="#8888a0" font-size="11">小说拆片段 → 角色提取 → 提示词生成</text>
-      <text x="450" y="188" text-anchor="middle" fill="#8888a0" font-size="10">GPT-4 / Claude / DeepSeek / Qwen</text>
+      <text x="450" y="148" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">🧠 LLM 在线 API</text>
+      <text x="450" y="170" text-anchor="middle" fill="#8888a0" font-size="11">小说拆片段 → 角色提取 → 提示词生成</text>
+      <text x="450" y="186" text-anchor="middle" fill="#8888a0" font-size="10">GPT-4o / Claude / DeepSeek / Qwen（OpenAI 兼容接口）</text>
       
-      <!-- Arrow -->
       <line x1="450" y1="200" x2="450" y2="230" stroke="#555" stroke-width="2"/>
       <polygon points="443,230 457,230 450,240" fill="#888"/>
       
-      <!-- Row 3: JSON Output -->
+      <!-- Row 3: JSON -->
       <rect x="310" y="244" width="280" height="44" rx="10" fill="#0d0d14" stroke="#2a2a3a" stroke-width="1"/>
       <text x="450" y="271" text-anchor="middle" fill="#8888a0" font-size="12" font-family="monospace">{ storyboard.json }</text>
       
-      <!-- Arrow -->
       <line x1="450" y1="288" x2="450" y2="318" stroke="#555" stroke-width="2"/>
       <polygon points="443,318 457,318 450,328" fill="#888"/>
       
-      <!-- Row 4: ComfyUI -->
-      <rect x="230" y="332" width="440" height="80" rx="16" fill="url(#g2)" opacity="0.12" filter="url(#shadow)"/>
-      <rect x="230" y="332" width="440" height="80" rx="16" fill="none" stroke="url(#g2)" stroke-width="1.5"/>
-      <text x="450" y="360" text-anchor="middle" fill="#ff6b9d" font-size="13" font-weight="700">🎨 ComfyUI 视频生成引擎</text>
-      <text x="450" y="380" text-anchor="middle" fill="#8888a0" font-size="11">SDXL + IPAdapter + AnimateDiff + ControlNet</text>
-      <text x="450" y="398" text-anchor="middle" fill="#8888a0" font-size="10">逐镜头生成 → 角色一致 → 动画输出</text>
+      <!-- Row 4: Online Video API -->
+      <rect x="200" y="332" width="500" height="80" rx="16" fill="url(#g2)" opacity="0.12"/>
+      <rect x="200" y="332" width="500" height="80" rx="16" fill="none" stroke="url(#g2)" stroke-width="1.5"/>
+      <text x="450" y="358" text-anchor="middle" fill="#ff6b9d" font-size="13" font-weight="700">☁️ 在线视频 / 图像生成 API</text>
+      <text x="450" y="378" text-anchor="middle" fill="#8888a0" font-size="11">可灵 · Runway · Vidu · Flux API · DALL-E · Midjourney</text>
+      <text x="450" y="396" text-anchor="middle" fill="#8888a0" font-size="10">文生图 / 图生视频 / 文生视频 — 按需调用</text>
       
-      <!-- Arrow -->
       <line x1="450" y1="412" x2="450" y2="442" stroke="#555" stroke-width="2"/>
       <polygon points="443,442 457,442 450,452" fill="#888"/>
       
       <!-- Row 5: Post -->
-      <rect x="260" y="456" width="380" height="56" rx="16" fill="url(#g3)" opacity="0.12" filter="url(#shadow)"/>
+      <rect x="260" y="456" width="380" height="56" rx="16" fill="url(#g3)" opacity="0.12"/>
       <rect x="260" y="456" width="380" height="56" rx="16" fill="none" stroke="url(#g3)" stroke-width="1.5"/>
       <text x="450" y="480" text-anchor="middle" fill="#00d4aa" font-size="13" font-weight="700">🔧 后处理 & 合成</text>
-      <text x="450" y="498" text-anchor="middle" fill="#8888a0" font-size="11">补帧 RIFE → 超分 → 配音 TTS → 剪辑拼接</text>
+      <text x="450" y="498" text-anchor="middle" fill="#8888a0" font-size="11">配音 TTS → 剪辑拼接 → 字幕 → 成片</text>
       
-      <!-- Arrow -->
       <line x1="450" y1="512" x2="450" y2="530" stroke="#555" stroke-width="2"/>
       <polygon points="443,530 457,530 450,540" fill="#888"/>
       
       <!-- Output -->
       <rect x="360" y="544" width="180" height="28" rx="8" fill="url(#g4)" opacity="0.8"/>
       <text x="450" y="563" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">🎉 成片输出</text>
-      
-      <!-- Side labels -->
-      <rect x="30" y="140" width="140" height="40" rx="8" fill="#1a1a2e" stroke="#7c5cfc" stroke-width="1" stroke-dasharray="4"/>
-      <text x="100" y="165" text-anchor="middle" fill="#7c5cfc" font-size="10">📝 Prompt Engineering</text>
-      
-      <rect x="730" y="350" width="140" height="40" rx="8" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1" stroke-dasharray="4"/>
-      <text x="800" y="375" text-anchor="middle" fill="#ff6b9d" font-size="10">🖥️ GPU 推理</text>
     </svg>
+  </div>
+
+  <div class="tip">
+    <strong>💡 在线方案优势：</strong>无需本地 GPU、无需安装 ComfyUI、无需下载大模型。只需一个 API Key，用多少算多少，手机都能跑脚本触发生成。
   </div>
 
   <div class="grid-3">
     <div class="card" style="text-align:center;">
       <div style="font-size:2.5rem;margin-bottom:0.8rem;">🧠</div>
       <h3 style="margin:0 0 0.5rem;color:#a78bfa;">LLM 编剧</h3>
-      <p>拆分小说、提取角色、生成结构化分镜提示词</p>
+      <p>在线 LLM API 拆分小说、提取角色、生成英文提示词</p>
     </div>
     <div class="card" style="text-align:center;">
-      <div style="font-size:2.5rem;margin-bottom:0.8rem;">🎨</div>
-      <h3 style="margin:0 0 0.5rem;color:#ff6b9d;">ComfyUI 摄影</h3>
-      <p>文生图/图生视频，角色一致性，镜头运动控制</p>
+      <div style="font-size:2.5rem;margin-bottom:0.8rem;">☁️</div>
+      <h3 style="margin:0 0 0.5rem;color:#ff6b9d;">在线生成</h3>
+      <p>可灵 / Runway / Flux 等 API 文生图、图生视频</p>
     </div>
     <div class="card" style="text-align:center;">
       <div style="font-size:2.5rem;margin-bottom:0.8rem;">🎬</div>
       <h3 style="margin:0 0 0.5rem;color:#00d4aa;">后期合成</h3>
-      <p>补帧超分、AI 配音、剪辑拼接、字幕叠加</p>
+      <p>AI 配音、剪辑拼接、字幕叠加、导出成片</p>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ==================== 2. ENV ==================== -->
-<section id="env">
+<!-- ==================== 2. API PROVIDERS ==================== -->
+<section id="api-providers">
   <span class="section-num">Chapter 02</span>
-  <h2><span class="emoji">🛠️</span> 环境准备 & 模型清单</h2>
-  
-  <h3>💻 硬件要求</h3>
+  <h2>☁️ 在线模型 API 选型</h2>
+
+  <h3>🧠 LLM API（分镜 & 提示词生成）</h3>
   <table>
     <thead>
-      <tr><th>方案</th><th>最低配置</th><th>推荐配置</th><th>适合场景</th></tr>
+      <tr><th>模型</th><th>提供商</th><th>特点</th><th>价格</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td>🏠 本地部署</td>
-        <td>NVIDIA 8GB VRAM</td>
-        <td>RTX 4090 24GB</td>
-        <td>高频使用、隐私敏感</td>
+        <td>GPT-4o</td><td>OpenAI</td>
+        <td>分镜能力强，JSON 输出稳定</td><td>$2.5 / 1M tokens</td>
       </tr>
       <tr>
-        <td>☁️ Comfy Cloud</td>
-        <td>任意电脑</td>
-        <td>稳定网络</td>
-        <td>无 GPU、偶尔使用</td>
+        <td>Claude 3.5 Sonnet</td><td>Anthropic</td>
+        <td>长文本理解好，适合长篇小说</td><td>$3 / 1M tokens</td>
       </tr>
       <tr>
-        <td>🍎 Apple Silicon</td>
-        <td>M1+ 16GB 统一内存</td>
-        <td>M3 Max 64GB</td>
-        <td>macOS 用户</td>
+        <td>DeepSeek-V3</td><td>DeepSeek</td>
+        <td>中文理解强，性价比极高</td><td>¥1 / 1M tokens</td>
+      </tr>
+      <tr>
+        <td>Qwen-Max</td><td>阿里云</td>
+        <td>中文顶级，OpenAI 兼容接口</td><td>¥2 / 1M tokens</td>
       </tr>
     </tbody>
   </table>
 
-  <h3>📦 必装组件</h3>
-  <pre><code># 1️⃣ 安装 ComfyUI CLI
-pip install comfy-cli
-
-# 2️⃣ 安装 ComfyUI（自动检测 GPU）
-comfy --skip-prompt install --nvidia
-
-# 3️⃣ 启动服务
-comfy launch --background
-
-# 4️⃣ 安装核心自定义节点
-comfy node install comfyui-animatediff-evolved      # 🎞️ 动画生成
-comfy node install comfyui-ipadapter-plus            # 🎭 角色一致性
-comfy node install comfyui-controlnet-aux            # 🕺 姿势控制
-comfy node install comfyui-video-helper-suite        # 📹 视频 I/O
-comfy node install comfyui-frame-interpolation       # 🔄 补帧 (RIFE)
-comfy node install comfyui-impact-pack               # 🧩 实用工具集
-comfy node install comfyui-essentials                # ⚙️ 基础节点</code></pre>
-
-  <h3>🗄️ 模型清单</h3>
+  <h3>🎨 文生图 API</h3>
   <table>
     <thead>
-      <tr><th>类别</th><th>模型</th><th>大小</th><th>用途</th></tr>
+      <tr><th>服务</th><th>特点</th><th>分辨率</th><th>价格</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td>🖼️ 基础模型</td>
-        <td>SDXL Base 1.0</td>
-        <td>~6.5 GB</td>
-        <td>高质量图像生成</td>
+        <td>Flux API <span class="badge badge-hot">热门</span></td>
+        <td>高质量，风格多样，API 友好</td>
+        <td>最高 2048px</td><td>~$0.04 / 张</td>
       </tr>
       <tr>
-        <td>🎞️ 动画</td>
-        <td>AnimateDiff v3</td>
-        <td>~1.8 GB</td>
-        <td>连续帧动画</td>
+        <td>DALL-E 3</td>
+        <td>OpenAI 官方，Prompt 理解好</td>
+        <td>1024×1024</td><td>$0.04 / 张</td>
       </tr>
       <tr>
-        <td>🎞️ 视频</td>
-        <td>Wan2.1 T2V / Hunyuan</td>
-        <td>~12 GB</td>
-        <td>文生视频（新方案）</td>
+        <td>Stability AI API</td>
+        <td>SDXL / SD3 在线版</td>
+        <td>最高 1024px</td><td>$0.002-0.03 / 张</td>
       </tr>
       <tr>
-        <td>🎭 一致性</td>
-        <td>IPAdapter Plus SDXL</td>
-        <td>~3 GB</td>
-        <td>角色面部/体态保持</td>
+        <td>Midjourney</td>
+        <td>画质顶级，无官方 API（需代理）</td>
+        <td>1024px+</td><td>$0.05 / 张</td>
       </tr>
       <tr>
-        <td>🕺 姿势</td>
-        <td>ControlNet OpenPose</td>
-        <td>~1.5 GB</td>
-        <td>角色动作控制</td>
-      </tr>
-      <tr>
-        <td>🏔️ 深度</td>
-        <td>ControlNet Depth</td>
-        <td>~1.5 GB</td>
-        <td>场景透视控制</td>
-      </tr>
-      <tr>
-        <td>🔍 超分</td>
-        <td>4x-UltraSharp / RealESRGAN</td>
-        <td>~100 MB</td>
-        <td>画面清晰度提升</td>
-      </tr>
-      <tr>
-        <td>🔄 补帧</td>
-        <td>RIFE v4.6</td>
-        <td>~30 MB</td>
-        <td>低帧率 → 24fps</td>
+        <td>硅基流动 SiliconFlow <span class="badge badge-free">便宜</span></td>
+        <td>Flux/SD 国内代理，低延迟</td>
+        <td>多档</td><td>¥0.01-0.1 / 张</td>
       </tr>
     </tbody>
   </table>
-  
+
+  <h3>🎞️ 视频生成 API</h3>
+  <table>
+    <thead>
+      <tr><th>服务</th><th>类型</th><th>特点</th><th>价格</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>可灵 Kling <span class="badge badge-hot">推荐</span></td>
+        <td>文生视频 / 图生视频</td>
+        <td>国产顶级，5-10 秒/片段，支持镜头控制</td><td>¥0.2-0.5 / 片段</td>
+      </tr>
+      <tr>
+        <td>Runway Gen-3</td>
+        <td>文生视频 / 图生视频</td>
+        <td>电影级画质，运动流畅</td><td>$0.05 / 秒</td>
+      </tr>
+      <tr>
+        <td>Vidu</td>
+        <td>文生视频 / 图生视频</td>
+        <td>国产，4 秒/片段，角色一致性好</td><td>¥0.1-0.3 / 片段</td>
+      </tr>
+      <tr>
+        <td>Pika</td>
+        <td>图生视频</td>
+        <td>简单易用，风格化强</td><td>$0.1 / 片段</td>
+      </tr>
+      <tr>
+        <td>Luma Dream Machine</td>
+        <td>文生视频 / 图生视频</td>
+        <td>运动自然，免费额度</td><td>有免费额度</td>
+      </tr>
+      <tr>
+        <td>Wan / Hunyuan API</td>
+        <td>开源模型在线推理</td>
+        <td>硅基流动等平台托管</td><td>¥0.05-0.2 / 片段</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🗣️ TTS 配音 API</h3>
+  <table>
+    <thead>
+      <tr><th>服务</th><th>特点</th><th>价格</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Edge-TTS</td><td>微软免费，中文效果好，无需 Key</td><td><span class="badge badge-free">免费</span></td></tr>
+      <tr><td>CosyVoice</td><td>阿里开源，声音克隆，API 托管</td><td>低成本</td></tr>
+      <tr><td>FishAudio</td><td>声音克隆，角色声线一致</td><td>$0.01 / 100字</td></tr>
+      <tr><td>MiniMax TTS</td><td>国产顶级 TTS，多情感多音色</td><td>¥0.01 / 100字</td></tr>
+    </tbody>
+  </table>
+
   <div class="tip">
-    <strong>💡 Tips：</strong> SD 1.5 (4GB) 也能用，适合 6GB 显卡。AnimateDiff 用 SD1.5 效果最成熟。SDXL 画质更好但显存要求更高。
+    <strong>💡 推荐组合（性价比最优）：</strong><br>
+    LLM: <code>DeepSeek-V3</code> + 文生图: <code>Flux API (SiliconFlow)</code> + 视频: <code>可灵 API</code> + 配音: <code>Edge-TTS</code><br>
+    一个 60 秒短剧片段（~20 镜），总成本约 ¥10-20。
   </div>
 </section>
 
@@ -601,13 +503,12 @@ comfy node install comfyui-essentials                # ⚙️ 基础节点</code
 <!-- ==================== 3. LLM ==================== -->
 <section id="llm">
   <span class="section-num">Chapter 03</span>
-  <h2><span class="emoji">🧠</span> 模块一：LLM 小说分割 & 提示词引擎</h2>
+  <h2>🧠 模块一：LLM 小说分割 & 提示词引擎</h2>
   
-  <p>这是流水线的「大脑」——LLM 负责将长篇小说拆解为可执行的分镜脚本，输出结构化 JSON。</p>
+  <p>流水线的「大脑」——LLM 读小说，输出结构化分镜 JSON。所有 LLM 都走 <strong>OpenAI 兼容接口</strong>，换个 API 地址就能切换模型。</p>
 
-  <!-- LLM Flow -->
   <div class="flow-diagram">
-    <svg class="svg-flow" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+    <svg class="svg-flow" viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
       <!-- Input -->
       <rect x="20" y="30" width="160" height="50" rx="10" fill="#1a1a2e" stroke="#7c5cfc" stroke-width="1"/>
       <text x="100" y="60" text-anchor="middle" fill="#a78bfa" font-size="12">📖 小说章节</text>
@@ -626,112 +527,101 @@ comfy node install comfyui-essentials                # ⚙️ 基础节点</code
       <!-- LLM Core -->
       <rect x="404" y="10" width="200" height="80" rx="14" fill="url(#g1)" opacity="0.15"/>
       <rect x="404" y="10" width="200" height="80" rx="14" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
-      <text x="504" y="38" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">🧠 LLM 分析</text>
+      <text x="504" y="38" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">🧠 LLM API 调用</text>
       <text x="504" y="56" text-anchor="middle" fill="#8888a0" font-size="10">场景识别 · 角色提取</text>
-      <text x="504" y="72" text-anchor="middle" fill="#8888a0" font-size="10">动作分析 · 镜头规划</text>
+      <text x="504" y="72" text-anchor="middle" fill="#8888a0" font-size="10">动作分析 · 英文 Prompt 生成</text>
       
       <line x1="604" y1="55" x2="640" y2="55" stroke="#555" stroke-width="2"/>
       <polygon points="635,50 645,55 635,60" fill="#888"/>
       
-      <!-- Prompt Gen -->
-      <rect x="644" y="10" width="120" height="80" rx="10" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1"/>
-      <text x="704" y="38" text-anchor="middle" fill="#ff6b9d" font-size="11" font-weight="600">✍️ 提示词生成</text>
-      <text x="704" y="56" text-anchor="middle" fill="#8888a0" font-size="10">image_prompt</text>
-      <text x="704" y="72" text-anchor="middle" fill="#8888a0" font-size="10">camera · mood</text>
-      
-      <line x1="764" y1="55" x2="800" y2="55" stroke="#555" stroke-width="2"/>
-      <polygon points="795,50 805,55 795,60" fill="#888"/>
-      
       <!-- Output -->
-      <rect x="804" y="30" width="80" height="50" rx="8" fill="#0d0d14" stroke="#2a2a3a" stroke-width="1"/>
-      <text x="844" y="60" text-anchor="middle" fill="#8888a0" font-size="10" font-family="monospace">JSON</text>
-      
-      <!-- Bottom: Character Registry -->
-      <rect x="250" y="140" width="400" height="60" rx="12" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1" stroke-dasharray="4"/>
-      <text x="450" y="165" text-anchor="middle" fill="#00d4aa" font-size="11" font-weight="600">🗂️ 角色注册表 Character Registry</text>
-      <text x="450" y="183" text-anchor="middle" fill="#8888a0" font-size="10">首次出现时生成详细外貌 → 后续分镜强制复用 → 全局一致</text>
-      
-      <!-- Connection -->
-      <line x1="504" y1="90" x2="504" y2="140" stroke="#00d4aa" stroke-width="1" stroke-dasharray="4" opacity="0.5"/>
+      <rect x="644" y="20" width="120" height="70" rx="10" fill="#0d0d14" stroke="#2a2a3a" stroke-width="1"/>
+      <text x="704" y="48" text-anchor="middle" fill="#00d4aa" font-size="11" font-weight="600">📤 storyboard</text>
+      <text x="704" y="68" text-anchor="middle" fill="#8888a0" font-size="10" font-family="monospace">JSON</text>
       
       <!-- Bottom: Strategy boxes -->
-      <rect x="50" y="230" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#7c5cfc" stroke-width="1"/>
-      <text x="125" y="252" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600">💬 对话场景</text>
-      <text x="125" y="268" text-anchor="middle" fill="#8888a0" font-size="9">每句台词 = 1 镜</text>
+      <rect x="50" y="140" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#7c5cfc" stroke-width="1"/>
+      <text x="125" y="162" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600">💬 对话场景</text>
+      <text x="125" y="178" text-anchor="middle" fill="#8888a0" font-size="9">每句台词 = 1 镜</text>
       
-      <rect x="230" y="230" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1"/>
-      <text x="305" y="252" text-anchor="middle" fill="#ff6b9d" font-size="10" font-weight="600">⚔️ 动作场景</text>
-      <text x="305" y="268" text-anchor="middle" fill="#8888a0" font-size="9">关键帧快切 2-3 秒</text>
+      <rect x="230" y="140" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1"/>
+      <text x="305" y="162" text-anchor="middle" fill="#ff6b9d" font-size="10" font-weight="600">⚔️ 动作场景</text>
+      <text x="305" y="178" text-anchor="middle" fill="#8888a0" font-size="9">关键帧快切 2-3 秒</text>
       
-      <rect x="410" y="230" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1"/>
-      <text x="485" y="252" text-anchor="middle" fill="#00d4aa" font-size="10" font-weight="600">🌄 环境描写</text>
-      <text x="485" y="268" text-anchor="middle" fill="#8888a0" font-size="9">慢推全景 4-5 秒</text>
+      <rect x="410" y="140" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1"/>
+      <text x="485" y="162" text-anchor="middle" fill="#00d4aa" font-size="10" font-weight="600">🌄 环境描写</text>
+      <text x="485" y="178" text-anchor="middle" fill="#8888a0" font-size="9">慢推全景 4-5 秒</text>
       
-      <rect x="590" y="230" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
-      <text x="665" y="252" text-anchor="middle" fill="#ffa726" font-size="10" font-weight="600">💭 心理活动</text>
-      <text x="665" y="268" text-anchor="middle" fill="#8888a0" font-size="9">特写 + 旁白配音</text>
+      <rect x="590" y="140" width="150" height="50" rx="8" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
+      <text x="665" y="162" text-anchor="middle" fill="#ffa726" font-size="10" font-weight="600">💭 心理活动</text>
+      <text x="665" y="178" text-anchor="middle" fill="#8888a0" font-size="9">特写 + 旁白配音</text>
+
+      <!-- Character Registry -->
+      <rect x="150" y="210" width="600" height="50" rx="12" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1" stroke-dasharray="4"/>
+      <text x="450" y="233" text-anchor="middle" fill="#00d4aa" font-size="11" font-weight="600">🗂️ 角色注册表 Character Registry</text>
+      <text x="450" y="250" text-anchor="middle" fill="#8888a0" font-size="10">首次出现 → LLM 生成详细外貌 → 后续分镜强制复用 → 全局一致</text>
     </svg>
   </div>
 
-  <h3>📋 分割策略详解</h3>
+  <h3>📋 分割策略</h3>
   <table>
     <thead>
-      <tr><th>📖 小说内容类型</th><th>🎬 分镜策略</th><th>⏱️ 时长建议</th></tr>
+      <tr><th>📖 内容类型</th><th>🎬 分镜策略</th><th>⏱️ 时长</th></tr>
     </thead>
     <tbody>
-      <tr><td>💬 对话场景</td><td>每句台词 = 1 个分镜，正反打镜头切换</td><td>3-4 秒/镜</td></tr>
-      <tr><td>⚔️ 动作场景</td><td>关键动作帧，快速切换</td><td>2-3 秒/镜</td></tr>
-      <tr><td>🌄 环境描写</td><td>1 个慢推/全景镜头</td><td>4-5 秒/镜</td></tr>
-      <tr><td>💭 心理活动</td><td>角色面部特写 + 旁白</td><td>3-4 秒/镜</td></tr>
-      <tr><td>⚡ 回忆/闪回</td><td>降低饱和度，柔焦处理</td><td>2-3 秒/镜</td></tr>
+      <tr><td>💬 对话</td><td>每句台词 = 1 个分镜，正反打切换</td><td>3-4 秒</td></tr>
+      <tr><td>⚔️ 动作</td><td>关键动作帧，快速切换</td><td>2-3 秒</td></tr>
+      <tr><td>🌄 环境</td><td>1 个慢推/全景镜头</td><td>4-5 秒</td></tr>
+      <tr><td>💭 心理</td><td>角色特写 + 旁白</td><td>3-4 秒</td></tr>
+      <tr><td>⚡ 闪回</td><td>降低饱和度，柔焦</td><td>2-3 秒</td></tr>
     </tbody>
   </table>
 
-  <h3>📝 LLM 系统提示词模板</h3>
+  <h3>📝 LLM System Prompt 模板</h3>
   <pre><code>你是一个专业的 AI 短剧分镜师。将小说片段拆分为视频分镜脚本。
 
 📋 规则：
-1. 每个分镜对应一个 3-5 秒的视频片段
-2. 每个分镜必须包含：场景描述、角色外貌、动作、表情、镜头运动
-3. ⚠️ 角色外貌描述必须全局一致（首次出现时定义详细外貌）
-4. 镜头运动：推(push)、拉(pull)、摇(pan)、移(tracking)、固定(static)、特写(close-up)
-5. image_prompt 必须是英文，包含场景、人物、光影、风格关键词
+1. 每个分镜 = 1 个 3-5 秒视频片段
+2. 必须包含：场景描述、角色外貌、动作、表情、镜头运动
+3. ⚠️ 角色外貌全局一致（首次定义，后续强制复用）
+4. image_prompt 必须是英文，含场景+人物+光影+风格
+5. image_prompt 要具体：写清楚外貌特征、服装、场景细节、光线、构图
 
-📤 输出 JSON 格式：
+📤 输出 JSON：
 {
   "characters": [{
     "id": "char_01",
     "name": "角色名",
-    "appearance": "详细外貌描述",
-    "voice_style": "声音风格"
+    "appearance": "详细外貌：年龄、发型、发色、服装、体型、特征",
+    "voice_style": "声音风格描述"
   }],
   "scenes": [{
     "scene_id": 1,
     "shot_id": 1,
-    "description": "场景中文描述",
+    "description": "中文场景描述",
     "characters_in_scene": ["char_01"],
-    "character_action": "角色动作描述",
-    "expression": "表情描述",
-    "camera": "镜头运动描述",
+    "character_action": "角色动作",
+    "expression": "表情",
+    "camera": "镜头描述：全景/中景/特写/推/拉/摇",
     "mood": "情绪氛围",
     "duration_sec": 4,
-    "image_prompt": "English prompt for image/video generation",
-    "negative_prompt": "blurry, deformed, extra limbs",
-    "motion": "camera movement description",
-    "transition_to_next": "cut / fade / dissolve",
-    "dialogue": "台词内容（如有）"
+    "image_prompt": "detailed English prompt for image generation",
+    "negative_prompt": "blurry, deformed, extra limbs, bad anatomy",
+    "video_prompt": "English prompt for video generation, describe motion",
+    "dialogue": "台词（如有）",
+    "transition_to_next": "cut / fade / dissolve"
   }]
 }</code></pre>
 
-  <h3>🎯 Prompt 工程技巧</h3>
+  <h3>🎯 Prompt 技巧</h3>
   <div class="grid-2">
     <div class="card">
       <div class="card-header">
-        <div class="icon" style="background:rgba(124,92,252,0.15);">✅</div>
+        <div class="icon" style="background:rgba(0,212,170,0.15);">✅</div>
         <h3>好的 Prompt</h3>
       </div>
-      <p><code>a young man with short black hair, white shirt, standing in rainy neon-lit street at night, cinematic lighting, film grain, 8k, masterpiece</code></p>
-      <p style="margin-top:0.5rem;color:#00d4aa;font-size:0.85rem;">✓ 具体外貌 ✓ 明确场景 ✓ 光影描述 ✓ 质量标签</p>
+      <p><code>a young man with short black hair, wearing white shirt and black trousers, standing in rainy neon-lit city street at night, medium shot, cinematic lighting, film grain, 8k</code></p>
+      <p style="margin-top:0.5rem;color:#00d4aa;font-size:0.85rem;">✓ 具体外貌 ✓ 明确场景 ✓ 镜头角度 ✓ 光影 ✓ 质量词</p>
     </div>
     <div class="card">
       <div class="card-header">
@@ -739,146 +629,132 @@ comfy node install comfyui-essentials                # ⚙️ 基础节点</code
         <h3>差的 Prompt</h3>
       </div>
       <p><code>a man walking on a street at night</code></p>
-      <p style="margin-top:0.5rem;color:#ff6b9d;font-size:0.85rem;">✗ 外貌模糊 ✗ 场景泛泛 ✗ 无光影 ✗ 无风格</p>
+      <p style="margin-top:0.5rem;color:#ff6b9d;font-size:0.85rem;">✗ 外貌模糊 ✗ 场景泛泛 ✗ 无镜头 ✗ 无光影 ✗ 无风格</p>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ==================== 4. COMFYUI ==================== -->
-<section id="comfyui">
+<!-- ==================== 4. VIDEO GEN ==================== -->
+<section id="video-gen">
   <span class="section-num">Chapter 04</span>
-  <h2><span class="emoji">🎨</span> 模块二：ComfyUI 视频生成工作流</h2>
+  <h2>🎞️ 模块二：在线视频 / 图像生成</h2>
 
-  <h3>🏗️ 工作流架构</h3>
-  
+  <h3>🏗️ 生成策略</h3>
+  <p>推荐<strong>两步走</strong>：先用文生图 API 生成高质量关键帧，再用图生视频 API 赋予动态。直接文生视频效果往往不如「图 → 视频」稳定。</p>
+
   <div class="flow-diagram">
-    <svg class="svg-flow" viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg">
-      <!-- Checkpoint -->
-      <rect x="30" y="20" width="180" height="50" rx="10" fill="#2a1a3e" stroke="#a78bfa" stroke-width="1.5"/>
-      <text x="120" y="50" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="600">📦 Load Checkpoint</text>
-      
-      <!-- CLIP -->
-      <line x1="210" y1="45" x2="260" y2="45" stroke="#555" stroke-width="1.5"/>
-      <polygon points="255,40 265,45 255,50" fill="#888"/>
-      <rect x="260" y="20" width="140" height="50" rx="10" fill="#2a1a3e" stroke="#a78bfa" stroke-width="1"/>
-      <text x="330" y="50" text-anchor="middle" fill="#8888a0" font-size="11">CLIP Encode</text>
-      
-      <!-- KSampler -->
-      <rect x="520" y="20" width="160" height="50" rx="10" fill="#3a2a1e" stroke="#ffa726" stroke-width="1.5"/>
-      <text x="600" y="50" text-anchor="middle" fill="#ffa726" font-size="12" font-weight="600">⚡ KSampler</text>
-      
-      <line x1="400" y1="45" x2="520" y2="45" stroke="#555" stroke-width="1.5"/>
-      <polygon points="515,40 525,45 515,50" fill="#888"/>
-      
-      <!-- VAE Decode -->
-      <line x1="680" y1="45" x2="720" y2="45" stroke="#555" stroke-width="1.5"/>
-      <polygon points="715,40 725,45 715,50" fill="#888"/>
-      <rect x="720" y="20" width="150" height="50" rx="10" fill="#1a2a1e" stroke="#00d4aa" stroke-width="1"/>
-      <text x="795" y="50" text-anchor="middle" fill="#00d4aa" font-size="11">🖼️ VAE Decode</text>
-      
-      <!-- Prompt input -->
-      <rect x="280" y="110" width="200" height="45" rx="8" fill="#0d0d14" stroke="#2a2a3a" stroke-width="1"/>
-      <text x="380" y="138" text-anchor="middle" fill="#8888a0" font-size="10">📝 Positive Prompt (from LLM)</text>
-      <line x1="380" y1="110" x2="380" y2="70" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3"/>
-      
-      <rect x="500" y="110" width="200" height="45" rx="8" fill="#0d0d14" stroke="#2a2a3a" stroke-width="1"/>
-      <text x="600" y="138" text-anchor="middle" fill="#8888a0" font-size="10">🚫 Negative Prompt</text>
-      <line x1="600" y1="110" x2="600" y2="70" stroke="#ff6b9d" stroke-width="1" stroke-dasharray="3"/>
-      
-      <!-- IPAdapter Branch -->
-      <rect x="30" y="200" width="200" height="70" rx="12" fill="url(#g3)" opacity="0.12"/>
-      <rect x="30" y="200" width="200" height="70" rx="12" fill="none" stroke="url(#g3)" stroke-width="1.5"/>
-      <text x="130" y="228" text-anchor="middle" fill="#00d4aa" font-size="12" font-weight="600">🎭 IPAdapter Plus</text>
-      <text x="130" y="250" text-anchor="middle" fill="#8888a0" font-size="10">角色参考图 → 特征注入</text>
-      
-      <line x1="230" y1="235" x2="300" y2="235" stroke="#00d4aa" stroke-width="1.5"/>
-      <polygon points="295,230 305,235 295,240" fill="#888"/>
-      
-      <!-- ControlNet Branch -->
-      <rect x="30" y="290" width="200" height="70" rx="12" fill="url(#g1)" opacity="0.12"/>
-      <rect x="30" y="290" width="200" height="70" rx="12" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
-      <text x="130" y="318" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="600">🕺 ControlNet</text>
-      <text x="130" y="340" text-anchor="middle" fill="#8888a0" font-size="10">OpenPose / Depth / Canny</text>
-      
-      <line x1="230" y1="325" x2="300" y2="325" stroke="#a78bfa" stroke-width="1.5"/>
-      <polygon points="295,320 305,325 295,330" fill="#888"/>
-      
-      <!-- Central Merge: AnimateDiff -->
-      <rect x="300" y="210" width="300" height="140" rx="16" fill="url(#g2)" opacity="0.1" stroke="url(#g2)" stroke-width="1.5"/>
-      <text x="450" y="248" text-anchor="middle" fill="#ff6b9d" font-size="14" font-weight="700">🎞️ AnimateDiff / Wan T2V</text>
-      <text x="450" y="272" text-anchor="middle" fill="#8888a0" font-size="11">连续帧动画生成</text>
-      <text x="450" y="292" text-anchor="middle" fill="#8888a0" font-size="10">Motion LoRA: pan / zoom / tracking</text>
-      
-      <!-- Motion LoRA -->
-      <rect x="340" y="305" width="220" height="30" rx="6" fill="#1a1a2e" stroke="#ffa726" stroke-width="1"/>
-      <text x="450" y="325" text-anchor="middle" fill="#ffa726" font-size="10">🎬 Motion LoRA 控制镜头运动</text>
-      
-      <!-- Output Chain -->
-      <line x1="600" y1="280" x2="660" y2="280" stroke="#555" stroke-width="1.5"/>
-      <polygon points="655,275 665,280 655,285" fill="#888"/>
-      
-      <rect x="660" y="250" width="120" height="60" rx="10" fill="#1a2a1e" stroke="#00d4aa" stroke-width="1"/>
-      <text x="720" y="275" text-anchor="middle" fill="#00d4aa" font-size="11" font-weight="600">🔄 RIFE</text>
-      <text x="720" y="295" text-anchor="middle" fill="#8888a0" font-size="10">补帧 → 24fps</text>
-      
-      <line x1="780" y1="280" x2="810" y2="280" stroke="#555" stroke-width="1.5"/>
-      <polygon points="805,275 815,280 805,285" fill="#888"/>
-      
-      <rect x="810" y="250" width="80" height="60" rx="10" fill="#2a1a1e" stroke="#ff6b9d" stroke-width="1"/>
-      <text x="850" y="285" text-anchor="middle" fill="#ff6b9d" font-size="16">💾</text>
-      
-      <!-- Labels -->
-      <rect x="660" y="380" width="230" height="40" rx="8" fill="#1a1a2e" stroke="#555" stroke-width="1" stroke-dasharray="4"/>
-      <text x="775" y="405" text-anchor="middle" fill="#8888a0" font-size="10">VHS_VideoCombine → .mp4 / .gif 输出</text>
-    </svg>
+    <div class="flow-row">
+      <div class="flow-box" style="background:rgba(124,92,252,0.15);border:1px solid #7c5cfc;color:#a78bfa;">
+        📝 LLM 生成<br>image_prompt
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="background:rgba(0,212,170,0.15);border:1px solid #00d4aa;color:#00d4aa;">
+        🖼️ 文生图 API<br>Flux / DALL-E / SD
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="background:rgba(255,107,157,0.15);border:1px solid #ff6b9d;color:#ff6b9d;">
+        🎞️ 图生视频 API<br>可灵 / Runway / Vidu
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="background:rgba(255,167,38,0.15);border:1px solid #ffa726;color:#ffa726;">
+        🎬 视频片段<br>3-5 秒 / 镜
+      </div>
+    </div>
   </div>
 
-  <h3>🔗 关键节点参数映射</h3>
-  <table>
-    <thead>
-      <tr><th>LLM 输出字段</th><th>→ ComfyUI 节点</th><th>说明</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>image_prompt</code></td><td>CLIP Text Encode (positive)</td><td>英文正向提示词</td></tr>
-      <tr><td><code>negative_prompt</code></td><td>CLIP Text Encode (negative)</td><td>排除不需要的元素</td></tr>
-      <tr><td><code>characters_in_scene</code></td><td>IPAdapter 参考图</td><td>自动加载角色参考图</td></tr>
-      <tr><td><code>camera</code></td><td>AnimateDiff Motion LoRA</td><td>推/拉/摇/移/固定</td></tr>
-      <tr><td><code>motion</code></td><td>ControlNet 序列</td><td>角色姿势变化</td></tr>
-      <tr><td><code>mood</code></td><td>Color Correct</td><td>色调情绪调整</td></tr>
-      <tr><td><code>duration_sec</code></td><td>帧数计算</td><td>duration × fps = 总帧数</td></tr>
-    </tbody>
-  </table>
+  <h3>🖼️ 文生图 API 调用示例</h3>
+  <pre><code># Flux API (通过 SiliconFlow 国内代理)
+import requests
 
-  <h3>🎬 镜头运动方案</h3>
+def generate_image(prompt: str, negative: str = "", seed: int = -1) -> str:
+    """调用 Flux API 生成图片，返回图片 URL"""
+    resp = requests.post(
+        "https://api.siliconflow.cn/v1/images/generations",
+        headers={"Authorization": "Bearer YOUR_API_KEY"},
+        json={
+            "model": "black-forest-labs/FLUX.1-schnell",  # 或 FLUX.1-dev
+            "prompt": prompt,
+            "negative_prompt": negative,
+            "image_size": "768x1024",   # 竖屏短剧
+            "batch_size": 1,
+            "seed": seed if seed > 0 else None,
+            "num_inference_steps": 20,
+        }
+    )
+    return resp.json()["data"][0]["url"]</code></pre>
+
+  <h3>🎞️ 图生视频 API 调用示例</h3>
+  <pre><code># 可灵 Kling API
+import requests, time
+
+def generate_video(image_url: str, prompt: str, duration: int = 5) -> str:
+    """图生视频：传入关键帧图片 + 运动描述 → 返回视频 URL"""
+    
+    # 1️⃣ 提交任务
+    resp = requests.post(
+        "https://api.klingai.com/v1/videos/image2video",
+        headers={"Authorization": "Bearer YOUR_KLING_KEY"},
+        json={
+            "model_name": "kling-v1-6",
+            "image": image_url,
+            "prompt": prompt,           # 运动描述："camera slowly pushes in, character turns head left"
+            "negative_prompt": "blurry, static, low quality",
+            "duration": str(duration),   # 5 或 10 秒
+            "mode": "high quality",      # 标准 / 高品质
+            "camera_type": "horizontal_pan",  # 镜头运动类型
+        }
+    )
+    task_id = resp.json()["data"]["task_id"]
+    
+    # 2️⃣ 轮询等待完成
+    while True:
+        status = requests.get(
+            f"https://api.klingai.com/v1/videos/image2video/{task_id}",
+            headers={"Authorization": "Bearer YOUR_KLING_KEY"}
+        ).json()
+        
+        if status["data"]["task_status"] == "succeed":
+            return status["data"]["task_result"]["videos"][0]["url"]
+        elif status["data"]["task_status"] == "failed":
+            raise Exception(f"生成失败: {status}")
+        
+        time.sleep(10)  # 等 10 秒再查</code></pre>
+
+  <h3>🎬 镜头控制技巧</h3>
   <div class="grid-2">
     <div class="card">
       <div class="card-header">
-        <div class="icon" style="background:rgba(124,92,252,0.15);">🎞️</div>
-        <h3>AnimateDiff Motion LoRA</h3>
+        <div class="icon" style="background:rgba(255,107,157,0.15);">📷</div>
+        <h3>视频 Prompt 写法</h3>
       </div>
-      <p>预训练的镜头运动模型，直接加载使用：</p>
-      <ul style="margin-top:0.5rem;padding-left:1.2rem;">
-        <li><code>pan_left</code> / <code>pan_right</code> — 水平摇镜</li>
-        <li><code>tilt_up</code> / <code>tilt_down</code> — 垂直摇镜</li>
-        <li><code>zoom_in</code> / <code>zoom_out</code> — 推拉镜头</li>
-        <li><code>tracking</code> — 跟踪移动</li>
+      <p>视频生成的 prompt 侧重<strong>运动描述</strong>，而非静态画面：</p>
+      <ul style="margin-top:0.5rem;padding-left:1.2rem;font-size:0.9rem;">
+        <li><code>camera slowly pushes in towards the character's face</code></li>
+        <li><code>character turns head to the left and smiles</code></li>
+        <li><code>camera pans right revealing a cityscape</code></li>
+        <li><code>rain falls, character walks forward slowly</code></li>
       </ul>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="icon" style="background:rgba(255,107,157,0.15);">🕺</div>
-        <h3>ControlNet 姿势序列</h3>
+        <div class="icon" style="background:rgba(124,92,252,0.15);">🎛️</div>
+        <h3>可灵 camera_type 参数</h3>
       </div>
-      <p>逐帧控制角色姿势，适合动作戏：</p>
-      <ul style="margin-top:0.5rem;padding-left:1.2rem;">
-        <li>OpenPose 检测骨架 → 逐帧编辑</li>
-        <li>Depth Map 控制场景纵深</li>
-        <li>Canny 边缘保持场景结构</li>
-        <li>可叠加多个 ControlNet</li>
+      <p>可灵 API 支持预设镜头运动：</p>
+      <ul style="margin-top:0.5rem;padding-left:1.2rem;font-size:0.9rem;">
+        <li><code>horizontal_pan</code> — 水平摇镜</li>
+        <li><code>vertical_pan</code> — 垂直摇镜</li>
+        <li><code>zoom_in</code> / <code>zoom_out</code> — 推拉</li>
+        <li><code>rotate</code> — 旋转</li>
+        <li><code>fixed</code> — 固定机位</li>
       </ul>
     </div>
+  </div>
+
+  <div class="warn">
+    <strong>⚠️ 注意：</strong> 图生视频效果取决于输入图质量。先用 Flux/SDXL 生成高清关键帧（768×1024 或更高），再喂给视频 API，效果远好于直接文生视频。角色参考图也用文生图 API 生成后缓存复用。
   </div>
 </section>
 
@@ -887,150 +763,165 @@ comfy node install comfyui-essentials                # ⚙️ 基础节点</code
 <!-- ==================== 5. CHARACTER ==================== -->
 <section id="character">
   <span class="section-num">Chapter 05</span>
-  <h2><span class="emoji">🎭</span> 模块三：角色一致性方案</h2>
+  <h2>🎭 模块三：角色一致性方案</h2>
 
-  <p>这是 AI 短剧<strong>最难也最关键</strong>的部分——让同一个角色在不同镜头、不同场景下保持一致。</p>
+  <p>AI 短剧<strong>最难也最关键</strong>的部分——让同一角色在不同镜头下保持一致。在线方案的核心策略：</p>
 
-  <!-- Character Consistency Flow -->
   <div class="flow-diagram">
-    <svg class="svg-flow" viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+    <svg class="svg-flow" viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg">
       <!-- Phase 1 -->
-      <rect x="30" y="20" width="200" height="100" rx="14" fill="url(#g1)" opacity="0.12"/>
-      <rect x="30" y="20" width="200" height="100" rx="14" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
-      <text x="130" y="48" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">📸 Phase 1: 设定图</text>
-      <text x="130" y="70" text-anchor="middle" fill="#8888a0" font-size="10">LLM 生成角色 prompt</text>
-      <text x="130" y="86" text-anchor="middle" fill="#8888a0" font-size="10">ComfyUI 生成多角度设定图</text>
-      <text x="130" y="102" text-anchor="middle" fill="#8888a0" font-size="10">正/侧/3/4 视角</text>
+      <rect x="30" y="20" width="200" height="90" rx="14" fill="url(#g1)" opacity="0.12"/>
+      <rect x="30" y="20" width="200" height="90" rx="14" fill="none" stroke="url(#g1)" stroke-width="1.5"/>
+      <text x="130" y="48" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">📸 Step 1: 生成设定图</text>
+      <text x="130" y="68" text-anchor="middle" fill="#8888a0" font-size="10">Flux API 生成多角度角色图</text>
+      <text x="130" y="84" text-anchor="middle" fill="#8888a0" font-size="10">正面 / 侧面 / 3/4 视角</text>
+      <text x="130" y="100" text-anchor="middle" fill="#8888a0" font-size="10">存入 character_refs 字典</text>
       
-      <line x1="230" y1="70" x2="290" y2="70" stroke="#555" stroke-width="2"/>
-      <polygon points="285,65 295,70 285,75" fill="#888"/>
+      <line x1="230" y1="65" x2="290" y2="65" stroke="#555" stroke-width="2"/>
+      <polygon points="285,60 295,65 285,70" fill="#888"/>
       
       <!-- Phase 2 -->
-      <rect x="294" y="20" width="200" height="100" rx="14" fill="url(#g3)" opacity="0.12"/>
-      <rect x="294" y="20" width="200" height="100" rx="14" fill="none" stroke="url(#g3)" stroke-width="1.5"/>
-      <text x="394" y="48" text-anchor="middle" fill="#00d4aa" font-size="12" font-weight="700">🔗 Phase 2: 特征绑定</text>
-      <text x="394" y="70" text-anchor="middle" fill="#8888a0" font-size="10">设定图 → IPAdapter 编码</text>
-      <text x="394" y="86" text-anchor="middle" fill="#8888a0" font-size="10">或训练角色 LoRA</text>
-      <text x="394" y="102" text-anchor="middle" fill="#8888a0" font-size="10">建立 character_ref 库</text>
+      <rect x="294" y="20" width="220" height="90" rx="14" fill="url(#g3)" opacity="0.12"/>
+      <rect x="294" y="20" width="220" height="90" rx="14" fill="none" stroke="url(#g3)" stroke-width="1.5"/>
+      <text x="404" y="48" text-anchor="middle" fill="#00d4aa" font-size="12" font-weight="700">🔗 Step 2: 角色注册表</text>
+      <text x="404" y="68" text-anchor="middle" fill="#8888a0" font-size="10">Prompt 中注入角色外貌描述</text>
+      <text x="404" y="84" text-anchor="middle" fill="#8888a0" font-size="10">每次生成都复用同一段描述</text>
+      <text x="404" y="100" text-anchor="middle" fill="#8888a0" font-size="10">LLM 被要求「不得修改外貌」</text>
       
-      <line x1="494" y1="70" x2="554" y2="70" stroke="#555" stroke-width="2"/>
-      <polygon points="549,65 559,70 549,75" fill="#888"/>
+      <line x1="514" y1="65" x2="574" y2="65" stroke="#555" stroke-width="2"/>
+      <polygon points="569,60 579,65 569,70" fill="#888"/>
       
       <!-- Phase 3 -->
-      <rect x="558" y="20" width="150" height="100" rx="14" fill="url(#g2)" opacity="0.12"/>
-      <rect x="558" y="20" width="150" height="100" rx="14" fill="none" stroke="url(#g2)" stroke-width="1.5"/>
-      <text x="633" y="48" text-anchor="middle" fill="#ff6b9d" font-size="12" font-weight="700">🎭 Phase 3: 注入</text>
-      <text x="633" y="70" text-anchor="middle" fill="#8888a0" font-size="10">每镜头自动匹配</text>
-      <text x="633" y="86" text-anchor="middle" fill="#8888a0" font-size="10">角色参考图</text>
-      <text x="633" y="102" text-anchor="middle" fill="#8888a0" font-size="10">IPAdapter 权重调节</text>
+      <rect x="578" y="20" width="160" height="90" rx="14" fill="url(#g2)" opacity="0.12"/>
+      <rect x="578" y="20" width="160" height="90" rx="14" fill="none" stroke="url(#g2)" stroke-width="1.5"/>
+      <text x="658" y="48" text-anchor="middle" fill="#ff6b9d" font-size="12" font-weight="700">🎭 Step 3: 图生视频</text>
+      <text x="658" y="68" text-anchor="middle" fill="#8888a0" font-size="10">设定图作为输入图</text>
+      <text x="658" y="84" text-anchor="middle" fill="#8888a0" font-size="10">+ 运动 prompt</text>
+      <text x="658" y="100" text-anchor="middle" fill="#8888a0" font-size="10">角色外观锁死在输入图上</text>
       
-      <line x1="708" y1="70" x2="748" y2="70" stroke="#555" stroke-width="2"/>
-      <polygon points="743,65 753,70 743,75" fill="#888"/>
+      <line x1="738" y1="65" x2="778" y2="65" stroke="#555" stroke-width="2"/>
+      <polygon points="773,60 783,65 773,70" fill="#888"/>
       
       <!-- Output -->
-      <rect x="752" y="30" width="120" height="80" rx="12" fill="#1a1a2e" stroke="#ffa726" stroke-width="1.5"/>
-      <text x="812" y="58" text-anchor="middle" fill="#ffa726" font-size="11" font-weight="600">✅ 一致的</text>
-      <text x="812" y="78" text-anchor="middle" fill="#ffa726" font-size="11" font-weight="600">角色视频</text>
+      <rect x="782" y="35" width="100" height="60" rx="12" fill="#1a1a2e" stroke="#ffa726" stroke-width="1.5"/>
+      <text x="832" y="58" text-anchor="middle" fill="#ffa726" font-size="11" font-weight="600">✅ 一致的</text>
+      <text x="832" y="78" text-anchor="middle" fill="#ffa726" font-size="11" font-weight="600">角色视频</text>
       
-      <!-- Bottom: Comparison -->
-      <rect x="100" y="170" width="320" height="90" rx="12" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1"/>
-      <text x="260" y="198" text-anchor="middle" fill="#00d4aa" font-size="12" font-weight="700">🏆 方案 A：IPAdapter（推荐入门）</text>
-      <text x="260" y="218" text-anchor="middle" fill="#8888a0" font-size="10">✅ 无需训练 · 即开即用 · 多角度参考图提高一致性</text>
-      <text x="260" y="238" text-anchor="middle" fill="#8888a0" font-size="10">⚠️ 权重过高会过拟合 · 复杂角度可能偏移</text>
+      <!-- Bottom tips -->
+      <rect x="80" y="140" width="340" height="80" rx="12" fill="#1a1a2e" stroke="#00d4aa" stroke-width="1"/>
+      <text x="250" y="165" text-anchor="middle" fill="#00d4aa" font-size="11" font-weight="700">💡 关键：图生视频的一致性远超文生视频</text>
+      <text x="250" y="185" text-anchor="middle" fill="#8888a0" font-size="10">输入图 = 角色外貌锚点，视频 API 只负责「动起来」</text>
+      <text x="250" y="205" text-anchor="middle" fill="#8888a0" font-size="10">角色描述越详细，Prompt 复用越严格，一致性越好</text>
       
-      <rect x="480" y="170" width="320" height="90" rx="12" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1"/>
-      <text x="640" y="198" text-anchor="middle" fill="#ff6b9d" font-size="12" font-weight="700">💎 方案 B：LoRA 训练（高要求）</text>
-      <text x="640" y="218" text-anchor="middle" fill="#8888a0" font-size="10">✅ 最稳定 · 多角度无偏移 · 可复用</text>
-      <text x="640" y="238" text-anchor="middle" fill="#8888a0" font-size="10">⚠️ 需 10-20 张图 · 训练耗时 · 过拟合风险</text>
+      <rect x="480" y="140" width="340" height="80" rx="12" fill="#1a1a2e" stroke="#ff6b9d" stroke-width="1"/>
+      <text x="650" y="165" text-anchor="middle" fill="#ff6b9d" font-size="11" font-weight="700">⚠️ 避坑</text>
+      <text x="650" y="185" text-anchor="middle" fill="#8888a0" font-size="10">❌ 不要每次重新描述角色外貌</text>
+      <text x="650" y="205" text-anchor="middle" fill="#8888a0" font-size="10">❌ 不要用文生视频做角色镜头（一致性差）</text>
     </svg>
   </div>
 
-  <div class="warn">
-    <strong>⚠️ 核心原则：</strong> LLM 在后续分镜中<strong>必须复用首次定义的角色外貌描述</strong>，不允许自由发挥。在 Prompt 中注入角色注册表，强制 LLM 引用。
+  <h3>🔑 一致性三板斧</h3>
+  <div class="grid-3">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">📋</div>
+      <h3 style="margin:0 0 0.3rem;color:#a78bfa;font-size:1rem;">角色注册表</h3>
+      <p>首次 LLM 生成详细外貌 → 存入 dict → 后续每次注入 prompt</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">🖼️</div>
+      <h3 style="margin:0 0 0.3rem;color:#00d4aa;font-size:1rem;">设定图锚定</h3>
+      <p>角色多角度设定图作为图生视频的输入，外貌锁死在图上</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">🔒</div>
+      <h3 style="margin:0 0 0.3rem;color:#ff6b9d;font-size:1rem;">Prompt 冻结</h3>
+      <p>LLM 被要求「不得修改已定义角色外貌」，system prompt 强制约束</p>
+    </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ==================== 6. PIPELINE CODE ==================== -->
+<!-- ==================== 6. PIPELINE ==================== -->
 <section id="pipeline">
   <span class="section-num">Chapter 06</span>
-  <h2><span class="emoji">⚡</span> 模块四：自动化流水线代码</h2>
-
-  <p>将以上模块串联成一键执行的 Python 流水线：</p>
+  <h2>⚡ 模块四：自动化流水线代码</h2>
 
   <div class="flow-diagram" style="text-align:center;">
     <div class="flow-row">
-      <div class="flow-box" style="background:rgba(124,92,252,0.15);border:1px solid #7c5cfc;color:#a78bfa;">
-        📖<br>读取小说
-      </div>
+      <div class="flow-box" style="background:rgba(124,92,252,0.15);border:1px solid #7c5cfc;color:#a78bfa;">📖<br>读小说</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(124,92,252,0.15);border:1px solid #7c5cfc;color:#a78bfa;">
-        🧠<br>LLM 分镜
-      </div>
+      <div class="flow-box" style="background:rgba(124,92,252,0.15);border:1px solid #7c5cfc;color:#a78bfa;">🧠<br>LLM 分镜</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(0,212,170,0.15);border:1px solid #00d4aa;color:#00d4aa;">
-        🎨<br>生成设定图
-      </div>
+      <div class="flow-box" style="background:rgba(0,212,170,0.15);border:1px solid #00d4aa;color:#00d4aa;">🖼️<br>文生图</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(255,107,157,0.15);border:1px solid #ff6b9d;color:#ff6b9d;">
-        🎞️<br>逐镜头生成
-      </div>
+      <div class="flow-box" style="background:rgba(255,107,157,0.15);border:1px solid #ff6b9d;color:#ff6b9d;">🎞️<br>图生视频</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(255,167,38,0.15);border:1px solid #ffa726;color:#ffa726;">
-        🔧<br>后处理
-      </div>
+      <div class="flow-box" style="background:rgba(255,167,38,0.15);border:1px solid #ffa726;color:#ffa726;">🗣️<br>配音</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(0,180,216,0.15);border:1px solid #00b4d8;color:#00b4d8;">
-        🎬<br>成片
-      </div>
+      <div class="flow-box" style="background:rgba(0,180,216,0.15);border:1px solid #00b4d8;color:#00b4d8;">🎬<br>成片</div>
     </div>
   </div>
 
-  <h3>🐍 核心代码骨架</h3>
+  <h3>🐍 完整代码骨架</h3>
   <pre><code>import json
 import requests
+import time
 from pathlib import Path
 
 class AIDramaPipeline:
-    """小说 → AI 短剧 全自动流水线"""
+    """小说 → AI 短剧 全自动流水线（在线 API 方案）"""
     
-    def __init__(self, comfyui_url="http://127.0.0.1:8188", llm_api="http://your-llm/v1"):
-        self.comfyui = comfyui_url
-        self.llm = llm_api
-        self.character_refs = {}  # 🎭 角色参考图注册表
+    def __init__(self):
+        # ═══ API 配置 ═══
+        self.llm_base = "https://api.deepseek.com/v1"        # LLM API
+        self.llm_key = "sk-xxx"
+        self.llm_model = "deepseek-chat"
+        
+        self.image_base = "https://api.siliconflow.cn/v1"     # Flux 文生图
+        self.image_key = "sk-xxx"
+        self.image_model = "black-forest-labs/FLUX.1-schnell"
+        
+        self.video_base = "https://api.klingai.com/v1"        # 可灵 图生视频
+        self.video_key = "xxx"
+        
+        # ═══ 角色注册表 ═══
+        self.character_refs = {}   # { "char_01": { "name":..., "appearance":..., "ref_image_url":... } }
         self.storyboard = None
     
     # ═══════════════════════════════════════════
-    # 🧠 Step 1: LLM 分割小说
+    # 🧠 Step 1: LLM 分镜
     # ═══════════════════════════════════════════
-    def split_novel(self, text: str, chapter: str) -> dict:
-        """调用 LLM 将小说拆分为分镜 JSON"""
+    def split_novel(self, text: str) -> dict:
+        system = """你是专业 AI 短剧分镜师。只输出 JSON，不要解释。
+规则：
+- 每镜 3-5 秒，角色外貌全局一致
+- image_prompt 英文，要具体（外貌+场景+光影+构图）
+- video_prompt 英文，描述运动和镜头变化
+- 已定义角色必须原样复用外貌描述，不得修改"""
         
-        system_prompt = """你是专业 AI 短剧分镜师。只输出 JSON。
-规则：每镜 3-5 秒，角色外貌全局一致，image_prompt 英文。"""
-        
-        user_prompt = f"""将小说第{chapter}章拆为分镜脚本。
-已定义角色（必须严格复用外貌）：
+        user = f"""已定义角色：
 {json.dumps(self.character_refs, ensure_ascii=False, indent=2)}
 
-小说内容：
-{text}"""
+将以下小说拆为分镜脚本：
+{text[:6000]}"""  # 截断防超 token
         
-        resp = requests.post(f"{self.llm}/chat/completions", json={
-            "model": "your-model",
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            "temperature": 0.7,
-            "response_format": {"type": "json_object"}
-        })
+        resp = requests.post(f"{self.llm_base}/chat/completions",
+            headers={"Authorization": f"Bearer {self.llm_key}"},
+            json={
+                "model": self.llm_model,
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user}
+                ],
+                "temperature": 0.7,
+                "response_format": {"type": "json_object"}
+            })
         
         content = resp.json()["choices"][0]["message"]["content"]
         self.storyboard = json.loads(content)
         
-        # 📝 更新角色注册表
+        # 更新角色注册表
         for char in self.storyboard.get("characters", []):
             if char["id"] not in self.character_refs:
                 self.character_refs[char["id"]] = char
@@ -1038,99 +929,141 @@ class AIDramaPipeline:
         return self.storyboard
     
     # ═══════════════════════════════════════════
-    # 🎨 Step 2: 生成角色设定图
+    # 🖼️ Step 2: 文生图（Flux API）
     # ═══════════════════════════════════════════
-    def generate_character_refs(self):
-        """为每个角色生成多角度参考图"""
-        for char_id, char in self.character_refs.items():
-            if "ref_images" in char:
-                continue  # 已有参考图，跳过
-            
-            prompt = f"{char['appearance']}, character design sheet, "
-            prompt += "front view, side view, 3/4 view, white background, "
-            prompt += "high quality, detailed, anime style"
-            
-            ref_path = self._generate_image(prompt, seed=42)
-            char["ref_images"] = [ref_path]
-            print(f"  🎭 {char['name']} 设定图已生成: {ref_path}")
+    def generate_image(self, prompt: str, negative: str = "") -> str:
+        resp = requests.post(f"{self.image_base}/images/generations",
+            headers={"Authorization": f"Bearer {self.image_key}"},
+            json={
+                "model": self.image_model,
+                "prompt": prompt,
+                "negative_prompt": negative or "blurry, deformed, bad anatomy",
+                "image_size": "768x1024",
+                "num_inference_steps": 20,
+            })
+        return resp.json()["data"][0]["url"]
     
     # ═══════════════════════════════════════════
-    # 🎞️ Step 3: 逐镜头生成视频
+    # 🎞️ Step 3: 图生视频（可灵 API）
+    # ═══════════════════════════════════════════
+    def generate_video(self, image_url: str, prompt: str, camera: str = "fixed") -> str:
+        # 提交任务
+        resp = requests.post(f"{self.video_base}/videos/image2video",
+            headers={"Authorization": f"Bearer {self.video_key}"},
+            json={
+                "model_name": "kling-v1-6",
+                "image": image_url,
+                "prompt": prompt,
+                "negative_prompt": "blurry, static, low quality",
+                "duration": "5",
+                "mode": "high quality",
+                "camera_type": camera,
+            })
+        task_id = resp.json()["data"]["task_id"]
+        
+        # 轮询等待
+        for _ in range(60):  # 最多等 10 分钟
+            time.sleep(10)
+            status = requests.get(
+                f"{self.video_base}/videos/image2video/{task_id}",
+                headers={"Authorization": f"Bearer {self.video_key}"}
+            ).json()
+            
+            if status["data"]["task_status"] == "succeed":
+                return status["data"]["task_result"]["videos"][0]["url"]
+            elif status["data"]["task_status"] == "failed":
+                raise Exception(f"视频生成失败: {status}")
+        
+        raise TimeoutError("视频生成超时")
+    
+    # ═══════════════════════════════════════════
+    # 🎭 Step 4: 生成角色设定图
+    # ═══════════════════════════════════════════
+    def generate_character_refs(self):
+        for cid, char in self.character_refs.items():
+            if "ref_image_url" in char:
+                continue
+            prompt = f"character design sheet, {char['appearance']}, "
+            prompt += "front view, side view, 3/4 view, white background, "
+            prompt += "high quality, detailed, full body"
+            url = self.generate_image(prompt)
+            char["ref_image_url"] = url
+            print(f"  🎭 {char['name']} 设定图: {url}")
+    
+    # ═══════════════════════════════════════════
+    # 🚀 Step 5: 逐镜头生成
     # ═══════════════════════════════════════════
     def generate_all_shots(self, output_dir="./shots"):
-        """遍历分镜，逐个生成视频片段"""
         Path(output_dir).mkdir(parents=True, exist_ok=True)
         shots = self.storyboard["scenes"]
-        paths = []
+        results = []
         
         for i, shot in enumerate(shots):
             print(f"  🎬 [{i+1}/{len(shots)}] {shot['description'][:40]}...")
             
-            # 构建 ComfyUI 参数
-            params = {
-                "positive_prompt": shot["image_prompt"],
-                "negative_prompt": shot.get("negative_prompt", ""),
-                "seed": -1,
-                "steps": 25,
+            # 2a. 文生图：生成关键帧
+            img_url = self.generate_image(
+                prompt=shot["image_prompt"],
+                negative=shot.get("negative_prompt", "")
+            )
+            
+            # 2b. 图生视频：关键帧 → 动态视频
+            camera_map = {
+                "pan": "horizontal_pan", "tilt": "vertical_pan",
+                "zoom_in": "zoom_in", "zoom_out": "zoom_out",
+                "push": "zoom_in", "pull": "zoom_out",
+                "fixed": "fixed", "static": "fixed",
             }
+            camera = camera_map.get(shot.get("camera", "fixed"), "fixed")
             
-            # 🎭 注入角色参考图
-            if shot.get("characters_in_scene"):
-                for cid in shot["characters_in_scene"]:
-                    if cid in self.character_refs:
-                        ref = self.character_refs[cid]["ref_images"][0]
-                        params["ipadapter_image"] = ref
+            video_url = self.generate_video(
+                image_url=img_url,
+                prompt=shot.get("video_prompt", shot.get("image_prompt", "")),
+                camera=camera
+            )
             
-            # 🎬 注入镜头运动
-            motion = shot.get("motion", "static")
-            params["motion_lora"] = self._map_motion(motion)
+            # 下载视频
+            path = f"{output_dir}/shot_{i:04d}.mp4"
+            with open(path, "wb") as f:
+                f.write(requests.get(video_url).content)
             
-            path = self._generate_video(params, f"{output_dir}/shot_{i:04d}.mp4")
-            paths.append(path)
+            results.append({"shot": shot, "image_url": img_url, "video_path": path})
+            print(f"    ✅ {path}")
         
-        return paths
-    
-    # ═══════════════════════════════════════════
-    # 🔧 Step 4: 后处理
-    # ═══════════════════════════════════════════
-    def postprocess(self, video_paths):
-        """补帧 + 超分"""
-        processed = []
-        for path in video_paths:
-            # RIFE 补帧到 24fps
-            rife_path = self._rife_interpolate(path, target_fps=24)
-            # 超分辨率
-            hd_path = self._upscale(rife_path)
-            processed.append(hd_path)
-        return processed
+        return results
     
     # ═══════════════════════════════════════════
     # 🚀 一键执行
     # ═══════════════════════════════════════════
-    def produce(self, novel_path: str, chapter: str):
-        """完整流水线一键执行"""
-        
-        print("📖 读取小说...")
-        with open(novel_path) as f:
-            text = f.read()
-        
+    def produce(self, novel_text: str):
         print("🧠 LLM 分镜中...")
-        self.split_novel(text, chapter)
+        self.split_novel(novel_text)
         
         print("🎨 生成角色设定图...")
         self.generate_character_refs()
         
-        print("🎞️ 生成视频片段...")
+        print("🎞️ 逐镜头生成视频...")
         shots = self.generate_all_shots()
         
-        print("🔧 后处理中...")
-        final_shots = self.postprocess(shots)
-        
-        print("🎬 合并成片...")
-        output = self._concatenate(final_shots)
-        
-        print(f"✅ 完成！输出: {output}")
-        return output</code></pre>
+        print(f"✅ 完成！共 {len(shots)} 个镜头")
+        return shots
+
+# ═══ 使用 ═══
+pipeline = AIDramaPipeline()
+pipeline.produce("""
+  第一章：雨夜
+
+  雨水顺着城市的霓虹灯管滴落。林默撑着黑色雨伞，
+  穿过空旷的街道。他停下脚步，抬头看着对面大楼的顶层——
+  那里亮着一盏灯。
+  
+  "终于找到了。"他低声说，眼神变得锐利。
+""")
+</code></pre>
+
+  <div class="tip">
+    <strong>💡 本地运行即可：</strong>这个脚本只需要 <code>requests</code> 库，不需要 GPU，不需要 ComfyUI。在任何有 Python 的机器上都能跑。
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -1138,71 +1071,82 @@ class AIDramaPipeline:
 <!-- ==================== 7. POST ==================== -->
 <section id="postprocess">
   <span class="section-num">Chapter 07</span>
-  <h2><span class="emoji">🔧</span> 模块五：后处理 & 合成</h2>
+  <h2>🔧 模块五：后处理 & 合成</h2>
 
-  <h3>🔄 ComfyUI 内部处理</h3>
-  <div class="grid-3">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:2rem;margin-bottom:0.5rem;">🔍</div>
-      <h3 style="margin:0 0 0.3rem;color:#a78bfa;font-size:1rem;">超分辨率</h3>
-      <p><code>Upscale Image</code><br>+ 4x-UltraSharp</p>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:2rem;margin-bottom:0.5rem;">🔄</div>
-      <h3 style="margin:0 0 0.3rem;color:#ff6b9d;font-size:1rem;">补帧</h3>
-      <p><code>Frame Interpolation</code><br>+ RIFE v4.6</p>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:2rem;margin-bottom:0.5rem;">🎨</div>
-      <h3 style="margin:0 0 0.3rem;color:#00d4aa;font-size:1rem;">调色</h3>
-      <p><code>Color Correct</code><br>情绪色调匹配</p>
-    </div>
-  </div>
+  <h3>🗣️ AI 配音</h3>
+  <pre><code># Edge-TTS（免费）
+import edge_tts, asyncio
 
-  <h3>🗣️ 配音方案</h3>
-  <table>
-    <thead>
-      <tr><th>方案</th><th>工具</th><th>特点</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>🆓 免费</td><td>Edge-TTS</td><td>微软免费 TTS，中文效果好</td></tr>
-      <tr><td>🎭 克隆</td><td>FishAudio / CosyVoice</td><td>声音克隆，角色声线一致</td></tr>
-      <tr><td>🎬 口型同步</td><td>SadTalker / Wav2Lip</td><td>驱动角色口型匹配音频</td></tr>
-      <tr><td>👩 真人</td><td>录音 + 后期</td><td>最高质量，成本最高</td></tr>
-    </tbody>
-  </table>
+async def voiceover(text: str, voice: str, output: str):
+    """生成配音音频"""
+    communicate = edge_tts.Communicate(text, voice)
+    await communicate.save(output)
 
-  <h3>🎞️ 剪辑合成流程</h3>
+# 中文音色推荐
+# zh-CN-XiaoxiaoNeural   — 女声，温柔
+# zh-CN-YunxiNeural       — 男声，沉稳
+# zh-CN-XiaoyiNeural      — 女声，活泼
+
+# 使用
+asyncio.run(voiceover(
+    text="终于找到了。",
+    voice="zh-CN-YunxiNeural",
+    output="shot_0003_audio.mp3"
+))</code></pre>
+
+  <h3>🎞️ 剪辑合成</h3>
   <div class="flow-diagram">
     <div class="flow-row">
-      <div class="flow-box" style="background:rgba(124,92,252,0.12);border:1px solid #7c5cfc;color:#a78bfa;padding:0.8rem 1.2rem;">
-        🎞️ 视频片段
-      </div>
+      <div class="flow-box" style="background:rgba(124,92,252,0.12);border:1px solid #7c5cfc;color:#a78bfa;padding:0.8rem 1rem;">🎞️ 视频片段</div>
       <div class="flow-arrow">+</div>
-      <div class="flow-box" style="background:rgba(255,107,157,0.12);border:1px solid #ff6b9d;color:#ff6b9d;padding:0.8rem 1.2rem;">
-        🗣️ 配音
-      </div>
+      <div class="flow-box" style="background:rgba(255,107,157,0.12);border:1px solid #ff6b9d;color:#ff6b9d;padding:0.8rem 1rem;">🗣️ 配音</div>
       <div class="flow-arrow">+</div>
-      <div class="flow-box" style="background:rgba(0,212,170,0.12);border:1px solid #00d4aa;color:#00d4aa;padding:0.8rem 1.2rem;">
-        🎵 BGM
-      </div>
+      <div class="flow-box" style="background:rgba(0,212,170,0.12);border:1px solid #00d4aa;color:#00d4aa;padding:0.8rem 1rem;">🎵 BGM</div>
       <div class="flow-arrow">+</div>
-      <div class="flow-box" style="background:rgba(255,167,38,0.12);border:1px solid #ffa726;color:#ffa726;padding:0.8rem 1.2rem;">
-        📝 字幕
-      </div>
+      <div class="flow-box" style="background:rgba(255,167,38,0.12);border:1px solid #ffa726;color:#ffa726;padding:0.8rem 1rem;">📝 字幕</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(0,180,216,0.12);border:1px solid #00b4d8;color:#00b4d8;padding:0.8rem 1.2rem;">
-        🎬 剪映/PR<br>合成
-      </div>
+      <div class="flow-box" style="background:rgba(0,180,216,0.15);border:1px solid #00b4d8;color:#00b4d8;padding:0.8rem 1rem;font-weight:700;">🎬 剪映/PR</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-box" style="background:rgba(255,167,38,0.2);border:1px solid #ffa726;color:#ffa726;padding:0.8rem 1.2rem;font-weight:700;">
-        🎉 成片
-      </div>
+      <div class="flow-box" style="background:rgba(255,167,38,0.2);border:1px solid #ffa726;color:#ffa726;padding:0.8rem 1rem;font-weight:700;">🎉 成片</div>
     </div>
   </div>
 
-  <div class="tip">
-    <strong>💡 最佳实践：</strong> ComfyUI 负责生成高质量视觉素材，后期剪辑软件赋予故事节奏和听觉元素。两者分工协作，不要指望 AI 一步到位出成片。
+  <h3>🔧 自动拼接（ffmpeg）</h3>
+  <pre><code># 把所有镜头拼接成一个视频
+import subprocess, os
+
+def concat_shots(shot_dir: str, output: str):
+    shots = sorted(f for f in os.listdir(shot_dir) if f.endswith('.mp4'))
+    
+    # 写 ffmpeg 列表文件
+    with open("filelist.txt", "w") as f:
+        for shot in shots:
+            f.write(f"file '{shot_dir}/{shot}'\n")
+    
+    # 拼接
+    subprocess.run([
+        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+        "-i", "filelist.txt", "-c", "copy", output
+    ])
+
+concat_shots("./shots", "episode_01_raw.mp4")</code></pre>
+
+  <div class="grid-3">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">🗣️</div>
+      <h3 style="margin:0 0 0.3rem;color:#a78bfa;font-size:1rem;">Edge-TTS</h3>
+      <p><span class="badge badge-free">免费</span> 微软 TTS</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">🎵</div>
+      <h3 style="margin:0 0 0.3rem;color:#ff6b9d;font-size:1rem;">Suno / AudioCraft</h3>
+      <p>AI 生成 BGM</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:0.5rem;">🎬</div>
+      <h3 style="margin:0 0 0.3rem;color:#00d4aa;font-size:1rem;">剪映 / CapCut</h3>
+      <p>最终合成 + 字幕</p>
+    </div>
   </div>
 </section>
 
@@ -1211,36 +1155,36 @@ class AIDramaPipeline:
 <!-- ==================== 8. EXTEND ==================== -->
 <section id="extend">
   <span class="section-num">Chapter 08</span>
-  <h2><span class="emoji">🚀</span> 扩展方向</h2>
+  <h2>🚀 扩展方向</h2>
 
   <div class="grid-2">
     <div class="card">
       <div class="card-header">
         <div class="icon" style="background:rgba(124,92,252,0.15);">🗣️</div>
-        <h3>AI 配音系统</h3>
+        <h3>声音克隆配音</h3>
       </div>
-      <p>对接 FishAudio / CosyVoice，LLM 生成每镜台词，TTS 生成对应音频，SadTalker 驱动口型同步。</p>
+      <p>FishAudio / CosyVoice 克隆角色声线，每个角色固定一种声音，全程一致。</p>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="icon" style="background:rgba(255,107,157,0.15);">🎵</div>
-        <h3>AI 配乐生成</h3>
+        <div class="icon" style="background:rgba(255,107,157,0.15);">💬</div>
+        <h3>口型同步</h3>
       </div>
-      <p>Suno / AudioCraft 根据 mood 标签自动生成匹配的背景音乐和音效。</p>
+      <p>SadTalker / Wav2Lip 驱动角色口型匹配音频，让角色「开口说话」。</p>
     </div>
     <div class="card">
       <div class="card-header">
         <div class="icon" style="background:rgba(0,212,170,0.15);">⚡</div>
-        <h3>批量生产</h3>
+        <h3>异步队列</h3>
       </div>
-      <p>Celery 队列 + 多 ComfyUI 实例并行，Web UI 面板管理任务队列和进度。</p>
+      <p>Celery / asyncio 并发调用 API，20 个镜头同时生成，10 分钟出一集。</p>
     </div>
     <div class="card">
       <div class="card-header">
         <div class="icon" style="background:rgba(255,167,38,0.15);">🖥️</div>
-        <h3>可视化面板</h3>
+        <h3>Web 面板</h3>
       </div>
-      <p>Gradio / Streamlit 做 Web UI：上传小说 → 预览分镜 → 调整参数 → 一键生成。</p>
+      <p>Gradio / Streamlit 可视化：上传小说 → 预览分镜 → 调参 → 一键生成。</p>
     </div>
   </div>
 </section>
@@ -1250,60 +1194,58 @@ class AIDramaPipeline:
 <!-- ==================== 9. RESOURCES ==================== -->
 <section id="resources">
   <span class="section-num">Chapter 09</span>
-  <h2><span class="emoji">📚</span> 资源汇总</h2>
+  <h2>📚 资源汇总</h2>
 
-  <h3>🔗 核心自定义节点</h3>
+  <h3>☁️ API 文档</h3>
   <table>
     <thead>
-      <tr><th>节点包</th><th>功能</th><th>重要程度</th></tr>
+      <tr><th>服务</th><th>文档地址</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>ComfyUI-AnimateDiff-Evolved</code></td><td>🎞️ 动画生成核心</td><td><span class="tag tag-pink">必需</span></td></tr>
-      <tr><td><code>ComfyUI-IPAdapter-Plus</code></td><td>🎭 角色一致性</td><td><span class="tag tag-pink">必需</span></td></tr>
-      <tr><td><code>ComfyUI-VideoHelperSuite</code></td><td>📹 视频 I/O</td><td><span class="tag tag-pink">必需</span></td></tr>
-      <tr><td><code>ComfyUI-ControlNet-Aux</code></td><td>🕺 姿势/深度预处理</td><td><span class="tag tag-purple">推荐</span></td></tr>
-      <tr><td><code>ComfyUI-Frame-Interpolation</code></td><td>🔄 RIFE 补帧</td><td><span class="tag tag-purple">推荐</span></td></tr>
-      <tr><td><code>ComfyUI-Impact-Pack</code></td><td>🧩 实用工具集</td><td><span class="tag tag-purple">推荐</span></td></tr>
+      <tr><td>DeepSeek API</td><td>https://platform.deepseek.com/api-docs</td></tr>
+      <tr><td>硅基流动 SiliconFlow</td><td>https://docs.siliconflow.cn</td></tr>
+      <tr><td>可灵 Kling API</td><td>https://docs.qingque.cn/d/home/eZQBK3VG4Nh9</td></tr>
+      <tr><td>Runway API</td><td>https://docs.dev.runwayml.com</td></tr>
+      <tr><td>Edge-TTS</td><td>https://github.com/rany2/edge-tts</td></tr>
     </tbody>
   </table>
 
   <h3>🔍 学习资源</h3>
   <table>
     <thead>
-      <tr><th>平台</th><th>搜索关键词</th><th>内容类型</th></tr>
+      <tr><th>平台</th><th>搜索关键词</th><th>内容</th></tr>
     </thead>
     <tbody>
-      <tr><td>📺 B 站</td><td><code>ComfyUI AI短剧</code></td><td>保姆级中文教程</td></tr>
-      <tr><td>📺 YouTube</td><td><code>ComfyUI AI filmmaking</code></td><td>电影感工作流</td></tr>
-      <tr><td>💻 GitHub</td><td><code>comfyui drama workflow</code></td><td>可下载的 workflow JSON</td></tr>
-      <tr><td>🎨 CivitAI</td><td><code>AnimateDiff workflow</code></td><td>模型 + 工作流社区</td></tr>
+      <tr><td>📺 B 站</td><td><code>AI短剧 可灵</code></td><td>国产工具实战教程</td></tr>
+      <tr><td>📺 YouTube</td><td><code>AI short film pipeline</code></td><td>全流程制作教程</td></tr>
+      <tr><td>💻 GitHub</td><td><code>ai-drama-pipeline</code></td><td>开源自动化项目</td></tr>
+      <tr><td>📖 即刻 / 小红书</td><td><code>AI短剧制作</code></td><td>最新玩法和案例</td></tr>
     </tbody>
   </table>
 
-  <h3>📖 官方文档</h3>
+  <h3>💰 成本估算（60 秒短剧片段 ≈ 20 镜）</h3>
   <table>
     <thead>
-      <tr><th>文档</th><th>链接</th></tr>
+      <tr><th>环节</th><th>用量</th><th>单价</th><th>小计</th></tr>
     </thead>
     <tbody>
-      <tr><td>ComfyUI 安装</td><td>https://docs.comfy.org/installation</td></tr>
-      <tr><td>comfy-cli 命令行</td><td>https://docs.comfy.org/comfy-cli/getting-started</td></tr>
-      <tr><td>Comfy Cloud 云服务</td><td>https://docs.comfy.org/get_started/cloud</td></tr>
-      <tr><td>REST API</td><td>https://docs.comfy.org/development/cloud/overview</td></tr>
+      <tr><td>🧠 LLM 分镜</td><td>~5K tokens</td><td>¥1/M</td><td>¥0.005</td></tr>
+      <tr><td>🖼️ 文生图 × 20</td><td>20 张</td><td>¥0.05/张</td><td>¥1</td></tr>
+      <tr><td>🎞️ 图生视频 × 20</td><td>20 段 5 秒</td><td>¥0.3/段</td><td>¥6</td></tr>
+      <tr><td>🗣️ 配音</td><td>Edge-TTS</td><td>免费</td><td>¥0</td></tr>
+      <tr><td style="font-weight:700;">💰 合计</td><td></td><td></td><td style="color:#00d4aa;font-weight:700;">~¥7</td></tr>
     </tbody>
   </table>
 </section>
 
 <div class="divider"></div>
 
-<!-- ==================== FOOTER ==================== -->
 <footer>
-  <p>🎬 ComfyUI AI 短剧制作完全指南 · 整理 by Hermes for 渡鸦</p>
-  <p style="margin-top:0.5rem;">ComfyUI · AnimateDiff · IPAdapter · LLM · AI Short Drama Pipeline</p>
-  <p style="margin-top:1rem;font-size:0.75rem;color:#555;">Generated on 2026-06-01 · Content based on community resources & official docs</p>
+  <p>🎬 AI 短剧制作完全指南 · 在线模型方案 · 整理 by Hermes for 渡鸦</p>
+  <p style="margin-top:0.5rem;">DeepSeek · Flux · 可灵 · Runway · Edge-TTS · AI Short Drama Pipeline</p>
+  <p style="margin-top:1rem;font-size:0.75rem;color:#555;">2026-06-01 · 全程在线 API，无需本地 GPU</p>
 </footer>
 
-</div><!-- /container -->
-
+</div>
 </body>
 </html>
