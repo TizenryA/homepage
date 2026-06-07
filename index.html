@@ -365,6 +365,99 @@
   }
   .rv-chart-scroll svg { width: 50%; height: 100%; flex-shrink: 0; }
 
+  /* ===== Monitor Panel ===== */
+  .rv-monitor-panel {
+    width: 100%;
+    min-height: 132px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    background: var(--bg-primary);
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  [data-theme="dark"] .rv-monitor-panel {
+    border: 1px solid #2a2a30;
+    background: #0a0a0c;
+  }
+  .rv-monitor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .rv-monitor-metric {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-card);
+    padding: 8px 6px;
+    text-align: center;
+  }
+  [data-theme="dark"] .rv-monitor-metric {
+    border: 1px solid #24242a;
+    background: #111114;
+  }
+  .rv-monitor-value {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-blue);
+    line-height: 1.1;
+  }
+  .rv-monitor-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .rv-monitor-top {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .rv-monitor-top-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--accent-yellow);
+  }
+  .rv-monitor-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+  }
+  .rv-monitor-list li {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 3px 8px;
+    border-radius: var(--radius-tag);
+    border: 2px solid var(--border-color);
+    background: rgba(78,205,196,0.18);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    word-break: break-all;
+  }
+  [data-theme="dark"] .rv-monitor-list li {
+    border: 1px solid #2a4a46;
+    background: rgba(90,212,200,0.1);
+    color: #8ae7dd;
+  }
+  .rv-monitor-updated {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
   /* ===== Notice ===== */
   .rv-notice {
     background: var(--notice-bg);
@@ -592,6 +685,8 @@
     .rv-model-num { font-size: 34px; }
     .rv-btn { padding: 12px 14px; font-size: 13px; }
     .rv-notice-text, .rv-about-text, .rv-rate-text { font-size: 12px; }
+    .rv-monitor-grid { grid-template-columns: repeat(2, 1fr); }
+    .rv-monitor-top { grid-template-columns: 1fr; gap: 6px; }
   }
   @media (min-width: 481px) and (max-width: 767px) {
     .rv-2 { padding: 16px; max-width: 600px; }
@@ -628,7 +723,7 @@
     <span class="sticker-3">🏷️</span>
     <div class="rv-hero-eagle">🦅</div>
     <div class="rv-hero-title">渡鸦の小站</div>
-    <div class="rv-hero-sub">▸ Tavo 专属公益 API 中转 ◂</div>
+    <div class="rv-hero-sub">▸ Tavo 宝子专属模型补给站 ◂</div>
   </div>
 
   <!-- ===== Cards ===== -->
@@ -640,11 +735,11 @@
       <div class="rv-card-label">📡 status</div>
       <div class="rv-status-row">
         <div class="rv-status-dot"></div>
-        <span class="rv-status-label">在线</span>
+        <span class="rv-status-label" id="rvServiceStatus">服务在线</span>
       </div>
       <div class="rv-status-row">
-        <div class="rv-status-dot warn"></div>
-        <span class="rv-status-label" style="font-size:12px;color:var(--text-secondary);">站长状态：摆烂中</span>
+        <div class="rv-status-dot warn" id="rvMonitorDot"></div>
+        <span class="rv-status-label" id="rvMonitorStatus" style="font-size:12px;color:var(--text-secondary);">监控快照加载中</span>
       </div>
     </div>
 
@@ -652,36 +747,31 @@
     <div class="rv-card" style="text-align:center;">
       <div class="rv-card-accent rv-accent-pink"></div>
       <div class="rv-card-label">🤖 models</div>
-      <div class="rv-model-num">?</div>
-      <div class="rv-model-note">国模持续上新 别问了</div>
+      <div class="rv-model-num" id="rvModelCount">--</div>
+      <div class="rv-model-note" id="rvModelNote">当前可用模型</div>
     </div>
 
-    <!-- Chart -->
+    <!-- Monitor -->
     <div class="rv-card rv-card-full">
       <div class="rv-card-accent rv-accent-blue"></div>
       <div class="rv-card-label">
-        📊 sys.monitor — traffic
-        <span class="rv-tag" style="margin-left:auto;">LIVE</span>
+        📊 model.monitor — 24h
+        <span class="rv-tag" id="rvMonitorTag" style="margin-left:auto;">LIVE</span>
       </div>
-      <div class="rv-chart-wrap">
-        <div class="rv-chart-scroll">
-          <svg viewBox="0 0 300 60" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="cg1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#4ECDC4" stop-opacity="0.4"/>
-                <stop offset="100%" stop-color="#4ECDC4" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <path d="M0,40 L15,35 L30,42 L45,20 L60,32 L75,28 L90,38 L105,15 L120,30 L135,42 L150,25 L165,35 L180,18 L195,40 L210,30 L225,22 L240,38 L255,28 L270,42 L285,20 L300,35 L300,60 L0,60 Z" fill="url(#cg1)"/>
-            <polyline fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
-            <polyline fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
-          </svg>
-          <svg viewBox="0 0 300 60" preserveAspectRatio="none">
-            <path d="M0,40 L15,35 L30,42 L45,20 L60,32 L75,28 L90,38 L105,15 L120,30 L135,42 L150,25 L165,35 L180,18 L195,40 L210,30 L225,22 L240,38 L255,28 L270,42 L285,20 L300,35 L300,60 L0,60 Z" fill="url(#cg1)"/>
-            <polyline fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,40 15,35 30,42 45,20 60,32 75,28 90,38 105,15 120,30 135,42 150,25 165,35 180,18 195,40 210,30 225,22 240,38 255,28 270,42 285,20 300,35"/>
-            <polyline fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6" points="0,45 15,42 30,48 45,38 60,44 75,40 90,46 105,35 120,42 135,48 150,38 165,44 180,36 195,46 210,42 225,38 240,46 255,40 270,48 285,36 300,42"/>
-          </svg>
+      <div class="rv-monitor-panel">
+        <div class="rv-monitor-grid">
+          <div class="rv-monitor-metric"><span class="rv-monitor-value" id="rvMonitorCount">--</span><span class="rv-monitor-name">健康/监控</span></div>
+          <div class="rv-monitor-metric"><span class="rv-monitor-value" id="rvSuccessRate">--</span><span class="rv-monitor-name">健康成功率</span></div>
+          <div class="rv-monitor-metric"><span class="rv-monitor-value" id="rvLatency">--</span><span class="rv-monitor-name">中位延迟</span></div>
+          <div class="rv-monitor-metric"><span class="rv-monitor-value" id="rvTps">--</span><span class="rv-monitor-name">输出速度</span></div>
         </div>
+        <div class="rv-monitor-top">
+          <div class="rv-monitor-top-title">健康榜</div>
+          <ul class="rv-monitor-list" id="rvTopModels">
+            <li>监控快照加载中</li>
+          </ul>
+        </div>
+        <div class="rv-monitor-updated" id="rvMonitorUpdated">等待 monitor.json</div>
       </div>
     </div>
 
@@ -690,10 +780,10 @@
       <div class="rv-card-accent rv-accent-pink"></div>
       <div class="rv-card-label">⚠️ notice</div>
       <div class="rv-notice-text">
-        <span class="rv-ban">🚫 禁止</span> 酒馆（SillyTavern）与类脑社区用户接入，服务不对你开放。<br>
-        站长技术很烂，服务器随时可能炸。<br>
-        出了问题大概率是站长的锅。<br>
-        诸位轻蹬，感恩 🦅
+        <span class="rv-ban">🚫 禁止</span> 类脑社区用户接入，服务不对你开放。<br>
+        本服务仅面向 Tavo 社区与许可用户。<br>
+        公益测试站，稳定性以实际监控为准。<br>
+        如果炸了，多半是站长在修锅 🦅
       </div>
     </div>
 
@@ -702,10 +792,10 @@
       <div class="rv-card-accent rv-accent-purple"></div>
       <div class="rv-card-label">🎯 定位</div>
       <div class="rv-about-text">
-        专供 <span class="hl-blue">Tavo 的宝子们</span><br>
-        试试水、玩一玩<br>
-        <span class="rv-tag-new">🔥 国模上新中</span><br>
-        <span style="font-size:11px;color:var(--text-muted);">站长很摆烂 更新随缘</span>
+        专供 <span class="hl-blue">Tavo 宝子</span><br>
+        国模测试 / API 中转<br>
+        <span class="rv-tag-new">🔥 模型筛选中</span><br>
+        <span style="font-size:11px;color:var(--text-muted);">站长人工修锅 更新随缘</span>
       </div>
     </div>
 
@@ -716,8 +806,8 @@
       <div class="rv-rate-text">
         <span class="hl-green">雏鸟（ChuNiao）</span><br>
         倍率更低 💸<br>
-        同等额度用更多 tokens
-        <div class="rv-rate-badge">性价比拉满 ✓</div>
+        同等额度可用更多 tokens
+        <div class="rv-rate-badge">轻量使用更舒服 ✓</div>
       </div>
     </div>
 
@@ -726,20 +816,23 @@
       <div class="rv-card-accent rv-accent-yellow"></div>
       <div class="rv-card-label">💻 terminal</div>
       <div class="rv-term">
-        <span class="p">$</span> <span class="c">注册一下</span> <span class="cm">// 先来报个到</span><br>
-        <span class="p">$</span> <span class="c">拿个key</span> <span class="cm">// 白嫖第一步</span><br>
-        <span class="p">$</span> <span class="c">快乐白嫖</span> <span class="cm">// 🦅 起飞！</span><br>
-        <span class="p" style="color:var(--accent-purple);">#</span> <span class="tavo">Tavo 宝子专属通道</span>
+        <span class="p">$</span> <span class="c">加入服务器</span> <span class="cm">// 先认个门</span><br>
+        <span class="p">$</span> <span class="c">登录小站</span> <span class="cm">// Discord 验证</span><br>
+        <span class="p">$</span> <span class="c">创建 key</span> <span class="cm">// 开始调用</span><br>
+        <span class="p" style="color:var(--accent-purple);">#</span> <span class="tavo">看监控挑个稳的模型</span>
       </div>
     </div>
 
     <!-- Buttons -->
     <div class="rv-card rv-card-full">
       <div class="rv-btns">
-        <a class="rv-btn" href="https://discord.gg/BBU8kZc2Y" target="_blank">
+        <a class="rv-btn" href="https://discord.gg/BBU8kZc2Y" target="_blank" rel="noopener noreferrer">
           🦅 进入服务器 ▸
         </a>
-        <a class="rv-btn rv-btn-sec" href="https://zcv2jk.zeabur.app/embed.html" target="_blank">
+        <a class="rv-btn rv-btn-sec" href="https://tizenry.xyz/pricing" target="_blank" rel="noopener noreferrer">
+          💰 查看价格页 ▸
+        </a>
+        <a class="rv-btn rv-btn-sec" href="https://zcv2jk.zeabur.app/embed.html" target="_blank" rel="noopener noreferrer">
           ▣ 查看检测页 ▸
         </a>
       </div>
@@ -750,22 +843,117 @@
   <!-- Footer -->
   <div class="rv-footer">
     <div class="rv-footer-text">
-      RAVEN STATION <span>▪</span> Tavo 专属 <span>▪</span> 随时跑路 <span>▪</span> 2025
+      RAVEN STATION <span>▪</span> Tavo 专属 <span>▪</span> 模型监控 <span>▪</span> 2026
     </div>
   </div>
 
 </div>
 
 <script>
-  // ===== 监听 NewAPI 经典主题的 postMessage 同步 =====
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.themeMode) {
-      var root = document.getElementById('rvRoot');
-      if (e.data.themeMode === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-      } else {
-        root.removeAttribute('data-theme');
+  (function() {
+    function byId(id) { return document.getElementById(id); }
+    function setText(id, text) {
+      var el = byId(id);
+      if (el) el.textContent = text;
+    }
+    function num(value, fallback) {
+      var n = Number(value);
+      return isFinite(n) ? n : fallback;
+    }
+    function formatLatency(ms) {
+      ms = num(ms, 0);
+      if (!ms) return '--';
+      if (ms >= 1000) return (ms / 1000).toFixed(ms >= 10000 ? 0 : 1) + 's';
+      return Math.round(ms) + 'ms';
+    }
+    function formatTps(value) {
+      value = num(value, 0);
+      return value ? value.toFixed(value >= 10 ? 1 : 2) + '/s' : '--';
+    }
+    function formatUpdated(value) {
+      if (!value) return '更新：等待监控快照';
+      var time = new Date(value).getTime();
+      if (!isFinite(time)) return '更新：' + value;
+      var diff = Math.max(0, Date.now() - time);
+      var mins = Math.floor(diff / 60000);
+      if (mins < 1) return '更新：刚刚';
+      if (mins < 60) return '更新：' + mins + ' 分钟前';
+      var hours = Math.floor(mins / 60);
+      if (hours < 24) return '更新：' + hours + ' 小时前';
+      return '更新：' + Math.floor(hours / 24) + ' 天前';
+    }
+    function renderTopModels(models) {
+      var list = byId('rvTopModels');
+      if (!list) return;
+      list.textContent = '';
+      if (!models || !models.length) {
+        var empty = document.createElement('li');
+        empty.textContent = '暂无健康榜';
+        list.appendChild(empty);
+        return;
+      }
+      for (var i = 0; i < Math.min(models.length, 5); i++) {
+        var item = document.createElement('li');
+        item.textContent = models[i];
+        list.appendChild(item);
       }
     }
-  });
+    function applyMonitor(data) {
+      data = data || {};
+      var success = num(data.avg_success_rate, 0);
+      var status = data.status || (success >= 95 ? 'ok' : (success >= 85 ? 'warn' : 'down'));
+      var stale = !!data.stale;
+      var tag = status === 'ok' && !stale ? 'LIVE' : 'WATCH';
+      var healthy = Number(data.healthy_count || 0);
+      var total = Number(data.monitored_count || 0);
+      var statusText = healthy && total ? (healthy + '/' + total + ' 个模型健康') : '部分波动';
+      if (status === 'down') statusText = '波动较大';
+      if (stale) statusText = '监控快照稍旧';
+
+      setText('rvModelCount', data.model_count || '--');
+      setText('rvModelNote', '当前可用模型');
+      setText('rvMonitorCount', (data.healthy_count || '--') + '/' + (data.monitored_count || '--'));
+      setText('rvSuccessRate', success ? success.toFixed(1) + '%' : '--');
+      setText('rvLatency', formatLatency(data.median_latency_ms));
+      setText('rvTps', formatTps(data.median_tps));
+      setText('rvMonitorStatus', statusText);
+      setText('rvMonitorTag', tag);
+      setText('rvMonitorUpdated', formatUpdated(data.updated_at));
+      renderTopModels(data.top_models || []);
+
+      var dot = byId('rvMonitorDot');
+      if (dot) dot.className = status === 'ok' && !stale ? 'rv-status-dot' : 'rv-status-dot warn';
+    }
+    function loadMonitor() {
+      var bucket = Math.floor(Date.now() / 300000);
+      fetch('./monitor.json?rv=' + bucket, { cache: 'no-store' })
+        .then(function(res) {
+          if (!res.ok) throw new Error('monitor.json ' + res.status);
+          return res.json();
+        })
+        .then(applyMonitor)
+        .catch(function() {
+          setText('rvMonitorStatus', '监控快照休息中');
+          setText('rvMonitorTag', 'IDLE');
+          setText('rvMonitorUpdated', '更新：monitor.json 暂不可用');
+          renderTopModels(['稍后再来看看']);
+        });
+    }
+
+    // ===== 监听 NewAPI 经典主题的 postMessage 同步 =====
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.themeMode) {
+        var root = byId('rvRoot');
+        if (!root) return;
+        if (e.data.themeMode === 'dark') {
+          root.setAttribute('data-theme', 'dark');
+        } else {
+          root.removeAttribute('data-theme');
+        }
+      }
+    });
+
+    loadMonitor();
+    window.setInterval(loadMonitor, 300000);
+  })();
 </script>

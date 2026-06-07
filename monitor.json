@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "source": "https://tizenry.xyz",
+  "window_hours": 24,
+  "model_count": 27,
+  "monitored_count": 32,
+  "healthy_count": 11,
+  "avg_success_rate": 98.99,
+  "all_avg_success_rate": 48.77,
+  "median_latency_ms": 18242,
+  "median_tps": 100.31,
+  "degraded_count": 19,
+  "slow_count": 1,
+  "top_models": [
+    "grok-4.20-0309-non-reasoning",
+    "claude-opus4.6",
+    "MiniMax-M2.5",
+    "grok-4.20-0309-reasoning",
+    "Kimi-K2.5"
+  ],
+  "status": "ok",
+  "stale": false,
+  "updated_at": "2026-06-07T08:19:32Z",
+  "updated_at_unix": 1780820372
+}
