@@ -125,13 +125,8 @@ def build_core() -> dict[str, Any]:
 
     # Per-model detail list (sorted: healthy first, then by success rate desc)
     model_list = []
-    seen_names: set[str] = set()
     for item in sorted(metrics, key=lambda m: (-to_float(m.get("success_rate")), to_float(m.get("avg_latency_ms"), 999999999))):
-        name = public_model_name(item.get("model_name"))
-        key = name.casefold()
-        if key in seen_names:
-            continue
-        seen_names.add(key)
+        name = str(item.get("model_name") or "未命名模型").strip()
         success = to_float(item.get("success_rate"))
         latency = to_float(item.get("avg_latency_ms"))
         tps = to_float(item.get("avg_tps"))
