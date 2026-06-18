@@ -4,48 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>渡鸦の小站</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='6' fill='%23E8743C'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='6' fill='%23D85F2A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ===== Variables — Light (侘寂 · 暖白宣纸) ===== */
   :root {
-    --bg:          #F5F1EA;
-    --bg-sub:      #EFEAE1;
-    --text:        #1A1714;
-    --text-sub:    #4A4238;
-    --text-mute:   #7A7268;
-    --orange:      #D85F2A;
-    --orange-soft: #E89868;
-    --green:       #5A7A4F;
-    --red:         #8B5A4A;
-    --line:        #C8C0B4;
-    --bw:          0.1vw;
-    --bw-soft:     0.06vw;
-    --serif:       'Noto Serif SC','EB Garamond',Georgia,serif;
-    --serif-en:    'EB Garamond','Noto Serif SC',Georgia,serif;
-    --mono:        'JetBrains Mono','SF Mono',monospace;
+    --bg:        #F2EDE4;
+    --bg-warm:   #EBE4D8;
+    --text:      #1A1714;
+    --text-sub:  #4A4238;
+    --text-mute: #8A8278;
+    --orange:    #D85F2A;
+    --orange-d:  #B84D1E;
+    --green:     #5A7A4F;
+    --red:       #8B5A4A;
+    --line:      #C8C0B4;
+    --serif:     'Noto Serif SC','EB Garamond',Georgia,serif;
+    --en:        'EB Garamond','Noto Serif SC',Georgia,serif;
+    --mono:      'JetBrains Mono','SF Mono',monospace;
   }
-
-  /* ===== Dark (侘寂 · 深炭暖夜) ===== */
   [data-theme="dark"] {
-    --bg:          #1A1916;
-    --bg-sub:      #22201C;
-    --text:        #EDE5DD;
-    --text-sub:    #B0A89E;
-    --text-mute:   #807870;
-    --orange:      #F29A5C;
-    --orange-soft: #C47040;
-    --green:       #7BA070;
-    --red:         #C08A7A;
-    --line:        #3A3631;
+    --bg:        #15140F;
+    --bg-warm:   #1E1C17;
+    --text:      #F0E8DC;
+    --text-sub:  #B8B0A4;
+    --text-mute: #787068;
+    --orange:    #F29A5C;
+    --orange-d:  #D87A3C;
+    --green:     #7BA070;
+    --red:       #C08A7A;
+    --line:      #3A3631;
   }
 
-  /* ===== Reset ===== */
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: clamp(14px, 1.6vw, 17px); }
-
+  html { font-size: clamp(14px, 1.55vw, 16px); -webkit-text-size-adjust: 100%; }
   body {
     background: var(--bg);
     color: var(--text);
@@ -53,163 +46,163 @@
     font-weight: 400;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
-    transition: background .4s ease, color .4s ease;
+    transition: background .5s ease, color .5s ease;
   }
 
   .rv {
-    max-width: 52rem;
+    max-width: 54rem;
     margin: 0 auto;
-    padding: 4vh 5vw 3vh;
+    padding: 5vh 6vw 4vh;
   }
 
-  /* ===== Theme Toggle ===== */
+  /* ===== Toggle ===== */
   .rv-toggle {
-    position: fixed;
-    top: 2vh;
-    right: 3vw;
-    z-index: 100;
-    background: transparent;
-    border: none;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.3rem;
-    color: var(--orange);
-    transition: all .3s ease;
-    line-height: 1;
+    position: fixed; top: 2.5vh; right: 4vw; z-index: 100;
+    background: transparent; border: none;
+    width: 2.5rem; height: 2.5rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.15rem; color: var(--text-mute);
+    transition: all .3s; line-height: 1;
   }
-  .rv-toggle:hover { color: var(--text); transform: scale(1.1); }
-  .rv-toggle:active { transform: scale(.92); }
+  .rv-toggle:hover { color: var(--orange); transform: scale(1.15); }
 
-  /* ===== Header ===== */
-  .rv-header {
-    text-align: center;
-    margin-bottom: 3vh;
+  /* ===== HERO — 不对称大标题 + 右侧数字 ===== */
+  .rv-hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 5vh;
+    padding-bottom: 3vh;
+    border-bottom: 0.08vw solid var(--line);
   }
-  .rv-dot-title {
+  .rv-hero-left .rv-title {
     font-family: var(--serif);
-    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
     font-weight: 900;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
     color: var(--text);
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.35em;
   }
-  .rv-dot-title::before {
-    content: '●';
+  .rv-hero-left .rv-title .dot {
     color: var(--orange);
-    font-size: 0.5em;
+    font-size: 0.4em;
+    vertical-align: middle;
+    margin-right: 0.15em;
     position: relative;
-    top: -0.05em;
+    top: -0.15em;
   }
-  .rv-subtitle {
-    font-family: var(--serif-en);
+  .rv-hero-left .rv-sub {
+    font-family: var(--en);
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: clamp(0.85rem, 1.4vw, 1rem);
     color: var(--text-sub);
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+  .rv-hero-left .rv-sub .sep { color: var(--orange); margin: 0 0.4em; font-style: normal; }
+  .rv-hero-right {
+    text-align: right;
+    padding-bottom: 0.3rem;
+  }
+  .rv-hero-num {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+  }
+  .rv-hero-num-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-mute);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* ===== Section — 左竖线 + 标签 ===== */
+  .rv-block {
+    margin-bottom: 4vh;
+  }
+  .rv-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
+    margin-bottom: 1.5vh;
+    padding-left: 0.8rem;
+    border-left: 0.15vw solid var(--orange);
+  }
+  .rv-block-title {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
     letter-spacing: 0.04em;
   }
-  .rv-subtitle .sep { color: var(--orange); margin: 0 0.5em; font-style: normal; }
+  .rv-block-sub {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--text-mute);
+    letter-spacing: 0.08em;
+  }
 
-  /* ===== Section Label (open, no box) ===== */
-  .rv-label {
-    font-family: var(--serif);
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--orange);
+  /* ===== Status row — 横向数字带 ===== */
+  .rv-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-left: 0.8rem;
+  }
+  .rv-stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .rv-stat-item .label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    color: var(--text-mute);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.4em;
   }
-  .rv-label::before {
-    content: '●';
-    font-size: 0.7em;
-    color: var(--orange);
-  }
-  .rv-label-sub {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    color: var(--text-mute);
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    text-transform: none;
-  }
-
-  /* ===== Dot Divider ===== */
-  .rv-divider {
-    text-align: center;
-    margin: 2.5vh 0;
-    color: var(--line);
-    font-size: 0.65rem;
-    letter-spacing: 0.8em;
-    user-select: none;
-  }
-
-  /* ===== Summary (open, no cards) ===== */
-  .rv-summary {
-    display: flex;
-    justify-content: center;
-    gap: 4vw;
-    margin-bottom: 1vh;
-    flex-wrap: wrap;
-  }
-  .rv-stat {
-    text-align: center;
-    padding: 0 1vw;
-  }
-  .rv-stat-label {
+  .rv-stat-item .val {
     font-family: var(--serif);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-mute);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-  .rv-stat-value {
-    font-family: var(--serif);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--orange);
-    line-height: 1.1;
+    color: var(--text);
+    line-height: 1.2;
   }
-  .rv-stat-note {
-    font-size: 0.75rem;
+  .rv-stat-item .val.orange { color: var(--orange); }
+  .rv-stat-item .note {
+    font-size: 0.72rem;
     color: var(--text-sub);
-    margin-top: 0.25rem;
   }
-  .rv-status-dot {
+  .rv-pulse {
     display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.5rem; height: 0.5rem;
     border-radius: 50%;
     background: var(--green);
-    margin-right: 0.35rem;
+    margin-right: 0.3rem;
     vertical-align: middle;
-    position: relative;
-    top: -0.05rem;
+    position: relative; top: -0.04rem;
+    animation: rvPulse 2.5s ease-in-out infinite;
   }
-  .rv-status-dot.warn { background: var(--orange); }
-  .rv-status-dot.down { background: var(--red); }
+  .rv-pulse.warn { background: var(--orange); animation-duration: 1.8s; }
+  .rv-pulse.down { background: var(--red); animation-duration: 1.2s; }
+  @keyframes rvPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+    50% { opacity: 0.6; box-shadow: 0 0 0 0.3rem transparent; }
+  }
 
-  /* ===== Monitor Panel (open, no outer border) ===== */
-  .rv-monitor {
-    margin-bottom: 2vh;
-  }
+  /* ===== Monitor panel ===== */
   .rv-monitor-panel {
-    height: 60vh;
+    height: 52vh;
     overflow-y: auto;
     overflow-x: hidden;
   }
-  .rv-monitor-panel::-webkit-scrollbar { width: 0.3vw; }
+  .rv-monitor-panel::-webkit-scrollbar { width: 0.25vw; }
   .rv-monitor-panel::-webkit-scrollbar-track { background: transparent; }
   .rv-monitor-panel::-webkit-scrollbar-thumb { background: var(--line); border-radius: 50%; }
 
@@ -217,28 +210,29 @@
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 0.8em;
-    padding: 1vh 0.5vw;
-    border-bottom: var(--bw-soft) solid var(--line);
-    transition: background .15s ease;
+    gap: 0.9em;
+    padding: 1.1vh 0.3vw 1.1vh 0;
+    border-bottom: 0.05vw solid var(--line);
+    transition: transform .2s ease, opacity .2s ease;
+    opacity: 0.92;
   }
   .rv-mrow:last-child { border-bottom: 0; }
-  .rv-mrow:hover { background: var(--bg-sub); }
+  .rv-mrow:hover { transform: translateX(0.4rem); opacity: 1; }
 
   .rv-mrow-dot {
-    width: 0.55rem;
-    height: 0.55rem;
+    width: 0.55rem; height: 0.55rem;
     border-radius: 50%;
     flex-shrink: 0;
+    transition: box-shadow .2s;
   }
   .rv-mrow-dot.healthy { background: var(--green); }
   .rv-mrow-dot.degraded { background: var(--orange); }
   .rv-mrow-dot.down { background: var(--red); }
+  .rv-mrow:hover .rv-mrow-dot.healthy { box-shadow: 0 0 0 0.2rem rgba(90,122,79,0.15); }
+  .rv-mrow:hover .rv-mrow-dot.degraded { box-shadow: 0 0 0 0.2rem rgba(216,95,42,0.15); }
+  .rv-mrow:hover .rv-mrow-dot.down { box-shadow: 0 0 0 0.2rem rgba(139,90,74,0.15); }
 
-  .rv-mrow-info {
-    min-width: 0;
-    overflow: hidden;
-  }
+  .rv-mrow-info { min-width: 0; overflow: hidden; }
   .rv-mrow-name {
     font-family: var(--serif);
     font-size: 0.85rem;
@@ -247,19 +241,18 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.4;
+    line-height: 1.3;
   }
   .rv-mrow-bar {
-    height: 0.18rem;
+    height: 0.16rem;
     border-radius: 50%;
-    background: var(--bg-sub);
-    margin-top: 0.35rem;
+    background: var(--bg-warm);
+    margin-top: 0.3rem;
     overflow: hidden;
   }
   .rv-mrow-bar-fill {
-    height: 100%;
-    border-radius: 50%;
-    transition: width .6s ease;
+    height: 100%; border-radius: 50%;
+    transition: width .8s cubic-bezier(.2,.8,.2,1);
   }
   .rv-mrow-bar-fill.healthy { background: var(--green); }
   .rv-mrow-bar-fill.degraded { background: var(--orange); }
@@ -269,130 +262,120 @@
     text-align: right;
     flex-shrink: 0;
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--text-mute);
     line-height: 1.5;
   }
   .rv-mrow-rate {
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.78rem;
     font-family: var(--serif);
+    font-weight: 700;
+    font-size: 0.82rem;
   }
   .rv-mrow-rate.healthy { color: var(--green); }
   .rv-mrow-rate.degraded { color: var(--orange); }
   .rv-mrow-rate.down { color: var(--red); }
 
   .rv-monitor-footer {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     font-family: var(--mono);
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     color: var(--text-mute);
     text-align: right;
   }
 
-  /* ===== Content (open, no card backgrounds) ===== */
-  .rv-sections {
+  /* ===== Content — 两列不对称 ===== */
+  .rv-cols {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3vw 4vw;
-    margin-bottom: 2vh;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 3.5rem;
+    margin-bottom: 3vh;
   }
-  .rv-section-full { grid-column: span 2; }
-  .rv-section-text {
+  .rv-col-full { grid-column: span 2; }
+  .rv-text {
     font-size: 0.85rem;
     color: var(--text-sub);
     line-height: 2.1;
   }
-  .rv-section-text .hl { color: var(--orange); font-weight: 700; }
-  .rv-section-text .hl-green { color: var(--green); font-weight: 700; }
-  .rv-section-text .ban {
-    display: inline-block;
-    color: var(--red);
-    font-weight: 700;
-    margin-right: 0.2em;
-  }
+  .rv-text .hl { color: var(--orange); font-weight: 700; }
+  .rv-text .hl-g { color: var(--green); font-weight: 700; }
+  .rv-text .ban { color: var(--red); font-weight: 700; }
 
-  /* Terminal */
   .rv-term {
-    background: var(--bg-sub);
-    padding: 1.5vh 2vw;
+    background: var(--bg-warm);
+    padding: 1.5vh 1.5vw;
     font-family: var(--mono);
-    font-size: 0.78rem;
-    line-height: 2.2;
+    font-size: 0.75rem;
+    line-height: 2.3;
     color: var(--text-sub);
   }
-  .rv-term .p { color: var(--orange); font-weight: 600; }
+  .rv-term .p { color: var(--orange); font-weight: 500; }
   .rv-term .c { color: var(--text); font-weight: 500; }
   .rv-term .cm { color: var(--text-mute); font-style: italic; }
   .rv-term .tavo { color: var(--green); font-weight: 500; }
 
-  /* Buttons (text + underline, no boxes) */
-  .rv-btns {
+  /* ===== Actions — 箭头文字链接 ===== */
+  .rv-actions {
     display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: baseline;
   }
-  .rv-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    padding: 0.3rem 0;
+  .rv-action {
     font-family: var(--serif);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--text);
     text-decoration: none;
-    background: transparent;
     cursor: pointer;
-    transition: color .2s ease;
-    letter-spacing: 0.02em;
-    border: none;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
   }
-  .rv-btn::before {
-    content: '·';
+  .rv-action .arrow {
+    font-family: var(--en);
+    color: var(--text-mute);
+    font-size: 0.85em;
+    transition: all .2s;
+  }
+  .rv-action:hover { color: var(--orange); }
+  .rv-action:hover .arrow { color: var(--orange); transform: translateX(0.2em); }
+  .rv-action.primary {
+    font-size: 1.1rem;
     color: var(--orange);
-    font-weight: 700;
-    margin-right: 0.1em;
-  }
-  .rv-btn:hover {
-    color: var(--orange);
-  }
-  .rv-btn-primary {
-    color: var(--orange);
-    font-size: 1rem;
-  }
-  .rv-btn-primary:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.3em;
-    text-decoration-color: var(--orange);
   }
 
   /* ===== Footer ===== */
   .rv-footer {
-    text-align: center;
-    padding: 2.5vh 0 1vh;
+    margin-top: 5vh;
+    padding-top: 2.5vh;
+    border-top: 0.05vw solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     font-family: var(--mono);
-    font-size: 0.65rem;
+    font-size: 0.58rem;
     color: var(--text-mute);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
   }
-  .rv-footer .sep { color: var(--orange); margin: 0 0.5em; opacity: 0.7; }
+  .rv-footer .sep { color: var(--orange); margin: 0 0.4em; }
 
   /* ===== Responsive ===== */
-  @media (max-width: 600px) {
-    .rv { padding: 3vh 6vw 2.5vh; }
-    .rv-summary { flex-direction: column; gap: 1.5vh; }
-    .rv-sections { grid-template-columns: 1fr; gap: 2vh; }
-    .rv-section-full { grid-column: span 1; }
-    .rv-btns { flex-direction: column; align-items: flex-start; }
-    .rv-monitor-panel { height: 50vh; }
-    .rv-toggle { width: 2.5rem; height: 2.5rem; font-size: 1.1rem; top: 1.5vh; right: 4vw; }
+  @media (max-width: 640px) {
+    .rv { padding: 4vh 7vw 3vh; }
+    .rv-hero { grid-template-columns: 1fr; gap: 1rem; }
+    .rv-hero-right { text-align: left; }
+    .rv-hero-num { font-size: 2.8rem; }
+    .rv-stats { gap: 1.5rem; }
+    .rv-cols { grid-template-columns: 1fr; gap: 2rem; }
+    .rv-col-full { grid-column: span 1; }
+    .rv-monitor-panel { height: 45vh; }
+    .rv-actions { flex-direction: column; gap: 0.8rem; }
+    .rv-footer { flex-direction: column; gap: 0.5rem; }
     .rv-mrow-name { font-size: 0.78rem; }
   }
   @media (min-width: 769px) {
-    .rv-monitor-panel { height: 65vh; }
+    .rv-monitor-panel { height: 58vh; }
   }
 </style>
 </head>
@@ -400,95 +383,99 @@
 
 <div class="rv" id="rvRoot">
 
-  <!-- Theme Toggle -->
   <button class="rv-toggle" id="rvToggle" onclick="rvToggleTheme()" title="切换主题">
     <span id="rvToggleIcon">☾</span>
   </button>
 
-  <!-- Header -->
-  <div class="rv-header">
-    <div class="rv-dot-title">渡鸦の小站</div>
-    <div class="rv-subtitle"><span class="sep">·</span>Tavo 宝子专属模型补给站<span class="sep">·</span></div>
+  <!-- HERO -->
+  <div class="rv-hero">
+    <div class="rv-hero-left">
+      <div class="rv-title"><span class="dot">●</span>渡鸦の小站</div>
+      <div class="rv-sub"><span class="sep">—</span>Tavo 宝子专属模型补给站<span class="sep">—</span></div>
+    </div>
+    <div class="rv-hero-right">
+      <div class="rv-hero-num" id="rvModelCount">--</div>
+      <div class="rv-hero-num-label">models available</div>
+    </div>
   </div>
 
-  <div class="rv-divider">· · ·</div>
-
-  <!-- Summary -->
-  <div class="rv-summary">
-    <div class="rv-stat">
-      <div class="rv-stat-label">status</div>
-      <div class="rv-stat-value">
-        <span class="rv-status-dot" id="rvStatusDot"></span>
-        <span id="rvServiceStatus" style="font-size:1rem;font-weight:500;">服务在线</span>
+  <!-- STATUS -->
+  <div class="rv-block">
+    <div class="rv-block-head">
+      <span class="rv-block-title">运行状态</span>
+      <span class="rv-block-sub">live snapshot</span>
+    </div>
+    <div class="rv-stats">
+      <div class="rv-stat-item">
+        <span class="label">service</span>
+        <span class="val"><span class="rv-pulse" id="rvStatusDot"></span><span id="rvServiceStatus" style="font-size:1rem;font-weight:500;">在线</span></span>
       </div>
-      <div class="rv-stat-note" id="rvMonitorStatus">监控快照加载中</div>
-    </div>
-    <div class="rv-stat">
-      <div class="rv-stat-label">models</div>
-      <div class="rv-stat-value" id="rvModelCount">--</div>
-      <div class="rv-stat-note">当前可用模型 · <span id="rvMonitorCount">--/--</span> 健康</div>
+      <div class="rv-stat-item">
+        <span class="label">healthy</span>
+        <span class="val orange" id="rvMonitorCount">--/--</span>
+        <span class="note" id="rvMonitorStatus">监控快照加载中</span>
+      </div>
+      <div class="rv-stat-item">
+        <span class="label">success rate</span>
+        <span class="val" id="rvSuccessRate">--</span>
+      </div>
     </div>
   </div>
 
-  <div class="rv-divider">· · ·</div>
-
-  <!-- Monitor Panel -->
-  <div class="rv-monitor">
-    <div class="rv-label">
-      模型监测
-      <span class="rv-label-sub">24h window · 30min refresh</span>
+  <!-- MONITOR -->
+  <div class="rv-block">
+    <div class="rv-block-head">
+      <span class="rv-block-title">模型监测</span>
+      <span class="rv-block-sub">24h window · 30min refresh</span>
     </div>
     <div class="rv-monitor-panel" id="rvMonitorPanel">
       <div class="rv-mrow">
         <div class="rv-mrow-dot degraded"></div>
-        <div class="rv-mrow-info">
-          <div class="rv-mrow-name">加载中…</div>
-        </div>
+        <div class="rv-mrow-info"><div class="rv-mrow-name">加载中…</div></div>
         <div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div>
       </div>
     </div>
     <div class="rv-monitor-footer" id="rvMonitorFooter">等待 monitor.json</div>
   </div>
 
-  <div class="rv-divider">· · ·</div>
-
-  <!-- Content Sections -->
-  <div class="rv-sections">
-
-    <!-- Notice -->
-    <div class="rv-section-full">
-      <div class="rv-label">notice</div>
-      <div class="rv-section-text">
+  <!-- INFO -->
+  <div class="rv-cols">
+    <div class="rv-col-full">
+      <div class="rv-block-head">
+        <span class="rv-block-title">须知</span>
+      </div>
+      <div class="rv-text">
         <span class="ban">🚫 禁止</span> 类脑社区用户接入，服务不对你开放。<br>
-        本服务仅面向 Tavo 社区与许可用户。<br>
-        公益测试站，稳定性以实际监控为准。<br>
-        如果炸了，多半是站长在修锅。
+        本服务仅面向 Tavo 社区与许可用户。公益测试站，稳定性以实际监控为准。
       </div>
     </div>
 
-    <!-- About -->
-    <div class="rv-section">
-      <div class="rv-label">定位</div>
-      <div class="rv-section-text">
+    <div>
+      <div class="rv-block-head">
+        <span class="rv-block-title">定位</span>
+      </div>
+      <div class="rv-text">
         专供 <span class="hl">Tavo 宝子</span><br>
         国模测试 / API 中转<br>
-        <span style="color:var(--text-mute);font-size:0.78rem;">站长人工修锅 更新随缘</span>
+        <span style="color:var(--text-mute);font-size:0.75rem;">站长人工修锅 更新随缘</span>
       </div>
     </div>
 
-    <!-- Rate -->
-    <div class="rv-section">
-      <div class="rv-label">倍率</div>
-      <div class="rv-section-text">
-        <span class="hl-green">雏鸟（ChuNiao）</span><br>
+    <div>
+      <div class="rv-block-head">
+        <span class="rv-block-title">倍率</span>
+      </div>
+      <div class="rv-text">
+        <span class="hl-g">雏鸟（ChuNiao）</span><br>
         倍率更低，同等额度可用更多 tokens<br>
-        <span style="color:var(--text-mute);font-size:0.78rem;">轻量使用更舒服</span>
+        <span style="color:var(--text-mute);font-size:0.75rem;">轻量使用更舒服</span>
       </div>
     </div>
 
-    <!-- Terminal -->
-    <div class="rv-section-full">
-      <div class="rv-label">terminal</div>
+    <div class="rv-col-full">
+      <div class="rv-block-head">
+        <span class="rv-block-title">快速上手</span>
+      </div>
       <div class="rv-term">
         <span class="p">$</span> <span class="c">加入服务器</span> <span class="cm">// 先认个门</span><br>
         <span class="p">$</span> <span class="c">登录小站</span> <span class="cm">// Discord 验证</span><br>
@@ -496,189 +483,118 @@
         <span class="p">#</span> <span class="tavo">看监控挑个稳的模型</span>
       </div>
     </div>
-
-    <!-- Buttons -->
-    <div class="rv-section-full">
-      <div class="rv-btns">
-        <a class="rv-btn rv-btn-primary" href="https://discord.gg/BBU8kZc2Y" target="_blank" rel="noopener noreferrer">
-          进入服务器
-        </a>
-        <a class="rv-btn" href="https://tizenry.xyz/pricing" target="_blank" rel="noopener noreferrer">
-          查看价格页
-        </a>
-        <a class="rv-btn" href="https://zcv2jk.zeabur.app/embed.html" target="_blank" rel="noopener noreferrer">
-          全屏检测页
-        </a>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Footer -->
+  <!-- ACTIONS -->
+  <div class="rv-block">
+    <div class="rv-actions">
+      <a class="rv-action primary" href="https://discord.gg/BBU8kZc2Y" target="_blank" rel="noopener noreferrer">
+        进入服务器 <span class="arrow">→</span>
+      </a>
+      <a class="rv-action" href="https://tizenry.xyz/pricing" target="_blank" rel="noopener noreferrer">
+        查看价格页 <span class="arrow">→</span>
+      </a>
+      <a class="rv-action" href="https://zcv2jk.zeabur.app/embed.html" target="_blank" rel="noopener noreferrer">
+        全屏检测页 <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
   <div class="rv-footer">
-    RAVEN STATION <span class="sep">·</span> Tavo 专属 <span class="sep">·</span> 模型监控 <span class="sep">·</span> 2026
+    <span>RAVEN STATION <span class="sep">·</span> Tavo 专属</span>
+    <span>模型监控 <span class="sep">·</span> 2026</span>
   </div>
 
 </div>
 
 <script>
-  // ===== Theme Toggle =====
-  function rvGetTheme() {
-    return document.documentElement.getAttribute('data-theme') || 'light';
-  }
+  function rvGetTheme() { return document.documentElement.getAttribute('data-theme') || 'light'; }
   function rvApplyTheme(t) {
-    if (t === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
     var icon = document.getElementById('rvToggleIcon');
     if (icon) icon.textContent = t === 'dark' ? '☀' : '☾';
     try { localStorage.setItem('rv-theme', t); } catch(e) {}
   }
-  function rvToggleTheme() {
-    rvApplyTheme(rvGetTheme() === 'dark' ? 'light' : 'dark');
-  }
-
-  // Init theme: localStorage > system preference
+  function rvToggleTheme() { rvApplyTheme(rvGetTheme() === 'dark' ? 'light' : 'dark'); }
   (function() {
     var saved = 'light';
     try { saved = localStorage.getItem('rv-theme') || 'light'; } catch(e) {}
-    if (saved === 'auto') {
-      saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-    }
+    if (saved === 'auto') saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     rvApplyTheme(saved);
   })();
 
-  // ===== Monitor Data =====
   (function() {
     function byId(id) { return document.getElementById(id); }
-    function setText(id, text) {
-      var el = byId(id);
-      if (el) el.textContent = text;
+    function setText(id, text) { var el = byId(id); if (el) el.textContent = text; }
+    function num(v, f) { var n = Number(v); return isFinite(n) ? n : f; }
+    function fmtLat(ms) { ms = num(ms,0); if(!ms) return '--'; return ms>=1000 ? (ms/1000).toFixed(ms>=10000?0:1)+'s' : Math.round(ms)+'ms'; }
+    function fmtTps(v) { v = num(v,0); return v ? v.toFixed(v>=10?1:2)+'/s' : '--'; }
+    function fmtUp(v) {
+      if (!v) return '等待监控快照';
+      var t = new Date(v).getTime();
+      if (!isFinite(t)) return v;
+      var d = Math.max(0, Date.now()-t), m = Math.floor(d/60000);
+      if (m<1) return '刚刚更新';
+      if (m<60) return m+' 分钟前更新';
+      var h = Math.floor(m/60);
+      if (h<24) return h+' 小时前更新';
+      return Math.floor(h/24)+' 天前更新';
     }
-    function num(value, fallback) {
-      var n = Number(value);
-      return isFinite(n) ? n : fallback;
-    }
-    function formatLatency(ms) {
-      ms = num(ms, 0);
-      if (!ms) return '--';
-      if (ms >= 1000) return (ms / 1000).toFixed(ms >= 10000 ? 0 : 1) + 's';
-      return Math.round(ms) + 'ms';
-    }
-    function formatTps(value) {
-      value = num(value, 0);
-      return value ? value.toFixed(value >= 10 ? 1 : 2) + '/s' : '--';
-    }
-    function formatUpdated(value) {
-      if (!value) return '等待监控快照';
-      var time = new Date(value).getTime();
-      if (!isFinite(time)) return value;
-      var diff = Math.max(0, Date.now() - time);
-      var mins = Math.floor(diff / 60000);
-      if (mins < 1) return '刚刚更新';
-      if (mins < 60) return mins + ' 分钟前更新';
-      var hours = Math.floor(mins / 60);
-      if (hours < 24) return hours + ' 小时前更新';
-      return Math.floor(hours / 24) + ' 天前更新';
-    }
-    function renderMonitorPanel(models) {
-      var panel = byId('rvMonitorPanel');
-      if (!panel) return;
-      panel.textContent = '';
+    function renderPanel(models) {
+      var p = byId('rvMonitorPanel'); if (!p) return;
+      p.textContent = '';
       if (!models || !models.length) {
-        panel.innerHTML = '<div class="rv-mrow"><div class="rv-mrow-dot degraded"></div><div class="rv-mrow-info"><div class="rv-mrow-name">暂无监控数据</div></div><div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div></div>';
+        p.innerHTML = '<div class="rv-mrow"><div class="rv-mrow-dot degraded"></div><div class="rv-mrow-info"><div class="rv-mrow-name">暂无监控数据</div></div><div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div></div>';
         return;
       }
       for (var i = 0; i < models.length; i++) {
-        var m = models[i];
-        var st = m.status || 'degraded';
-        var rate = num(m.success_rate, 0);
-        var latency = formatLatency(m.latency_ms);
-        var tps = formatTps(m.tps);
-
-        var row = document.createElement('div');
-        row.className = 'rv-mrow';
-
-        var dot = document.createElement('div');
-        dot.className = 'rv-mrow-dot ' + st;
-
-        var info = document.createElement('div');
-        info.className = 'rv-mrow-info';
-        var name = document.createElement('div');
-        name.className = 'rv-mrow-name';
-        name.textContent = m.name;
-        var bar = document.createElement('div');
-        bar.className = 'rv-mrow-bar';
-        var fill = document.createElement('div');
-        fill.className = 'rv-mrow-bar-fill ' + st;
-        fill.style.width = Math.min(100, Math.max(0, rate)) + '%';
-        bar.appendChild(fill);
-        info.appendChild(name);
-        info.appendChild(bar);
-
-        var metrics = document.createElement('div');
-        metrics.className = 'rv-mrow-metrics';
-        var rateEl = document.createElement('span');
-        rateEl.className = 'rv-mrow-rate ' + st;
-        rateEl.textContent = rate.toFixed(1) + '%';
-        var detail = document.createElement('span');
-        detail.textContent = latency + ' · ' + tps;
-        metrics.appendChild(rateEl);
-        metrics.appendChild(document.createElement('br'));
-        metrics.appendChild(detail);
-
-        row.appendChild(dot);
-        row.appendChild(info);
-        row.appendChild(metrics);
-        panel.appendChild(row);
+        var m = models[i], st = m.status||'degraded', rate = num(m.success_rate,0);
+        var row = document.createElement('div'); row.className = 'rv-mrow';
+        var dot = document.createElement('div'); dot.className = 'rv-mrow-dot '+st;
+        var info = document.createElement('div'); info.className = 'rv-mrow-info';
+        var name = document.createElement('div'); name.className = 'rv-mrow-name'; name.textContent = m.name;
+        var bar = document.createElement('div'); bar.className = 'rv-mrow-bar';
+        var fill = document.createElement('div'); fill.className = 'rv-mrow-bar-fill '+st;
+        fill.style.width = Math.min(100, Math.max(0, rate))+'%';
+        bar.appendChild(fill); info.appendChild(name); info.appendChild(bar);
+        var met = document.createElement('div'); met.className = 'rv-mrow-metrics';
+        var re = document.createElement('span'); re.className = 'rv-mrow-rate '+st; re.textContent = rate.toFixed(1)+'%';
+        var de = document.createElement('span'); de.textContent = fmtLat(m.latency_ms)+' · '+fmtTps(m.tps);
+        met.appendChild(re); met.appendChild(document.createElement('br')); met.appendChild(de);
+        row.appendChild(dot); row.appendChild(info); row.appendChild(met);
+        p.appendChild(row);
       }
     }
-    function applyMonitor(data) {
+    function apply(data) {
       data = data || {};
-      var success = num(data.avg_success_rate, 0);
-      var status = data.status || (success >= 95 ? 'ok' : (success >= 85 ? 'warn' : 'down'));
+      var s = num(data.avg_success_rate,0);
+      var st = data.status || (s>=95?'ok':(s>=85?'warn':'down'));
       var stale = !!data.stale;
-      var healthy = Number(data.healthy_count || 0);
-      var total = Number(data.monitored_count || 0);
-
+      var h = Number(data.healthy_count||0), t = Number(data.monitored_count||0);
       setText('rvModelCount', data.model_count || '--');
-      setText('rvMonitorCount', (healthy || '--') + '/' + (total || '--'));
-
-      var statusText = healthy && total ? (healthy + '/' + total + ' 个模型健康') : '部分波动';
-      if (status === 'down') statusText = '波动较大';
-      if (stale) statusText = '监控快照稍旧';
-      setText('rvMonitorStatus', statusText + ' · ' + (success ? success.toFixed(1) + '%' : '--') + ' 成功率');
-
+      setText('rvMonitorCount', (h||'--')+'/'+(t||'--'));
+      setText('rvSuccessRate', s ? s.toFixed(1)+'%' : '--');
+      var stx = h&&t ? (h+'/'+t+' 个模型健康') : '部分波动';
+      if (st==='down') stx = '波动较大';
+      if (stale) stx = '监控快照稍旧';
+      setText('rvMonitorStatus', stx);
       var dot = byId('rvStatusDot');
-      if (dot) {
-        dot.className = status === 'ok' && !stale ? 'rv-status-dot' : (status === 'down' ? 'rv-status-dot down' : 'rv-status-dot warn');
-      }
-
-      renderMonitorPanel(data.models || []);
-      setText('rvMonitorFooter', formatUpdated(data.updated_at));
+      if (dot) dot.className = st==='ok'&&!stale ? 'rv-pulse' : (st==='down'?'rv-pulse down':'rv-pulse warn');
+      renderPanel(data.models||[]);
+      setText('rvMonitorFooter', fmtUp(data.updated_at));
     }
-    function loadMonitor() {
-      var bucket = Math.floor(Date.now() / 300000);
-      fetch('./monitor.json?rv=' + bucket, { cache: 'no-store' })
-        .then(function(res) {
-          if (!res.ok) throw new Error('monitor.json ' + res.status);
-          return res.json();
-        })
-        .then(applyMonitor)
-        .catch(function() {
-          setText('rvMonitorStatus', '监控快照休息中');
-          var dot = byId('rvStatusDot');
-          if (dot) dot.className = 'rv-status-dot warn';
-          setText('rvMonitorFooter', 'monitor.json 暂不可用');
-        });
+    function load() {
+      var b = Math.floor(Date.now()/300000);
+      fetch('./monitor.json?rv='+b, {cache:'no-store'})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+        .then(apply)
+        .catch(function(){ setText('rvMonitorStatus','监控快照休息中'); setText('rvMonitorFooter','monitor.json 暂不可用');
+          var d=byId('rvStatusDot'); if(d) d.className='rv-pulse warn'; });
     }
-
-    loadMonitor();
-    window.setInterval(loadMonitor, 300000);
+    load(); window.setInterval(load, 300000);
   })();
 </script>
-
 </body>
 </html>
