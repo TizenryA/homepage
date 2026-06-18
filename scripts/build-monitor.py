@@ -123,6 +123,27 @@ def build_core() -> dict[str, Any]:
         )
         top_models = unique_keep_order([row[0] for row in fallback])[:5]
 
+    # Per-model detail list (sorted: healthy first, then by success rate desc)
+    model_list = []
+    seen_names: set[str] = set()
+    for item in sorted(metrics, key=lambda m: (-to_float(m.get("success_rate")), to_float(m.get("avg_latency_ms"), 999999999))):
+        name = public_model_name(item.get("model_name"))
+        key = name.casefold()
+        if key in seen_names:
+            continue
+        seen_names.add(key)
+        success = to_float(item.get("success_rate"))
+        latency = to_float(item.get("avg_latency_ms"))
+        tps = to_float(item.get("avg_tps"))
+        mstatus = "healthy" if success >= 90 else ("degraded" if success >= 80 else "down")
+        model_list.append({
+            "name": name,
+            "success_rate": round(success, 1),
+            "latency_ms": int(latency) if latency else 0,
+            "tps": round(tps, 1) if tps else 0,
+            "status": mstatus,
+        })
+
     if not metrics:
         status = "warn"
     elif healthy_count >= 5:
@@ -146,6 +167,7 @@ def build_core() -> dict[str, Any]:
         "degraded_count": degraded_count,
         "slow_count": slow_count,
         "top_models": top_models,
+        "models": model_list,
         "status": status,
         "stale": False,
     }

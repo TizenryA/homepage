@@ -3,23 +3,186 @@
   "source": "https://tizenry.xyz",
   "window_hours": 24,
   "model_count": 27,
-  "monitored_count": 32,
-  "healthy_count": 11,
-  "avg_success_rate": 98.99,
-  "all_avg_success_rate": 48.73,
-  "median_latency_ms": 20642,
-  "median_tps": 100.31,
-  "degraded_count": 19,
-  "slow_count": 1,
+  "monitored_count": 25,
+  "healthy_count": 15,
+  "avg_success_rate": 98.27,
+  "all_avg_success_rate": 63.46,
+  "median_latency_ms": 37013,
+  "median_tps": 51.72,
+  "degraded_count": 10,
+  "slow_count": 5,
   "top_models": [
-    "grok-4.20-0309-non-reasoning",
-    "claude-opus4.6",
     "MiniMax-M2.5",
-    "grok-4.20-0309-reasoning",
-    "Kimi-K2.5"
+    "Qwen3-Coder",
+    "grok-4.20-multi-agent-xhigh",
+    "grok-4.3",
+    "grok-4.20-0309-reasoning"
+  ],
+  "models": [
+    {
+      "name": "MiniMax-M2.5",
+      "success_rate": 100.0,
+      "latency_ms": 1849,
+      "tps": 176.0,
+      "status": "healthy"
+    },
+    {
+      "name": "Qwen3-Coder",
+      "success_rate": 100.0,
+      "latency_ms": 10598,
+      "tps": 137.7,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.20-multi-agent-xhigh",
+      "success_rate": 100.0,
+      "latency_ms": 11679,
+      "tps": 14265.5,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.3",
+      "success_rate": 100.0,
+      "latency_ms": 20051,
+      "tps": 74.6,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.20-0309-reasoning",
+      "success_rate": 100.0,
+      "latency_ms": 22955,
+      "tps": 179.8,
+      "status": "healthy"
+    },
+    {
+      "name": "GLM-4.7",
+      "success_rate": 100.0,
+      "latency_ms": 24641,
+      "tps": 51.1,
+      "status": "healthy"
+    },
+    {
+      "name": "Kimi-K2.5",
+      "success_rate": 100.0,
+      "latency_ms": 39107,
+      "tps": 42.1,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.20-0309-non-reasoning",
+      "success_rate": 100.0,
+      "latency_ms": 84844,
+      "tps": 8.9,
+      "status": "healthy"
+    },
+    {
+      "name": "萝卜の讯飞/GLM-5.1",
+      "success_rate": 99.7,
+      "latency_ms": 76433,
+      "tps": 19.1,
+      "status": "healthy"
+    },
+    {
+      "name": "DeepSeek-V3.2",
+      "success_rate": 99.3,
+      "latency_ms": 61715,
+      "tps": 40.3,
+      "status": "healthy"
+    },
+    {
+      "name": "GLM-5",
+      "success_rate": 97.9,
+      "latency_ms": 37013,
+      "tps": 39.2,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.3-high",
+      "success_rate": 96.9,
+      "latency_ms": 8392,
+      "tps": 536.8,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.20-fast",
+      "success_rate": 95.7,
+      "latency_ms": 51241,
+      "tps": 92.9,
+      "status": "healthy"
+    },
+    {
+      "name": "千帆/glm-5.1",
+      "success_rate": 91.0,
+      "latency_ms": 60137,
+      "tps": 38.6,
+      "status": "healthy"
+    },
+    {
+      "name": "grok-4.20-multi-agent",
+      "success_rate": 66.7,
+      "latency_ms": 16929,
+      "tps": 683.7,
+      "status": "down"
+    },
+    {
+      "name": "grok-imagine-image-lite",
+      "success_rate": 40.0,
+      "latency_ms": 10062,
+      "tps": 6.0,
+      "status": "down"
+    },
+    {
+      "name": "gpt-image-2",
+      "success_rate": 5.8,
+      "latency_ms": 3027,
+      "tps": 1726476.2,
+      "status": "down"
+    },
+    {
+      "name": "gemini-flash-lite",
+      "success_rate": 0.0,
+      "latency_ms": 12,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "gemini-3.5-flash-thinking-lite",
+      "success_rate": 0.0,
+      "latency_ms": 12,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "gemini-3.5-flash-thinking",
+      "success_rate": 0.0,
+      "latency_ms": 19,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "glm-5-thinking",
+      "success_rate": 0.0,
+      "latency_ms": 21,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "gemini-3.5-flash",
+      "success_rate": 0.0,
+      "latency_ms": 23,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "gpt-5-mini",
+      "success_rate": 0.0,
+      "latency_ms": 769,
+      "tps": 0,
+      "status": "down"
+    }
   ],
   "status": "ok",
   "stale": false,
-  "updated_at": "2026-06-07T08:22:34Z",
-  "updated_at_unix": 1780820554
+  "updated_at": "2026-06-18T12:21:23Z",
+  "updated_at_unix": 1781785283
 }

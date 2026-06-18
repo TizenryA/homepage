@@ -187,46 +187,120 @@
   .rv-status-dot.warn { background: var(--orange); }
   .rv-status-dot.down { background: var(--red); }
 
-  /* ===== Iframe Section ===== */
-  .rv-iframe-wrap {
+  /* ===== Monitor Panel ===== */
+  .rv-monitor {
     margin-bottom: 2vh;
   }
-  .rv-iframe-header {
+  .rv-monitor-header {
     display: flex;
     align-items: baseline;
     gap: 0.5em;
     margin-bottom: 0.8rem;
   }
-  .rv-iframe-title {
+  .rv-monitor-title {
     font-family: var(--serif);
     font-size: 1rem;
     font-weight: 500;
     color: var(--text);
   }
-  .rv-iframe-title::before {
+  .rv-monitor-title::before {
     content: '●';
     color: var(--orange);
     font-size: 0.7em;
     margin-right: 0.35em;
   }
-  .rv-iframe-sub {
+  .rv-monitor-sub {
     font-family: var(--mono);
     font-size: 0.65rem;
     color: var(--text-mute);
     letter-spacing: 0.08em;
   }
-  .rv-iframe-frame {
+  .rv-monitor-panel {
     border: var(--bw) solid var(--border);
     border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--bg-iframe);
-  }
-  .rv-iframe-frame iframe {
-    display: block;
-    width: 100%;
+    background: var(--bg-card);
     height: 60vh;
-    border: 0;
-    scrolling: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .rv-monitor-panel::-webkit-scrollbar { width: 0.3vw; }
+  .rv-monitor-panel::-webkit-scrollbar-track { background: transparent; }
+  .rv-monitor-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius); }
+
+  .rv-mrow {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.8em;
+    padding: 0.9vh 2.5vw;
+    border-bottom: var(--bw-soft) solid var(--border-soft);
+    transition: background .2s ease;
+  }
+  .rv-mrow:last-child { border-bottom: 0; }
+  .rv-mrow:hover { background: var(--bg); }
+
+  .rv-mrow-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .rv-mrow-dot.healthy { background: var(--green); }
+  .rv-mrow-dot.degraded { background: var(--orange); }
+  .rv-mrow-dot.down { background: var(--red); }
+
+  .rv-mrow-info {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .rv-mrow-name {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+  }
+  .rv-mrow-bar {
+    height: 0.2rem;
+    border-radius: var(--radius);
+    background: var(--border-soft);
+    margin-top: 0.3rem;
+    overflow: hidden;
+  }
+  .rv-mrow-bar-fill {
+    height: 100%;
+    border-radius: var(--radius);
+    transition: width .6s ease;
+  }
+  .rv-mrow-bar-fill.healthy { background: var(--green); }
+  .rv-mrow-bar-fill.degraded { background: var(--orange); }
+  .rv-mrow-bar-fill.down { background: var(--red); }
+
+  .rv-mrow-metrics {
+    text-align: right;
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text-mute);
+    line-height: 1.5;
+  }
+  .rv-mrow-rate {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  .rv-mrow-rate.healthy { color: var(--green); }
+  .rv-mrow-rate.degraded { color: var(--orange); }
+  .rv-mrow-rate.down { color: var(--red); }
+
+  .rv-monitor-footer {
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-mute);
+    text-align: right;
   }
 
   /* ===== Content Sections ===== */
@@ -347,15 +421,15 @@
     .rv-sections { grid-template-columns: 1fr; gap: 1vh; }
     .rv-section-full { grid-column: span 1; }
     .rv-btns { flex-direction: column; }
-    .rv-iframe-frame iframe { height: 50vh; }
+    .rv-monitor-panel { height: 50vh; }
     .rv-toggle { width: 2.6rem; height: 2.6rem; font-size: 1rem; top: 1.5vh; right: 4vw; }
   }
   @media (min-width: 769px) {
-    .rv-iframe-frame iframe { height: 65vh; }
+    .rv-monitor-panel { height: 65vh; }
   }
 
   /* Smooth theme transition */
-  .rv-stat, .rv-section, .rv-iframe-frame, .rv-term, .rv-btn, .rv-toggle {
+  .rv-stat, .rv-section, .rv-monitor-panel, .rv-term, .rv-btn, .rv-toggle {
     transition: background .4s ease, border-color .4s ease, color .4s ease;
   }
 </style>
@@ -396,21 +470,22 @@
 
   <div class="rv-divider">· · ·</div>
 
-  <!-- Iframe Monitor -->
-  <div class="rv-iframe-wrap">
-    <div class="rv-iframe-header">
-      <span class="rv-iframe-title">实时模型监测</span>
-      <span class="rv-iframe-sub">24h window · auto-refresh 3s</span>
+  <!-- Monitor Panel -->
+  <div class="rv-monitor">
+    <div class="rv-monitor-header">
+      <span class="rv-monitor-title">模型监测</span>
+      <span class="rv-monitor-sub">24h window · 30min refresh</span>
     </div>
-    <div class="rv-iframe-frame">
-      <iframe
-        src="https://zcv2jk.zeabur.app/embed.html"
-        loading="lazy"
-        scrolling="auto"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
+    <div class="rv-monitor-panel" id="rvMonitorPanel">
+      <div class="rv-mrow">
+        <div class="rv-mrow-dot degraded"></div>
+        <div class="rv-mrow-info">
+          <div class="rv-mrow-name">加载中…</div>
+        </div>
+        <div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div>
+      </div>
     </div>
+    <div class="rv-monitor-footer" id="rvMonitorFooter">等待 monitor.json</div>
   </div>
 
   <div class="rv-divider">· · ·</div>
@@ -546,6 +621,58 @@
       if (hours < 24) return hours + ' 小时前更新';
       return Math.floor(hours / 24) + ' 天前更新';
     }
+    function renderMonitorPanel(models) {
+      var panel = byId('rvMonitorPanel');
+      if (!panel) return;
+      panel.textContent = '';
+      if (!models || !models.length) {
+        panel.innerHTML = '<div class="rv-mrow"><div class="rv-mrow-dot degraded"></div><div class="rv-mrow-info"><div class="rv-mrow-name">暂无监控数据</div></div><div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div></div>';
+        return;
+      }
+      for (var i = 0; i < models.length; i++) {
+        var m = models[i];
+        var st = m.status || 'degraded';
+        var rate = num(m.success_rate, 0);
+        var latency = formatLatency(m.latency_ms);
+        var tps = formatTps(m.tps);
+
+        var row = document.createElement('div');
+        row.className = 'rv-mrow';
+
+        var dot = document.createElement('div');
+        dot.className = 'rv-mrow-dot ' + st;
+
+        var info = document.createElement('div');
+        info.className = 'rv-mrow-info';
+        var name = document.createElement('div');
+        name.className = 'rv-mrow-name';
+        name.textContent = m.name;
+        var bar = document.createElement('div');
+        bar.className = 'rv-mrow-bar';
+        var fill = document.createElement('div');
+        fill.className = 'rv-mrow-bar-fill ' + st;
+        fill.style.width = Math.min(100, Math.max(0, rate)) + '%';
+        bar.appendChild(fill);
+        info.appendChild(name);
+        info.appendChild(bar);
+
+        var metrics = document.createElement('div');
+        metrics.className = 'rv-mrow-metrics';
+        var rateEl = document.createElement('span');
+        rateEl.className = 'rv-mrow-rate ' + st;
+        rateEl.textContent = rate.toFixed(1) + '%';
+        var detail = document.createElement('span');
+        detail.textContent = latency + ' · ' + tps;
+        metrics.appendChild(rateEl);
+        metrics.appendChild(document.createElement('br'));
+        metrics.appendChild(detail);
+
+        row.appendChild(dot);
+        row.appendChild(info);
+        row.appendChild(metrics);
+        panel.appendChild(row);
+      }
+    }
     function applyMonitor(data) {
       data = data || {};
       var success = num(data.avg_success_rate, 0);
@@ -566,6 +693,9 @@
       if (dot) {
         dot.className = status === 'ok' && !stale ? 'rv-status-dot' : (status === 'down' ? 'rv-status-dot down' : 'rv-status-dot warn');
       }
+
+      renderMonitorPanel(data.models || []);
+      setText('rvMonitorFooter', formatUpdated(data.updated_at));
     }
     function loadMonitor() {
       var bucket = Math.floor(Date.now() / 300000);
@@ -579,6 +709,7 @@
           setText('rvMonitorStatus', '监控快照休息中');
           var dot = byId('rvStatusDot');
           if (dot) dot.className = 'rv-status-dot warn';
+          setText('rvMonitorFooter', 'monitor.json 暂不可用');
         });
     }
 
