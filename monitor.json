@@ -2,201 +2,194 @@
   "schema": 1,
   "source": "https://tizenry.xyz",
   "window_hours": 24,
-  "model_count": 27,
-  "monitored_count": 25,
-  "healthy_count": 15,
-  "avg_success_rate": 98.3,
-  "all_avg_success_rate": 63.64,
-  "median_latency_ms": 36831,
-  "median_tps": 51.72,
-  "degraded_count": 10,
-  "slow_count": 5,
+  "model_count": 20,
+  "monitored_count": 24,
+  "healthy_count": 11,
+  "avg_success_rate": 99.07,
+  "all_avg_success_rate": 72.21,
+  "median_latency_ms": 46787,
+  "median_tps": 42.59,
+  "degraded_count": 11,
+  "slow_count": 4,
   "top_models": [
-    "MiniMax-M2.5",
     "Qwen3-Coder",
-    "grok-4.20-multi-agent-xhigh",
-    "grok-4.3",
-    "grok-4.20-0309-reasoning"
+    "grok-4.20-0309-non-reasoning",
+    "/kimi-k2.6",
+    "/MiniMax-M2.7-highspeed",
+    "/MiniMax-M2.7"
   ],
   "models": [
     {
-      "name": "[京东云]MiniMax-M2.5",
-      "success_rate": 100.0,
-      "latency_ms": 1849,
-      "tps": 176.0,
-      "status": "healthy"
-    },
-    {
       "name": "[京东云]Qwen3-Coder",
       "success_rate": 100.0,
-      "latency_ms": 10598,
-      "tps": 137.7,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.20-multi-agent-xhigh",
-      "success_rate": 100.0,
-      "latency_ms": 11679,
-      "tps": 14265.5,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.3-console",
-      "success_rate": 100.0,
-      "latency_ms": 20051,
-      "tps": 74.6,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.20-0309-reasoning-console",
-      "success_rate": 100.0,
-      "latency_ms": 22955,
-      "tps": 179.8,
-      "status": "healthy"
-    },
-    {
-      "name": "[京东云]GLM-4.7",
-      "success_rate": 100.0,
-      "latency_ms": 24641,
-      "tps": 51.1,
-      "status": "healthy"
-    },
-    {
-      "name": "[京东云]Kimi-K2.5",
-      "success_rate": 100.0,
-      "latency_ms": 39107,
-      "tps": 42.1,
+      "latency_ms": 7871,
+      "tps": 38.7,
       "status": "healthy"
     },
     {
       "name": "grok-4.20-0309-non-reasoning",
       "success_rate": 100.0,
-      "latency_ms": 84844,
-      "tps": 8.9,
+      "latency_ms": 8682,
+      "tps": 69.2,
       "status": "healthy"
     },
     {
-      "name": "萝卜の讯飞/GLM-5.1",
-      "success_rate": 99.7,
-      "latency_ms": 76135,
-      "tps": 19.1,
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/kimi-k2.6",
+      "success_rate": 100.0,
+      "latency_ms": 19264,
+      "tps": 57.2,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/MiniMax-M2.7-highspeed",
+      "success_rate": 100.0,
+      "latency_ms": 33978,
+      "tps": 43.2,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/MiniMax-M2.7",
+      "success_rate": 100.0,
+      "latency_ms": 46787,
+      "tps": 32.2,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/kimi-k2.5",
+      "success_rate": 100.0,
+      "latency_ms": 71724,
+      "tps": 5.5,
+      "status": "healthy"
+    },
+    {
+      "name": "[京东云]MiniMax-M2.5",
+      "success_rate": 100.0,
+      "latency_ms": 122226,
+      "tps": 106.4,
       "status": "healthy"
     },
     {
       "name": "[京东云]DeepSeek-V3.2",
       "success_rate": 99.3,
-      "latency_ms": 61857,
-      "tps": 40.3,
+      "latency_ms": 32547,
+      "tps": 42.6,
       "status": "healthy"
+    },
+    {
+      "name": "萝卜の讯飞/GLM-5.1",
+      "success_rate": 99.2,
+      "latency_ms": 113249,
+      "tps": 21.4,
+      "status": "healthy"
+    },
+    {
+      "name": "[京东云]Kimi-K2.5",
+      "success_rate": 97.8,
+      "latency_ms": 57118,
+      "tps": 48.9,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5",
+      "success_rate": 93.3,
+      "latency_ms": 111401,
+      "tps": 20.8,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5.1",
+      "success_rate": 89.4,
+      "latency_ms": 119354,
+      "tps": 27.5,
+      "status": "degraded"
+    },
+    {
+      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5.2",
+      "success_rate": 88.4,
+      "latency_ms": 66820,
+      "tps": 30.0,
+      "status": "degraded"
     },
     {
       "name": "[京东云]GLM-5",
-      "success_rate": 97.9,
-      "latency_ms": 36831,
-      "tps": 39.2,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.3-high",
-      "success_rate": 96.9,
-      "latency_ms": 8392,
-      "tps": 536.8,
-      "status": "healthy"
+      "success_rate": 77.8,
+      "latency_ms": 45660,
+      "tps": 39.6,
+      "status": "down"
     },
     {
       "name": "grok-4.20-fast",
-      "success_rate": 95.8,
-      "latency_ms": 49363,
-      "tps": 92.7,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.20-0309-non-reasoning-console",
-      "success_rate": 93.8,
-      "latency_ms": 95879,
-      "tps": 51.7,
-      "status": "healthy"
+      "success_rate": 73.3,
+      "latency_ms": 4632,
+      "tps": 61.6,
+      "status": "down"
     },
     {
       "name": "千帆/glm-5.1",
-      "success_rate": 91.1,
-      "latency_ms": 60535,
-      "tps": 38.6,
-      "status": "healthy"
+      "success_rate": 72.2,
+      "latency_ms": 43269,
+      "tps": 35.4,
+      "status": "down"
     },
     {
-      "name": "grok-4.20-multi-agent-console",
+      "name": "[京东云]GLM-4.7",
+      "success_rate": 71.4,
+      "latency_ms": 77571,
+      "tps": 28.9,
+      "status": "down"
+    },
+    {
+      "name": "grok-4.3-console",
       "success_rate": 66.7,
-      "latency_ms": 16929,
-      "tps": 683.7,
+      "latency_ms": 8697,
+      "tps": 165.6,
       "status": "down"
     },
     {
       "name": "grok-imagine-image-lite",
-      "success_rate": 39.4,
-      "latency_ms": 10035,
-      "tps": 5.8,
+      "success_rate": 54.0,
+      "latency_ms": 9825,
+      "tps": 40.8,
+      "status": "down"
+    },
+    {
+      "name": "grok-4.3-high",
+      "success_rate": 50.0,
+      "latency_ms": 811,
+      "tps": 0,
       "status": "down"
     },
     {
       "name": "gpt-image-2",
-      "success_rate": 10.5,
-      "latency_ms": 5586,
-      "tps": 17820.8,
-      "status": "down"
-    },
-    {
-      "name": "gemini-flash-lite",
       "success_rate": 0.0,
-      "latency_ms": 12,
+      "latency_ms": 40,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "gemini-3.5-flash-thinking-lite",
+      "name": "grok-4.20-multi-agent-xhigh",
       "success_rate": 0.0,
-      "latency_ms": 12,
-      "tps": 0,
-      "status": "down"
-    },
-    {
-      "name": "gemini-3.5-flash-thinking",
-      "success_rate": 0.0,
-      "latency_ms": 19,
-      "tps": 0,
-      "status": "down"
-    },
-    {
-      "name": "glm-5",
-      "success_rate": 0.0,
-      "latency_ms": 19,
-      "tps": 0,
-      "status": "down"
-    },
-    {
-      "name": "glm-5-thinking",
-      "success_rate": 0.0,
-      "latency_ms": 21,
-      "tps": 0,
-      "status": "down"
-    },
-    {
-      "name": "gemini-3.5-flash",
-      "success_rate": 0.0,
-      "latency_ms": 23,
+      "latency_ms": 42,
       "tps": 0,
       "status": "down"
     },
     {
       "name": "gpt-5-mini",
       "success_rate": 0.0,
-      "latency_ms": 769,
+      "latency_ms": 912,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "grok-4.20-0309-reasoning-console",
+      "success_rate": 0.0,
+      "latency_ms": 61501,
       "tps": 0,
       "status": "down"
     }
   ],
   "status": "ok",
   "stale": false,
-  "updated_at": "2026-06-18T12:39:11Z",
-  "updated_at_unix": 1781786351
+  "updated_at": "2026-06-24T16:23:16Z",
+  "updated_at_unix": 1782318196
 }
