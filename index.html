@@ -377,6 +377,32 @@
   @media (min-width: 769px) {
     .rv-monitor-panel { height: 58vh; }
   }
+
+  /* ===== Checkin ===== */
+  .rv-checkin-btn {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--orange);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    user-select: none;
+  }
+  .rv-checkin-btn .arrow {
+    font-family: var(--en);
+    color: var(--text-mute);
+    font-size: 0.85em;
+    transition: all .2s;
+  }
+  .rv-checkin-btn:hover { color: var(--orange-d); }
+  .rv-checkin-btn:hover .arrow { color: var(--orange-d); transform: translateX(0.2em); }
+  .rv-checkin-btn.checked { color: var(--green); }
+  .rv-checkin-btn.checked .arrow { color: var(--green); }
+  .rv-checkin-btn.loading { opacity: 0.6; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -488,14 +514,17 @@
   <!-- ACTIONS -->
   <div class="rv-block">
     <div class="rv-actions">
+      <a class="rv-checkin-btn" href="https://tizenry.xyz/profile" target="_blank" rel="noopener noreferrer">
+        每日签到 <span class="arrow">-></span>
+      </a>
       <a class="rv-action primary" href="https://discord.gg/BBU8kZc2Y" target="_blank" rel="noopener noreferrer">
-        进入服务器 <span class="arrow">→</span>
+        进入服务器 <span class="arrow">-></span>
       </a>
       <a class="rv-action" href="https://tizenry.xyz/pricing" target="_blank" rel="noopener noreferrer">
-        查看价格页 <span class="arrow">→</span>
+        查看价格页 <span class="arrow">-></span>
       </a>
       <a class="rv-action" href="https://zcv2jk.zeabur.app/embed.html" target="_blank" rel="noopener noreferrer">
-        全屏检测页 <span class="arrow">→</span>
+        全屏检测页 <span class="arrow">-></span>
       </a>
     </div>
   </div>
