@@ -403,6 +403,79 @@
   .rv-checkin-btn.checked { color: var(--green); }
   .rv-checkin-btn.checked .arrow { color: var(--green); }
   .rv-checkin-btn.loading { opacity: 0.6; pointer-events: none; }
+
+  /* ===== Disclaimer Modal ===== */
+  .rv-modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    padding: 5vw;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .rv-modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .rv-modal {
+    background: var(--bg);
+    border: 0.15vw solid var(--orange);
+    max-width: 32rem; width: 100%;
+    padding: 4vh 5vw;
+    transform: translateY(1.5rem);
+    transition: transform .3s ease;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .rv-modal-overlay.show .rv-modal { transform: translateY(0); }
+  .rv-modal-title {
+    font-family: var(--serif);
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .rv-modal-sub {
+    font-family: var(--mono);
+    font-size: 0.58rem; color: var(--text-mute);
+    letter-spacing: 0.12em; margin-bottom: 2.5vh;
+    padding-bottom: 1.5vh;
+    border-bottom: 0.05vw solid var(--line);
+  }
+  .rv-modal-body {
+    font-size: 0.85rem; color: var(--text-sub);
+    line-height: 2.1;
+  }
+  .rv-modal-body .warn { color: var(--orange); font-weight: 700; }
+  .rv-modal-body .ban { color: var(--red); font-weight: 700; }
+  .rv-modal-body .item { display: block; padding-left: 0.8em; }
+  .rv-modal-actions {
+    margin-top: 3vh; padding-top: 2vh;
+    border-top: 0.05vw solid var(--line);
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    align-items: center;
+  }
+  .rv-modal-btn {
+    font-family: var(--serif);
+    font-size: 0.9rem; font-weight: 600;
+    padding: 0.55rem 1.4rem;
+    border: 0.08vw solid var(--line);
+    background: transparent; color: var(--text);
+    cursor: pointer; transition: all .2s;
+  }
+  .rv-modal-btn:hover { border-color: var(--text-mute); }
+  .rv-modal-btn.primary {
+    background: var(--orange); color: var(--bg);
+    border-color: var(--orange);
+  }
+  .rv-modal-btn.primary:hover { background: var(--orange-d); border-color: var(--orange-d); }
+  .rv-modal-skip {
+    display: flex; align-items: center; gap: 0.4em;
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--text-mute); cursor: pointer; user-select: none;
+  }
+  .rv-modal-skip input { accent-color: var(--orange); }
+  @media (max-width: 640px) {
+    .rv-modal { padding: 3vh 6vw; }
+    .rv-modal-actions { flex-direction: column; align-items: stretch; gap: 0.8rem; }
+    .rv-modal-btn { text-align: center; }
+    .rv-modal-skip { justify-content: center; }
+  }
 </style>
 </head>
 <body>
@@ -517,6 +590,9 @@
       <a class="rv-checkin-btn" href="https://tizenry.xyz/profile" target="_blank" rel="noopener noreferrer">
         每日签到 <span class="arrow">-></span>
       </a>
+      <a class="rv-action" href="javascript:void(0)" onclick="rvShowArcadeDisclaimer()">
+        娱乐页<span style="color:var(--orange);font-size:0.6em;vertical-align:middle;margin:0 0.1em;">●</span>点线聚画 <span class="arrow">-></span>
+      </a>
       <a class="rv-action primary" href="https://discord.gg/BBU8kZc2Y" target="_blank" rel="noopener noreferrer">
         进入服务器 <span class="arrow">-></span>
       </a>
@@ -537,6 +613,31 @@
 
 </div>
 
+<!-- Disclaimer Modal -->
+<div class="rv-modal-overlay" id="rvArcadeModal" onclick="if(event.target===this)rvCloseArcade()">
+  <div class="rv-modal">
+    <div class="rv-modal-title">娱乐页 · 免责声明</div>
+    <div class="rv-modal-sub">DISCLAIMER · READ BEFORE ENTERING</div>
+    <div class="rv-modal-body">
+      <span class="warn">⚠ 娱乐为主，理性参与</span><br>
+      本娱乐页为社区公益趣味项目，所有"游戏币"均为虚拟道具，不涉及真实货币交易。额度消费后不可退回。<br><br>
+      <span class="ban">🚫 请勿沉迷</span><br>
+      游戏设有概率机制，输赢均为随机。请合理安排时间，切勿影响学习与工作。<br><br>
+      <span class="warn">📌 须知</span>
+      <span class="item">· 未成年人请在监护人指导下使用</span>
+      <span class="item">· 游戏币兑换额度后不可逆向操作</span>
+      <span class="item">· 如感不适，请立即停止使用</span>
+    </div>
+    <div class="rv-modal-actions">
+      <button class="rv-modal-btn primary" onclick="rvEnterArcade()">我已了解，进入</button>
+      <button class="rv-modal-btn" onclick="rvCloseArcade()">返回</button>
+      <label class="rv-modal-skip">
+        <input type="checkbox" id="rvArcadeSkip"> 不再提醒
+      </label>
+    </div>
+  </div>
+</div>
+
 <script>
   function rvGetTheme() { return document.documentElement.getAttribute('data-theme') || 'light'; }
   function rvApplyTheme(t) {
@@ -547,6 +648,30 @@
     try { localStorage.setItem('rv-theme', t); } catch(e) {}
   }
   function rvToggleTheme() { rvApplyTheme(rvGetTheme() === 'dark' ? 'light' : 'dark'); }
+
+  /* ===== Arcade Disclaimer ===== */
+  function rvShowArcadeDisclaimer() {
+    try {
+      if (localStorage.getItem('rv-arcade-skip') === '1') {
+        window.open('https://play.tizenry.xyz', '_blank', 'noopener');
+        return;
+      }
+    } catch(e) {}
+    var m = document.getElementById('rvArcadeModal');
+    if (m) m.classList.add('show');
+  }
+  function rvCloseArcade() {
+    var m = document.getElementById('rvArcadeModal');
+    if (m) m.classList.remove('show');
+  }
+  function rvEnterArcade() {
+    try {
+      var skip = document.getElementById('rvArcadeSkip');
+      if (skip && skip.checked) localStorage.setItem('rv-arcade-skip', '1');
+    } catch(e) {}
+    rvCloseArcade();
+    window.open('https://play.tizenry.xyz', '_blank', 'noopener');
+  }
   (function() {
     var saved = 'light';
     try { saved = localStorage.getItem('rv-theme') || 'light'; } catch(e) {}
