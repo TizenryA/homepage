@@ -2,215 +2,208 @@
   "schema": 1,
   "source": "https://tizenry.xyz",
   "window_hours": 24,
-  "model_count": 36,
-  "monitored_count": 27,
-  "healthy_count": 16,
-  "avg_success_rate": 98.58,
-  "all_avg_success_rate": 67.06,
-  "median_latency_ms": 19941,
-  "median_tps": 64.34,
-  "degraded_count": 10,
-  "slow_count": 2,
+  "model_count": 63,
+  "monitored_count": 26,
+  "healthy_count": 12,
+  "avg_success_rate": 99.18,
+  "all_avg_success_rate": 53.8,
+  "median_latency_ms": 48481,
+  "median_tps": 23.41,
+  "degraded_count": 14,
+  "slow_count": 5,
   "top_models": [
-    "/deepseek-v4-pro",
+    "meta/llama-3.1-70b-instruct",
     "/glm-5.2",
-    "grok-4.20-0309-reasoning",
-    "grok-4.20-0309",
-    "/MiniMax-M2.7"
+    "/Auto",
+    "/deepseek-v4-pro",
+    "/kimi-k2.6"
   ],
   "models": [
     {
+      "name": "[NV]meta/llama-3.1-70b-instruct",
+      "success_rate": 100.0,
+      "latency_ms": 9912,
+      "tps": 14.0,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜の神秘渠道·快速响应]/glm-5.2",
+      "success_rate": 100.0,
+      "latency_ms": 21223,
+      "tps": 49.7,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜の神秘渠道·默认思考]/Auto",
+      "success_rate": 100.0,
+      "latency_ms": 23026,
+      "tps": 30.3,
+      "status": "healthy"
+    },
+    {
       "name": "[萝卜の神秘渠道·快速响应]/deepseek-v4-pro",
       "success_rate": 100.0,
-      "latency_ms": 1891,
-      "tps": 0.5,
+      "latency_ms": 36256,
+      "tps": 51.6,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜の神秘渠道·快速响应]/kimi-k2.6",
+      "success_rate": 100.0,
+      "latency_ms": 39243,
+      "tps": 42.6,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜の神秘渠道·快速响应]/glm-5.1",
+      "success_rate": 100.0,
+      "latency_ms": 90604,
+      "tps": 22.1,
+      "status": "healthy"
+    },
+    {
+      "name": "[NV]nvidia/nemotron-3-ultra-550b-a55b",
+      "success_rate": 100.0,
+      "latency_ms": 160411,
+      "tps": 16.1,
+      "status": "healthy"
+    },
+    {
+      "name": "[萝卜の神秘渠道·快速响应]/Auto",
+      "success_rate": 100.0,
+      "latency_ms": 193593,
+      "tps": 20.9,
+      "status": "healthy"
+    },
+    {
+      "name": "[NV]deepseek-ai/deepseek-v4-flash-0731",
+      "success_rate": 99.4,
+      "latency_ms": 43893,
+      "tps": 15.9,
       "status": "healthy"
     },
     {
       "name": "[萝卜の神秘渠道·默认思考]/glm-5.2",
-      "success_rate": 100.0,
-      "latency_ms": 2294,
-      "tps": 9.6,
+      "success_rate": 98.2,
+      "latency_ms": 53070,
+      "tps": 75.5,
       "status": "healthy"
     },
     {
-      "name": "grok-4.20-0309-reasoning-console",
-      "success_rate": 100.0,
-      "latency_ms": 13364,
-      "tps": 519.1,
+      "name": "[NV]minimaxai/minimax-m3",
+      "success_rate": 97.2,
+      "latency_ms": 82904,
+      "tps": 11.5,
       "status": "healthy"
     },
     {
-      "name": "grok-4.20-0309-console",
-      "success_rate": 100.0,
-      "latency_ms": 15517,
-      "tps": 314.0,
+      "name": "[NV]z-ai/glm-5.2",
+      "success_rate": 95.4,
+      "latency_ms": 83075,
+      "tps": 24.8,
       "status": "healthy"
     },
     {
-      "name": "[good老师のopenstarry渠道~请不要在高峰期14-18点使用！！]/MiniMax-M2.7",
-      "success_rate": 100.0,
-      "latency_ms": 18046,
-      "tps": 36.9,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.20-multi-agent-xhigh",
-      "success_rate": 100.0,
-      "latency_ms": 19046,
-      "tps": 2046.6,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.3-low",
-      "success_rate": 100.0,
-      "latency_ms": 20837,
-      "tps": 221.3,
-      "status": "healthy"
-    },
-    {
-      "name": "[good老师のopenstarry渠道~请不要在高峰期14-18点使用！！]/glm-5.1",
-      "success_rate": 100.0,
-      "latency_ms": 34077,
-      "tps": 71.4,
-      "status": "healthy"
-    },
-    {
-      "name": "[good老师のopenstarry渠道~请不要在高峰期14-18点使用！！]/kimi-k2.6",
-      "success_rate": 100.0,
-      "latency_ms": 38581,
-      "tps": 67.8,
-      "status": "healthy"
-    },
-    {
-      "name": "[good老师のopenstarry渠道~请不要在高峰期14-18点使用！！]/kimi-k2.5",
-      "success_rate": 100.0,
-      "latency_ms": 245575,
-      "tps": 32.6,
-      "status": "healthy"
-    },
-    {
-      "name": "萝卜の京东云/DeepSeek-V4-Flash",
-      "success_rate": 99.0,
-      "latency_ms": 10511,
-      "tps": 65.9,
-      "status": "healthy"
-    },
-    {
-      "name": "[good老师のopenstarry渠道~请不要在高峰期14-18点使用！！]/glm-5.2",
-      "success_rate": 98.9,
-      "latency_ms": 27729,
-      "tps": 87.6,
-      "status": "healthy"
-    },
-    {
-      "name": "萝卜の京东云/Kimi-K2.6",
-      "success_rate": 98.6,
-      "latency_ms": 58504,
-      "tps": 62.8,
-      "status": "healthy"
-    },
-    {
-      "name": "MAXの讯飞/GLM-5.1",
-      "success_rate": 96.8,
-      "latency_ms": 84392,
-      "tps": 21.4,
-      "status": "healthy"
-    },
-    {
-      "name": "萝卜の京东云/DeepSeek-V4-Pro",
-      "success_rate": 93.6,
-      "latency_ms": 16895,
-      "tps": 50.8,
-      "status": "healthy"
-    },
-    {
-      "name": "萝卜の京东云/GLM-5.1",
-      "success_rate": 90.5,
-      "latency_ms": 48864,
-      "tps": 38.5,
-      "status": "healthy"
-    },
-    {
-      "name": "grok-4.20-0309-non-reasoning-console",
-      "success_rate": 88.4,
-      "latency_ms": 5133,
-      "tps": 92.2,
-      "status": "degraded"
-    },
-    {
-      "name": "萝卜の京东云/GLM-5.2",
-      "success_rate": 70.2,
-      "latency_ms": 45394,
-      "tps": 49.5,
+      "name": "[NV]meta/llama-3.3-70b-instruct",
+      "success_rate": 75.0,
+      "latency_ms": 158937,
+      "tps": 17.4,
       "status": "down"
     },
     {
-      "name": "grok-4.20-multi-agent-console",
-      "success_rate": 61.5,
-      "latency_ms": 6900,
-      "tps": 547.8,
-      "status": "down"
-    },
-    {
-      "name": "grok-imagine-image-lite",
-      "success_rate": 13.0,
-      "latency_ms": 4283,
+      "name": "[鸦のgrok]grok-imagine-image-con",
+      "success_rate": 73.5,
+      "latency_ms": 7910,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5",
+      "name": "grok-4.5-con",
+      "success_rate": 60.0,
+      "latency_ms": 18601,
+      "tps": 3150.1,
+      "status": "down"
+    },
+    {
+      "name": "[NV]minimaxai/minimax-m2.7",
       "success_rate": 0.0,
-      "latency_ms": 8,
+      "latency_ms": 27,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/kimi-k2.5",
+      "name": "[NV]qwen/qwen3.5-122b-a10b",
       "success_rate": 0.0,
-      "latency_ms": 25,
+      "latency_ms": 50,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5.2",
+      "name": "glm-5.2",
       "success_rate": 0.0,
-      "latency_ms": 579,
+      "latency_ms": 60,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/glm-5.1",
+      "name": "sd-1.5-img2img[图生图]",
       "success_rate": 0.0,
-      "latency_ms": 842,
+      "latency_ms": 64,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/MiniMax-M2.7",
+      "name": "gpt-5.6-sol",
       "success_rate": 0.0,
-      "latency_ms": 1148,
+      "latency_ms": 72,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "[萝卜のopenstarry渠道~请不要再高峰期14-18点使用！！]/MiniMax-M2.7-highspeed",
+      "name": "opus-4.6",
       "success_rate": 0.0,
-      "latency_ms": 1297,
+      "latency_ms": 75,
       "tps": 0,
       "status": "down"
     },
     {
-      "name": "萝卜の京东云/MiniMax-M3",
+      "name": "gemini-3.1-pro",
       "success_rate": 0.0,
-      "latency_ms": 3999,
+      "latency_ms": 77,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "kimi-k3",
+      "success_rate": 0.0,
+      "latency_ms": 90,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "deepseek-r1-32b",
+      "success_rate": 0.0,
+      "latency_ms": 94,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "[NV]deepseek-ai/deepseek-v4-pro",
+      "success_rate": 0.0,
+      "latency_ms": 95,
+      "tps": 0,
+      "status": "down"
+    },
+    {
+      "name": "[NV]deepseek-ai/deepseek-v4-flash",
+      "success_rate": 0.0,
+      "latency_ms": 117,
       "tps": 0,
       "status": "down"
     }
   ],
   "status": "ok",
   "stale": false,
-  "updated_at": "2026-07-18T03:50:19Z",
-  "updated_at_unix": 1784346619
+  "updated_at": "2026-08-11T02:11:22Z",
+  "updated_at_unix": 1786414282
 }
