@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实时模型监控 · 渡鸦の小站</title>
+<style>
+  :root {
+    --bg: #F2EDE4;
+    --bg-warm: #EBE4D8;
+    --text: #1A1714;
+    --text-sub: #4A4238;
+    --text-mute: #8A8278;
+    --orange: #D85F2A;
+    --orange-d: #B84D1E;
+    --green: #5A7A4F;
+    --red: #8B5A4A;
+    --line: #C8C0B4;
+    --blue: #64748B;
+    --serif: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+  [data-theme="dark"] {
+    --bg: #15140F;
+    --bg-warm: #1E1C17;
+    --text: #F0E8DC;
+    --text-sub: #B8B0A4;
+    --text-mute: #787068;
+    --orange: #F29A5C;
+    --orange-d: #D87A3C;
+    --green: #7BA070;
+    --red: #C08A7A;
+    --line: #3A3631;
+    --blue: #A6B1C0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+  button, input, select { font: inherit; }
+  button, a, input, select { -webkit-tap-highlight-color: transparent; }
+  .page { width: 86vw; max-width: 100vw; margin: 0 auto; padding: 7vh 0 5vh; }
+  .topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3vw;
+    padding-bottom: 2vh;
+    border-bottom: 0.08vw solid var(--line);
+  }
+  .back-link {
+    color: var(--text-sub);
+    font-family: var(--mono);
+    font-size: 1.05vw;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .back-link:hover { color: var(--orange); }
+  .theme-toggle {
+    width: 3vw;
+    height: 3vw;
+    min-width: 3vw;
+    border: 0.08vw solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-sub);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .theme-toggle:hover { color: var(--orange); border-color: var(--orange); }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 4vw;
+    padding: 6vh 0 4vh;
+    border-bottom: 0.15vw solid var(--orange);
+  }
+  .eyebrow {
+    color: var(--orange);
+    font-family: var(--mono);
+    font-size: 1vw;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin-top: 1.3vh;
+    font-size: clamp(5vw, 7vw, 9vw);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+  }
+  .hero-copy {
+    max-width: 54vw;
+    margin-top: 1.8vh;
+    color: var(--text-sub);
+    font-size: 1.4vw;
+  }
+  .hero-mark {
+    color: var(--orange);
+    font-size: clamp(8vw, 13vw, 17vw);
+    font-weight: 900;
+    line-height: .72;
+  }
+  .notice {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2vw;
+    margin: 3vh 0;
+    padding: 1.8vh 1.8vw;
+    border: 0.08vw solid var(--line);
+    background: var(--bg-warm);
+  }
+  .notice-copy { color: var(--text-sub); font-size: 1.1vw; }
+  .notice-copy strong { color: var(--text); }
+  .source-badge {
+    flex-shrink: 0;
+    color: var(--orange);
+    font-family: var(--mono);
+    font-size: .85vw;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .source-badge.historical { color: var(--blue); }
+  .section { margin-top: 5vh; }
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 1vw;
+    margin-bottom: 2vh;
+    padding-left: 1vw;
+    border-left: 0.25vw solid var(--orange);
+  }
+  .section-heading h2 { font-size: 1.8vw; font-weight: 700; }
+  .section-heading span {
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .8vw;
+    letter-spacing: .08em;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border-top: 0.08vw solid var(--line);
+    border-bottom: 0.08vw solid var(--line);
+  }
+  .stat {
+    min-width: 0;
+    padding: 2vh 1.3vw;
+    border-right: 0.08vw solid var(--line);
+  }
+  .stat:last-child { border-right: 0; }
+  .stat-label {
+    display: block;
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .75vw;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    display: block;
+    margin-top: .6vh;
+    color: var(--text);
+    font-size: 2.1vw;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .stat-note {
+    display: block;
+    margin-top: .7vh;
+    color: var(--text-sub);
+    font-size: .9vw;
+    overflow-wrap: anywhere;
+  }
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr auto;
+    gap: 1vw;
+    margin-bottom: 2vh;
+  }
+  .field, .refresh-button {
+    min-width: 0;
+    min-height: 5vh;
+    padding: 1.1vh 1vw;
+    border: 0.08vw solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text);
+  }
+  .field:focus, .refresh-button:focus-visible, .theme-toggle:focus-visible, .back-link:focus-visible {
+    outline: 0.15vw solid var(--orange);
+    outline-offset: 0.2vw;
+  }
+  .field::placeholder { color: var(--text-mute); }
+  .refresh-button {
+    border-color: var(--orange);
+    background: var(--orange);
+    color: var(--bg);
+    cursor: pointer;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .refresh-button:hover:not(:disabled) { background: var(--orange-d); border-color: var(--orange-d); }
+  .refresh-button:disabled { cursor: wait; opacity: .55; }
+  .refresh-note {
+    min-height: 2.5vh;
+    margin: -1vh 0 2vh;
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .8vw;
+    text-align: right;
+  }
+  .model-list { border-top: 0.08vw solid var(--line); }
+  .model-row {
+    display: grid;
+    grid-template-columns: minmax(20vw, 2.5fr) .8fr .8fr .8fr .8fr 1.15fr;
+    gap: 1vw;
+    align-items: center;
+    padding: 1.7vh 0;
+    border-bottom: 0.08vw solid var(--line);
+  }
+  .model-row.header {
+    padding: 1.1vh 0;
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .72vw;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .model-name { min-width: 0; overflow-wrap: anywhere; }
+  .model-title { font-size: 1.1vw; font-weight: 700; }
+  .model-sub { margin-top: .4vh; color: var(--text-mute); font-family: var(--mono); font-size: .75vw; }
+  .status-cell { display: flex; align-items: center; gap: .55vw; }
+  .status-dot {
+    width: .65vw;
+    height: .65vw;
+    min-width: .65vw;
+    border-radius: 50%;
+    background: var(--text-mute);
+  }
+  .status-dot.full_ok { background: var(--green); }
+  .status-dot.basic_ok { background: var(--orange); }
+  .status-dot.failed { background: var(--red); }
+  .status-dot.unsupported { background: var(--blue); }
+  .status-label { font-size: .95vw; }
+  .metric { color: var(--text-sub); font-family: var(--mono); font-size: .82vw; overflow-wrap: anywhere; }
+  .metric strong { color: var(--text); font-family: var(--serif); font-size: 1vw; }
+  .model-error {
+    grid-column: 1 / -1;
+    margin-top: -.6vh;
+    padding-left: 1.2vw;
+    border-left: 0.15vw solid var(--red);
+    color: var(--red);
+    font-size: .85vw;
+    overflow-wrap: anywhere;
+  }
+  .empty {
+    padding: 5vh 2vw;
+    border-bottom: 0.08vw solid var(--line);
+    color: var(--text-mute);
+    text-align: center;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 3vw;
+    margin-top: 6vh;
+    padding-top: 2vh;
+    border-top: 0.08vw solid var(--line);
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .75vw;
+    letter-spacing: .06em;
+  }
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .45; }
+  }
+  .status-dot.live { animation: statusPulse 2.4s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01s !important; animation-iteration-count: 1 !important; transition-duration: .01s !important; }
+  }
+  @media (max-width: 64vw) {
+    .page { width: 90vw; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat:nth-child(3) { border-right: 0; }
+    .stat:nth-child(-n + 3) { border-bottom: 0.08vw solid var(--line); }
+    .model-row { grid-template-columns: minmax(26vw, 2fr) repeat(4, .8fr); }
+    .model-row > :last-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 48vw) {
+    .page { width: 88vw; padding-top: 4vh; }
+    .back-link { font-size: 2.8vw; }
+    .theme-toggle { width: 8vw; height: 8vw; min-width: 8vw; }
+    .hero { grid-template-columns: 1fr; gap: 3vh; padding: 5vh 0 3vh; }
+    .eyebrow { font-size: 2.5vw; }
+    h1 { font-size: 10vw; }
+    .hero-copy { max-width: none; font-size: 3.5vw; }
+    .hero-mark { display: none; }
+    .notice { display: block; }
+    .notice-copy { font-size: 3.1vw; }
+    .source-badge { margin-top: 1.2vh; font-size: 2.3vw; }
+    .section { margin-top: 4vh; }
+    .section-heading { padding-left: 2vw; }
+    .section-heading h2 { font-size: 5vw; }
+    .section-heading span { font-size: 2.2vw; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding: 1.8vh 2vw; border-right: 0.08vw solid var(--line); }
+    .stat:nth-child(2n) { border-right: 0; }
+    .stat:nth-child(3) { border-right: 0.08vw solid var(--line); }
+    .stat:nth-child(n) { border-bottom: 0.08vw solid var(--line); }
+    .stat:nth-last-child(-n + 2) { border-bottom: 0; }
+    .stat-label { font-size: 2.2vw; }
+    .stat-value { font-size: 5.5vw; }
+    .stat-note { font-size: 2.6vw; }
+    .toolbar { grid-template-columns: 1fr; gap: 1.5vh; }
+    .field, .refresh-button { min-height: 6vh; padding: 1.3vh 2vw; }
+    .refresh-note { font-size: 2.3vw; text-align: left; }
+    .model-row, .model-row.header { grid-template-columns: 1fr 1fr; gap: 1.2vh 3vw; padding: 2vh 0; }
+    .model-row.header { display: none; }
+    .model-title { font-size: 3.6vw; }
+    .model-sub { font-size: 2.3vw; }
+    .status-cell { grid-column: 1 / -1; }
+    .status-dot { width: 2.4vw; height: 2.4vw; min-width: 2.4vw; }
+    .status-label { font-size: 3vw; }
+    .metric { font-size: 2.5vw; }
+    .metric strong { font-size: 3.2vw; }
+    .model-error { padding-left: 2.5vw; font-size: 2.7vw; }
+    .footer { flex-direction: column; gap: 1vh; font-size: 2.2vw; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="topline">
+    <a class="back-link" href="./index.html">← 返回首页</a>
+    <button class="theme-toggle" id="themeToggle" type="button" title="切换主题" aria-label="切换主题">☾</button>
+  </div>
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">RAVEN STATION · PUBLIC STATUS</div>
+      <h1>实时模型监控</h1>
+      <p class="hero-copy">查看公开模型的能力回包、延迟与最近检查时间。页面每 60 秒自动更新，服务异常时会明确切换为历史快照。</p>
+    </div>
+    <div class="hero-mark" aria-hidden="true">·</div>
+  </header>
+
+  <section class="notice" aria-live="polite">
+    <p class="notice-copy" id="sourceMessage"><strong>状态：</strong>正在连接公开监控接口。</p>
+    <span class="source-badge" id="sourceBadge">LIVE</span>
+  </section>
+
+  <section class="section" aria-labelledby="summaryTitle">
+    <div class="section-heading">
+      <h2 id="summaryTitle">总览</h2>
+      <span>PUBLIC SUMMARY</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="stat-label">total</span><span class="stat-value" id="totalCount">—</span><span class="stat-note">模型总数</span></div>
+      <div class="stat"><span class="stat-label">full ok</span><span class="stat-value" id="fullOkCount">—</span><span class="stat-note">推理与内容均正常</span></div>
+      <div class="stat"><span class="stat-label">basic ok</span><span class="stat-value" id="basicOkCount">—</span><span class="stat-note">基础内容可用</span></div>
+      <div class="stat"><span class="stat-label">failed</span><span class="stat-value" id="failedCount">—</span><span class="stat-note">本次检查异常</span></div>
+      <div class="stat"><span class="stat-label">avg latency</span><span class="stat-value" id="avgLatency">—</span><span class="stat-note">公开平均延迟</span></div>
+      <div class="stat"><span class="stat-label">checked</span><span class="stat-value" id="checkedAt">—</span><span class="stat-note" id="nextCheckAt">下次检查：—</span></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="modelsTitle">
+    <div class="section-heading">
+      <h2 id="modelsTitle">模型列表</h2>
+      <span id="listCount">0 RESULTS</span>
+    </div>
+    <div class="toolbar">
+      <input class="field" id="searchInput" type="search" placeholder="搜索模型名称" aria-label="搜索模型名称">
+      <select class="field" id="statusFilter" aria-label="按状态筛选">
+        <option value="all">全部状态</option>
+        <option value="full_ok">完整正常</option>
+        <option value="basic_ok">基础正常</option>
+        <option value="failed">异常</option>
+        <option value="unsupported">不支持</option>
+      </select>
+      <button class="refresh-button" id="refreshButton" type="button">立即刷新</button>
+    </div>
+    <div class="refresh-note" id="refreshNote" aria-live="polite"></div>
+    <div class="model-list" id="modelList" aria-live="polite">
+      <div class="empty">正在读取公开状态……</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>RAVEN STATION <span aria-hidden="true">·</span> TAVO</span>
+    <span id="schemaInfo">schema —</span>
+  </footer>
+</main>
+<script>
+  (function () {
+    'use strict';
+
+    var STATUS_API = 'https://play.tizenry.xyz/monitor-api/v1/public/status';
+    var FALLBACK_URL = './monitor.json';
+    var ALLOWED_STATUS = ['full_ok', 'basic_ok', 'failed', 'unsupported'];
+    var state = { models: [], status: 'all', query: '', live: false, refreshing: false, cooldownUntil: 0 };
+    var statusNames = { full_ok: '完整正常', basic_ok: '基础正常', failed: '异常', unsupported: '不支持' };
+
+    function byId(id) { return document.getElementById(id); }
+    function setText(id, value) { var element = byId(id); if (element) element.textContent = value; }
+    function safeNumber(value, fallback) {
+      var number = Number(value);
+      return Number.isFinite(number) ? number : (fallback || 0);
+    }
+    function formatLatency(value) {
+      var number = safeNumber(value, 0);
+      if (!number) return '—';
+      return number >= 1000 ? (number / 1000).toFixed(number >= 10000 ? 0 : 1) + 's' : Math.round(number) + 'ms';
+    }
+    function formatDate(value) {
+      if (!value) return '—';
+      var date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return date.toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+    function formatCapability(value) {
+      return value === true ? '有' : value === false ? '无' : '—';
+    }
+    function statusOf(value) {
+      return ALLOWED_STATUS.indexOf(value) >= 0 ? value : 'unsupported';
+    }
+    function normaliseModels(models, legacy) {
+      if (!Array.isArray(models)) return [];
+      return models.map(function (item) {
+        item = item || {};
+        var status = item.status;
+        if (legacy) status = status === 'healthy' ? 'full_ok' : status === 'degraded' ? 'basic_ok' : 'failed';
+        return {
+          name: String(item.name || '未命名模型'),
+          status: statusOf(status),
+          reasoning_present: item.reasoning_present === true ? true : item.reasoning_present === false ? false : null,
+          content_present: item.content_present === true ? true : item.content_present === false ? false : null,
+          latency_ms: safeNumber(item.latency_ms, 0),
+          http_status: item.http_status == null ? null : String(item.http_status),
+          finish_reason: item.finish_reason == null ? '' : String(item.finish_reason),
+          last_checked_at: item.last_checked_at || item.updated_at || '',
+          error: item.error == null ? '' : String(item.error)
+        };
+      });
+    }
+    function normalisePayload(payload, historical) {
+      payload = payload || {};
+      var legacy = historical || !payload.summary;
+      var sourceModels = normaliseModels(payload.models, legacy);
+      var oldTotal = safeNumber(payload.model_count, sourceModels.length);
+      var oldHealthy = safeNumber(payload.healthy_count, 0);
+      var oldFailed = sourceModels.filter(function (model) { return model.status === 'failed'; }).length;
+      var summary = legacy ? {
+        total: oldTotal || sourceModels.length,
+        full_ok: oldHealthy || sourceModels.filter(function (model) { return model.status === 'full_ok'; }).length,
+        basic_ok: sourceModels.filter(function (model) { return model.status === 'basic_ok'; }).length,
+        failed: safeNumber(payload.degraded_count, oldFailed) || oldFailed,
+        unsupported: 0,
+        avg_latency_ms: safeNumber(payload.median_latency_ms, 0)
+      } : payload.summary;
+      return {
+        schema: payload.schema == null ? '—' : String(payload.schema),
+        updated_at: payload.updated_at || '',
+        next_check_at: payload.next_check_at || '',
+        running: payload.running === true,
+        summary: {
+          total: safeNumber(summary && summary.total, sourceModels.length),
+          full_ok: safeNumber(summary && summary.full_ok, 0),
+          basic_ok: safeNumber(summary && summary.basic_ok, 0),
+          failed: safeNumber(summary && summary.failed, 0),
+          unsupported: safeNumber(summary && summary.unsupported, 0),
+          avg_latency_ms: safeNumber(summary && summary.avg_latency_ms, 0)
+        },
+        models: sourceModels,
+        historical: Boolean(historical)
+      };
+    }
+    function renderSummary(payload) {
+      var summary = payload.summary;
+      setText('totalCount', summary.total);
+      setText('fullOkCount', summary.full_ok);
+      setText('basicOkCount', summary.basic_ok);
+      setText('failedCount', summary.failed);
+      setText('avgLatency', formatLatency(summary.avg_latency_ms));
+      setText('checkedAt', formatDate(payload.updated_at));
+      setText('nextCheckAt', '下次检查：' + formatDate(payload.next_check_at));
+      setText('schemaInfo', 'schema ' + payload.schema + (payload.running ? ' · 检查中' : ''));
+    }
+    function makeMetric(label, value) {
+      var element = document.createElement('div');
+      element.className = 'metric';
+      var strong = document.createElement('strong');
+      strong.textContent = value;
+      element.appendChild(document.createTextNode(label + ' '));
+      element.appendChild(strong);
+      return element;
+    }
+    function renderModels() {
+      var list = byId('modelList');
+      if (!list) return;
+      list.textContent = '';
+      var query = state.query.trim().toLocaleLowerCase();
+      var models = state.models.filter(function (model) {
+        return (state.status === 'all' || model.status === state.status) && (!query || model.name.toLocaleLowerCase().indexOf(query) >= 0);
+      });
+      setText('listCount', models.length + ' RESULTS');
+      if (!models.length) {
+        var empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = state.models.length ? '没有符合条件的模型。' : '暂无可展示的模型状态。';
+        list.appendChild(empty);
+        return;
+      }
+      var header = document.createElement('div');
+      header.className = 'model-row header';
+      ['模型', '状态', '推理', '内容', '延迟', 'HTTP · 完成'].forEach(function (label) {
+        var cell = document.createElement('div');
+        cell.textContent = label;
+        header.appendChild(cell);
+      });
+      list.appendChild(header);
+      models.forEach(function (model) {
+        var row = document.createElement('article');
+        row.className = 'model-row';
+        var name = document.createElement('div');
+        name.className = 'model-name';
+        var title = document.createElement('div');
+        title.className = 'model-title';
+        title.textContent = model.name;
+        var sub = document.createElement('div');
+        sub.className = 'model-sub';
+        sub.textContent = '最近检查 · ' + formatDate(model.last_checked_at);
+        name.appendChild(title);
+        name.appendChild(sub);
+        row.appendChild(name);
+        var status = document.createElement('div');
+        status.className = 'status-cell';
+        var dot = document.createElement('span');
+        dot.className = 'status-dot ' + model.status + (model.status === 'full_ok' && state.live ? ' live' : '');
+        dot.setAttribute('aria-hidden', 'true');
+        status.appendChild(dot);
+        var statusLabel = document.createElement('span');
+        statusLabel.className = 'status-label';
+        statusLabel.textContent = statusNames[model.status];
+        status.appendChild(statusLabel);
+        row.appendChild(status);
+        row.appendChild(makeMetric('推理', formatCapability(model.reasoning_present)));
+        row.appendChild(makeMetric('内容', formatCapability(model.content_present)));
+        row.appendChild(makeMetric('延迟', formatLatency(model.latency_ms)));
+        var transport = document.createElement('div');
+        transport.className = 'metric';
+        transport.textContent = (model.http_status || '—') + ' · ' + (model.finish_reason || '—');
+        row.appendChild(transport);
+        if (model.error) {
+          var error = document.createElement('div');
+          error.className = 'model-error';
+          error.textContent = '服务端提示：' + model.error;
+          row.appendChild(error);
+        }
+        list.appendChild(row);
+      });
+    }
+    function setSource(historical, message) {
+      var badge = byId('sourceBadge');
+      if (badge) {
+        badge.textContent = historical ? '历史快照' : 'LIVE';
+        badge.className = 'source-badge' + (historical ? ' historical' : '');
+      }
+      setText('sourceMessage', message);
+    }
+    function applyPayload(payload, historical) {
+      var normalised = normalisePayload(payload, historical);
+      state.models = normalised.models;
+      state.live = !historical;
+      renderSummary(normalised);
+      renderModels();
+      if (historical) {
+        setSource(true, '状态：实时接口暂不可用，以下为同源 monitor.json 的历史快照，不代表当前实时状态。');
+      } else {
+        setSource(false, normalised.running ? '状态：检查正在运行，数据可能在下一轮更新。' : '状态：公开接口在线，当前为实时公开状态。');
+      }
+    }
+    function loadHistoricalSnapshot() {
+      return fetch(FALLBACK_URL, { cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('fallback unavailable');
+          return response.json();
+        })
+        .then(function (payload) { applyPayload(payload, true); })
+        .catch(function () {
+          state.models = [];
+          state.live = false;
+          renderModels();
+          setSource(true, '状态：实时接口与历史快照均暂不可用，未伪装为实时数据。');
+          setText('schemaInfo', 'schema —');
+        });
+    }
+    function loadStatus() {
+      return fetch(STATUS_API, { cache: 'no-store', headers: { Accept: 'application/json' } })
+        .then(function (response) {
+          if (response.status === 429) {
+            var retry = Number(response.headers.get('Retry-After')) || 30;
+            startCooldown(retry);
+            throw { rateLimited: true };
+          }
+          if (!response.ok) throw new Error('status unavailable');
+          return response.json();
+        })
+        .then(function (payload) {
+          if (!payload || !Array.isArray(payload.models) || !payload.summary) throw new Error('invalid payload');
+          applyPayload(payload, false);
+          return true;
+        })
+        .catch(function (error) {
+          if (error && error.rateLimited) setText('refreshNote', '公开状态读取受限，已进入冷却；当前展示保留为历史快照。');
+          return loadHistoricalSnapshot().then(function () { return false; });
+        });
+    }
+    function setRefreshButton() {
+      var button = byId('refreshButton');
+      if (!button) return;
+      var remaining = Math.max(0, state.cooldownUntil - Date.now());
+      if (remaining > 0) {
+        button.disabled = true;
+        button.textContent = '冷却中 ' + Math.ceil(remaining / 1000) + 's';
+      } else {
+        button.disabled = state.refreshing;
+        button.textContent = state.refreshing ? '刷新中…' : '立即刷新';
+      }
+    }
+    function startCooldown(seconds) {
+      var duration = Math.max(1, Math.min(600, safeNumber(seconds, 30)));
+      state.cooldownUntil = Date.now() + duration * 1000;
+      setRefreshButton();
+      window.setTimeout(function tick() {
+        setRefreshButton();
+        if (state.cooldownUntil > Date.now()) window.setTimeout(tick, 1000);
+      }, 1000);
+    }
+    function refreshNow() {
+      if (state.refreshing || state.cooldownUntil > Date.now()) return;
+      state.refreshing = true;
+      setRefreshButton();
+      setText('refreshNote', '正在读取最新公开状态……');
+      loadStatus()
+        .then(function (isLive) {
+          setText('refreshNote', isLive ? '已读取最新公开状态。' : '实时接口暂不可用，已保留历史快照展示。');
+        })
+        .catch(function () {
+          setText('refreshNote', '读取失败，已保留当前展示；下一轮自动检查仍会继续。');
+        })
+        .then(function () {
+          state.refreshing = false;
+          setRefreshButton();
+        });
+    }
+    function applyTheme(theme) {
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+      var toggle = byId('themeToggle');
+      if (toggle) toggle.textContent = theme === 'dark' ? '☀' : '☾';
+      try { localStorage.setItem('rv-theme', theme); } catch (error) { /* storage is optional */ }
+    }
+    function setup() {
+      var theme = 'light';
+      try { theme = localStorage.getItem('rv-theme') || 'light'; } catch (error) {}
+      applyTheme(theme === 'dark' ? 'dark' : 'light');
+      byId('themeToggle').addEventListener('click', function () { applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+      byId('searchInput').addEventListener('input', function (event) { state.query = event.target.value; renderModels(); });
+      byId('statusFilter').addEventListener('change', function (event) { state.status = event.target.value; renderModels(); });
+      byId('refreshButton').addEventListener('click', refreshNow);
+      loadStatus();
+      window.setInterval(loadStatus, 60000);
+      setRefreshButton();
+    }
+    setup();
+  }());
+</script>
+</body>
+</html>

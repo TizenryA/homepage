@@ -196,91 +196,41 @@
     50% { opacity: 0.6; box-shadow: 0 0 0 0.3rem transparent; }
   }
 
-  /* ===== Monitor panel ===== */
-  .rv-monitor-panel {
-    height: 52vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  .rv-monitor-panel::-webkit-scrollbar { width: 0.25vw; }
-  .rv-monitor-panel::-webkit-scrollbar-track { background: transparent; }
-  .rv-monitor-panel::-webkit-scrollbar-thumb { background: var(--line); border-radius: 50%; }
-
-  .rv-mrow {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+  /* ===== Monitor entry ===== */
+  .rv-monitor-entry {
+    display: flex;
     align-items: center;
-    gap: 0.9em;
-    padding: 1.1vh 0.3vw 1.1vh 0;
-    border-bottom: 0.05vw solid var(--line);
-    transition: transform .2s ease, opacity .2s ease;
-    opacity: 0.92;
-  }
-  .rv-mrow:last-child { border-bottom: 0; }
-  .rv-mrow:hover { transform: translateX(0.4rem); opacity: 1; }
-
-  .rv-mrow-dot {
-    width: 0.55rem; height: 0.55rem;
-    border-radius: 50%;
-    flex-shrink: 0;
-    transition: box-shadow .2s;
-  }
-  .rv-mrow-dot.healthy { background: var(--green); }
-  .rv-mrow-dot.degraded { background: var(--orange); }
-  .rv-mrow-dot.down { background: var(--red); }
-  .rv-mrow:hover .rv-mrow-dot.healthy { box-shadow: 0 0 0 0.2rem rgba(90,122,79,0.15); }
-  .rv-mrow:hover .rv-mrow-dot.degraded { box-shadow: 0 0 0 0.2rem rgba(216,95,42,0.15); }
-  .rv-mrow:hover .rv-mrow-dot.down { box-shadow: 0 0 0 0.2rem rgba(139,90,74,0.15); }
-
-  .rv-mrow-info { min-width: 0; overflow: hidden; }
-  .rv-mrow-name {
-    font-family: var(--serif);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.3;
-  }
-  .rv-mrow-bar {
-    height: 0.16rem;
-    border-radius: 50%;
+    justify-content: space-between;
+    gap: 2vw;
+    padding: 2.2vh 2vw;
+    border: 0.08vw solid var(--line);
+    border-left: 0.3vw solid var(--orange);
     background: var(--bg-warm);
-    margin-top: 0.3rem;
-    overflow: hidden;
+    color: var(--text);
+    text-decoration: none;
+    transition: color .2s ease, border-color .2s ease, transform .2s ease;
   }
-  .rv-mrow-bar-fill {
-    height: 100%; border-radius: 50%;
-    transition: width .8s cubic-bezier(.2,.8,.2,1);
+  .rv-monitor-entry:hover {
+    color: var(--orange);
+    border-color: var(--orange);
+    transform: translateX(0.4vw);
   }
-  .rv-mrow-bar-fill.healthy { background: var(--green); }
-  .rv-mrow-bar-fill.degraded { background: var(--orange); }
-  .rv-mrow-bar-fill.down { background: var(--red); }
-
-  .rv-mrow-metrics {
-    text-align: right;
-    flex-shrink: 0;
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    color: var(--text-mute);
-    line-height: 1.5;
-  }
-  .rv-mrow-rate {
-    font-family: var(--serif);
+  .rv-monitor-entry-title {
+    font-size: 2.2vw;
     font-weight: 700;
-    font-size: 0.82rem;
+    letter-spacing: 0.04em;
   }
-  .rv-mrow-rate.healthy { color: var(--green); }
-  .rv-mrow-rate.degraded { color: var(--orange); }
-  .rv-mrow-rate.down { color: var(--red); }
-
-  .rv-monitor-footer {
-    margin-top: 0.6rem;
+  .rv-monitor-entry-note {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.75vw;
     color: var(--text-mute);
+    letter-spacing: 0.08em;
     text-align: right;
+  }
+  .rv-monitor-entry-arrow {
+    color: var(--orange);
+    font-family: var(--en);
+    font-size: 1.4vw;
   }
 
   /* ===== Content — 两列不对称 ===== */
@@ -369,13 +319,10 @@
     .rv-stats { gap: 1.5rem; }
     .rv-cols { grid-template-columns: 1fr; gap: 2rem; }
     .rv-col-full { grid-column: span 1; }
-    .rv-monitor-panel { height: 45vh; }
     .rv-actions { flex-direction: column; gap: 0.8rem; }
     .rv-footer { flex-direction: column; gap: 0.5rem; }
-    .rv-mrow-name { font-size: 0.78rem; }
-  }
-  @media (min-width: 769px) {
-    .rv-monitor-panel { height: 58vh; }
+    .rv-monitor-entry-title { font-size: 5.4vw; }
+    .rv-monitor-entry-note { font-size: 1.7vw; }
   }
 
   /* ===== Checkin ===== */
@@ -511,7 +458,7 @@
       </div>
       <div class="rv-stat-item">
         <span class="label">healthy</span>
-        <span class="val orange" id="rvMonitorCount">--/--</span>
+        <span class="val orange" id="rvHealthyRatio"><span id="rvMonitorCount">--/--</span></span>
         <span class="note" id="rvMonitorStatus">监控快照加载中</span>
       </div>
       <div class="rv-stat-item">
@@ -521,20 +468,16 @@
     </div>
   </div>
 
-  <!-- MONITOR -->
+  <!-- MONITOR ENTRY -->
   <div class="rv-block">
     <div class="rv-block-head">
-      <span class="rv-block-title">模型监测</span>
-      <span class="rv-block-sub">24h window · 30min refresh</span>
+      <span class="rv-block-title">模型监控</span>
+      <span class="rv-block-sub">live status</span>
     </div>
-    <div class="rv-monitor-panel" id="rvMonitorPanel">
-      <div class="rv-mrow">
-        <div class="rv-mrow-dot degraded"></div>
-        <div class="rv-mrow-info"><div class="rv-mrow-name">加载中…</div></div>
-        <div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div>
-      </div>
-    </div>
-    <div class="rv-monitor-footer" id="rvMonitorFooter">等待 monitor.json</div>
+    <a class="rv-monitor-entry" href="./monitor.html">
+      <span class="rv-monitor-entry-title">实时模型监控</span>
+      <span class="rv-monitor-entry-note">状态 · 延迟 · 检查时间 <span class="rv-monitor-entry-arrow">-></span></span>
+    </a>
   </div>
 
   <!-- INFO -->
@@ -599,8 +542,8 @@
       <a class="rv-action" href="https://tizenry.xyz/pricing" target="_blank" rel="noopener noreferrer">
         查看价格页 <span class="arrow">-></span>
       </a>
-      <a class="rv-action" href="https://zcv2jk.zeabur.app/embed.html" target="_blank" rel="noopener noreferrer">
-        全屏检测页 <span class="arrow">-></span>
+      <a class="rv-action" href="./monitor.html">
+        实时模型监控 <span class="arrow">-></span>
       </a>
     </div>
   </div>
@@ -679,75 +622,44 @@
     rvApplyTheme(saved);
   })();
 
+  /* ===== Compact snapshot summary ===== */
   (function() {
-    function byId(id) { return document.getElementById(id); }
-    function setText(id, text) { var el = byId(id); if (el) el.textContent = text; }
-    function num(v, f) { var n = Number(v); return isFinite(n) ? n : f; }
-    function fmtLat(ms) { ms = num(ms,0); if(!ms) return '--'; return ms>=1000 ? (ms/1000).toFixed(ms>=10000?0:1)+'s' : Math.round(ms)+'ms'; }
-    function fmtTps(v) { v = num(v,0); return v ? v.toFixed(v>=10?1:2)+'/s' : '--'; }
-    function fmtUp(v) {
-      if (!v) return '等待监控快照';
-      var t = new Date(v).getTime();
-      if (!isFinite(t)) return v;
-      var d = Math.max(0, Date.now()-t), m = Math.floor(d/60000);
-      if (m<1) return '刚刚更新';
-      if (m<60) return m+' 分钟前更新';
-      var h = Math.floor(m/60);
-      if (h<24) return h+' 小时前更新';
-      return Math.floor(h/24)+' 天前更新';
+    function setText(id, value) {
+      var element = document.getElementById(id);
+      if (element) element.textContent = value;
     }
-    function renderPanel(models) {
-      var p = byId('rvMonitorPanel'); if (!p) return;
-      p.textContent = '';
-      if (!models || !models.length) {
-        p.innerHTML = '<div class="rv-mrow"><div class="rv-mrow-dot degraded"></div><div class="rv-mrow-info"><div class="rv-mrow-name">暂无监控数据</div></div><div class="rv-mrow-metrics"><span class="rv-mrow-rate">--</span></div></div>';
-        return;
-      }
-      for (var i = 0; i < models.length; i++) {
-        var m = models[i], st = m.status||'degraded', rate = num(m.success_rate,0);
-        var row = document.createElement('div'); row.className = 'rv-mrow';
-        var dot = document.createElement('div'); dot.className = 'rv-mrow-dot '+st;
-        var info = document.createElement('div'); info.className = 'rv-mrow-info';
-        var name = document.createElement('div'); name.className = 'rv-mrow-name'; name.textContent = m.name;
-        var bar = document.createElement('div'); bar.className = 'rv-mrow-bar';
-        var fill = document.createElement('div'); fill.className = 'rv-mrow-bar-fill '+st;
-        fill.style.width = Math.min(100, Math.max(0, rate))+'%';
-        bar.appendChild(fill); info.appendChild(name); info.appendChild(bar);
-        var met = document.createElement('div'); met.className = 'rv-mrow-metrics';
-        var re = document.createElement('span'); re.className = 'rv-mrow-rate '+st; re.textContent = rate.toFixed(1)+'%';
-        var de = document.createElement('span'); de.textContent = fmtLat(m.latency_ms)+' · '+fmtTps(m.tps);
-        met.appendChild(re); met.appendChild(document.createElement('br')); met.appendChild(de);
-        row.appendChild(dot); row.appendChild(info); row.appendChild(met);
-        p.appendChild(row);
-      }
+    function number(value, fallback) {
+      var parsed = Number(value);
+      return isFinite(parsed) ? parsed : fallback;
     }
-    function apply(data) {
+    function applySummary(data) {
       data = data || {};
-      var s = num(data.avg_success_rate,0);
-      var st = data.status || (s>=95?'ok':(s>=85?'warn':'down'));
-      var stale = !!data.stale;
-      var h = Number(data.healthy_count||0), t = Number(data.monitored_count||0);
-      setText('rvModelCount', data.model_count || '--');
-      setText('rvMonitorCount', (h||'--')+'/'+(t||'--'));
-      setText('rvSuccessRate', s ? s.toFixed(1)+'%' : '--');
-      var stx = h&&t ? (h+'/'+t+' 个模型健康') : '部分波动';
-      if (st==='down') stx = '波动较大';
-      if (stale) stx = '监控快照稍旧';
-      setText('rvMonitorStatus', stx);
-      var dot = byId('rvStatusDot');
-      if (dot) dot.className = st==='ok'&&!stale ? 'rv-pulse' : (st==='down'?'rv-pulse down':'rv-pulse warn');
-      renderPanel(data.models||[]);
-      setText('rvMonitorFooter', fmtUp(data.updated_at));
+      var healthy = number(data.healthy_count, 0);
+      var monitored = number(data.monitored_count, 0);
+      var success = number(data.avg_success_rate, 0);
+      var stale = data.stale === true;
+      var status = data.status || 'warn';
+      setText('rvModelCount', number(data.model_count, 0) || '--');
+      setText('rvMonitorCount', monitored ? healthy + '/' + monitored : '--/--');
+      setText('rvSuccessRate', success ? success.toFixed(1) + '%' : '--');
+      setText('rvMonitorStatus', stale ? '监控快照稍旧' : (monitored ? healthy + '/' + monitored + ' 个模型健康' : '状态未知'));
+      setText('rvServiceStatus', stale ? '状态未知' : (status === 'down' ? '波动' : (monitored ? '在线' : '状态未知')));
+      var dot = document.getElementById('rvStatusDot');
+      if (dot) dot.className = stale || status !== 'ok' ? 'rv-pulse warn' : 'rv-pulse';
     }
-    function load() {
-      var b = Math.floor(Date.now()/300000);
-      fetch('./monitor.json?rv='+b, {cache:'no-store'})
-        .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-        .then(apply)
-        .catch(function(){ setText('rvMonitorStatus','监控快照休息中'); setText('rvMonitorFooter','monitor.json 暂不可用');
-          var d=byId('rvStatusDot'); if(d) d.className='rv-pulse warn'; });
+    function loadSummary() {
+      fetch('./monitor.json', { cache: 'no-store' })
+        .then(function(response) {
+          if (!response.ok) throw new Error('snapshot unavailable');
+          return response.json();
+        })
+        .then(applySummary)
+        .catch(function() {
+          applySummary({ model_count: 0, monitored_count: 0, healthy_count: 0, avg_success_rate: 0, status: 'warn', stale: true });
+          setText('rvMonitorStatus', '状态未知');
+        });
     }
-    load(); window.setInterval(load, 300000);
+    loadSummary();
   })();
 </script>
 </body>
