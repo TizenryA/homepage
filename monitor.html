@@ -220,6 +220,53 @@
     font-size: .8vw;
     text-align: right;
   }
+  .quota-message {
+    min-height: 2.5vh;
+    margin: -1vh 0 2vh;
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .8vw;
+    overflow-wrap: anywhere;
+  }
+  .quota-list { border-top: 0.08vw solid var(--line); }
+  .quota-provider { border-bottom: 0.08vw solid var(--line); }
+  .quota-provider-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2vw;
+    padding: 1.4vh 0 1vh;
+  }
+  .quota-provider-title { font-size: 1.35vw; font-weight: 700; }
+  .quota-provider-count {
+    color: var(--text-mute);
+    font-family: var(--mono);
+    font-size: .75vw;
+    letter-spacing: .06em;
+  }
+  .quota-account-row {
+    display: grid;
+    grid-template-columns: minmax(15vw, 1.5fr) 1.25fr 2fr .8fr 1.55fr;
+    gap: 1vw;
+    align-items: center;
+    padding: 1.4vh 0;
+    border-top: 0.08vw solid var(--line);
+  }
+  .quota-account-name { min-width: 0; overflow-wrap: anywhere; font-size: 1vw; font-weight: 700; }
+  .quota-account-meta { margin-top: .35vh; color: var(--text-mute); font-family: var(--mono); font-size: .7vw; overflow-wrap: anywhere; }
+  .quota-status { display: flex; align-items: center; gap: .5vw; min-width: 0; }
+  .quota-status-dot { width: .6vw; height: .6vw; min-width: .6vw; border-radius: 50%; background: var(--text-mute); }
+  .quota-status-dot.ok { background: var(--green); }
+  .quota-status-dot.rate_limited { background: var(--orange); }
+  .quota-status-dot.unauthorized, .quota-status-dot.server_error, .quota-status-dot.timeout, .quota-status-dot.error { background: var(--red); }
+  .quota-status-dot.unknown { background: var(--blue); }
+  .quota-status-label { min-width: 0; overflow-wrap: anywhere; font-size: .88vw; }
+  .quota-accuracy { color: var(--text-mute); font-size: .75vw; white-space: nowrap; }
+  .quota-usage, .quota-meta { color: var(--text-sub); font-family: var(--mono); font-size: .76vw; overflow-wrap: anywhere; }
+  .quota-usage strong { color: var(--text); font-family: var(--serif); font-size: .95vw; }
+  .quota-meta { line-height: 1.6; }
+  .quota-error { grid-column: 1 / -1; padding-left: 1.2vw; border-left: 0.15vw solid var(--red); color: var(--red); font-size: .8vw; overflow-wrap: anywhere; }
+  .quota-stale { color: var(--blue); }
   .model-list { border-top: 0.08vw solid var(--line); }
   .model-row {
     display: grid;
@@ -326,6 +373,17 @@
     .toolbar { grid-template-columns: 1fr; gap: 1.5vh; }
     .field, .refresh-button { min-height: 6vh; padding: 1.3vh 2vw; }
     .refresh-note { font-size: 2.3vw; text-align: left; }
+    .quota-message { font-size: 2.3vw; }
+    .quota-provider-title { font-size: 4vw; }
+    .quota-provider-count { font-size: 2.2vw; }
+    .quota-account-row { grid-template-columns: 1fr; gap: 1vh; padding: 2vh 0; }
+    .quota-account-name { font-size: 3.5vw; }
+    .quota-account-meta { font-size: 2.2vw; }
+    .quota-status-dot { width: 2.4vw; height: 2.4vw; min-width: 2.4vw; }
+    .quota-status-label { font-size: 3vw; }
+    .quota-accuracy, .quota-usage, .quota-meta { font-size: 2.4vw; }
+    .quota-usage strong { font-size: 3vw; }
+    .quota-error { padding-left: 2.5vw; font-size: 2.7vw; }
     .model-row, .model-row.header { grid-template-columns: 1fr 1fr; gap: 1.2vh 3vw; padding: 2vh 0; }
     .model-row.header { display: none; }
     .model-title { font-size: 3.6vw; }
@@ -376,6 +434,17 @@
     </div>
   </section>
 
+  <section class="section" aria-labelledby="quotasTitle">
+    <div class="section-heading">
+      <h2 id="quotasTitle">供应商号池</h2>
+      <span id="quotaCount">0 ACCOUNTS</span>
+    </div>
+    <div class="quota-message" id="quotaMessage" aria-live="polite">正在读取公开额度……</div>
+    <div class="quota-list" id="quotaList" aria-live="polite">
+      <div class="empty">正在读取公开额度……</div>
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="modelsTitle">
     <div class="section-heading">
       <h2 id="modelsTitle">模型列表</h2>
@@ -408,6 +477,7 @@
     'use strict';
 
     var STATUS_API = 'https://play.tizenry.xyz/monitor-api/v1/public/status';
+    var QUOTA_API = 'https://play.tizenry.xyz/monitor-api/v1/public/quotas';
     var FALLBACK_URL = './monitor.json';
     var ALLOWED_STATUS = ['full_ok', 'basic_ok', 'failed', 'unsupported'];
     var REQUEST_TIMEOUT_MS = 15000;
@@ -417,11 +487,23 @@
     var MAX_ERROR_LENGTH = 300;
     var MAX_FINISH_REASON_LENGTH = 100;
     var MAX_LATENCY_MS = 86400000;
+    var MAX_QUOTA_RECORDS = 1000;
+    var MAX_PROVIDER_LENGTH = 80;
+    var MAX_ACCOUNT_LABEL_LENGTH = 80;
+    var MAX_QUOTA_ERROR_LENGTH = 240;
+    var MAX_QUOTA_VALUE = 1000000000000000;
+    var ALLOWED_QUOTA_STATUS = ['ok', 'rate_limited', 'unauthorized', 'server_error', 'timeout', 'error', 'unknown'];
+    var ALLOWED_QUOTA_ACCURACY = ['exact', 'estimated', 'status_only', 'unknown'];
+    var QUOTA_PROVIDERS = ['OpenRouter', 'NVIDIA', 'Cloudflare'];
     var state = {
       models: [], status: 'all', query: '', live: false, refreshing: false,
-      requestInFlight: false, requestSequence: 0, cooldownUntil: 0, cooldownTimer: null
+      requestInFlight: false, requestSequence: 0, cooldownUntil: 0, cooldownTimer: null,
+      quota: { schema: '—', updated_at: '', next_check_at: '', running: false, summary: {}, records: [] },
+      quotaStale: false, quotaRequestInFlight: false, quotaRequestSequence: 0
     };
     var statusNames = { full_ok: '完整正常', basic_ok: '基础正常', failed: '异常', unsupported: '不支持' };
+    var quotaStatusNames = { ok: '正常', rate_limited: '限流', unauthorized: '未授权', server_error: '服务端错误', timeout: '超时', error: '错误', unknown: '未知' };
+    var quotaAccuracyNames = { exact: '精确', estimated: '估算', status_only: '仅状态', unknown: '暂无用量' };
 
     function byId(id) { return document.getElementById(id); }
     function setText(id, value) { var element = byId(id); if (element) element.textContent = value; }
@@ -435,6 +517,12 @@
     }
     function safeLatency(value) {
       return boundedInteger(value, 0, 0, MAX_LATENCY_MS);
+    }
+    function safeQuotaNumber(value) {
+      if (value == null || value === '') return null;
+      var number = Number(value);
+      if (!Number.isFinite(number) || number < 0) return null;
+      return Math.min(MAX_QUOTA_VALUE, number);
     }
     function safeText(value, fallback, maximum) {
       if (value == null) return fallback;
@@ -456,6 +544,12 @@
     }
     function statusOf(value) {
       return ALLOWED_STATUS.indexOf(value) >= 0 ? value : 'unsupported';
+    }
+    function quotaStatusOf(value) {
+      return ALLOWED_QUOTA_STATUS.indexOf(value) >= 0 ? value : 'unknown';
+    }
+    function quotaAccuracyOf(value) {
+      return ALLOWED_QUOTA_ACCURACY.indexOf(value) >= 0 ? value : 'unknown';
     }
     function normaliseHttpStatus(value) {
       if (value == null || value === '') return null;
@@ -514,6 +608,42 @@
         historical: Boolean(historical)
       };
     }
+    function normaliseQuotaPayload(payload) {
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload) || !Array.isArray(payload.records)) throw new Error('invalid quota payload');
+      var summary = payload.summary && typeof payload.summary === 'object' ? payload.summary : {};
+      var records = payload.records.slice(0, MAX_QUOTA_RECORDS).map(function (item) {
+        item = item && typeof item === 'object' ? item : {};
+        return {
+          provider: safeText(item.provider, '未知供应商', MAX_PROVIDER_LENGTH) || '未知供应商',
+          account_label: safeText(item.account_label, '未命名账号', MAX_ACCOUNT_LABEL_LENGTH) || '未命名账号',
+          status: quotaStatusOf(item.status),
+          used: safeQuotaNumber(item.used),
+          remaining: safeQuotaNumber(item.remaining),
+          limit: safeQuotaNumber(item.limit),
+          reset_at: item.reset_at || '',
+          latency_ms: safeQuotaNumber(item.latency_ms),
+          accuracy: quotaAccuracyOf(item.accuracy),
+          error: safeText(item.error, '', MAX_QUOTA_ERROR_LENGTH),
+          checked_at: item.checked_at || ''
+        };
+      });
+      return {
+        schema: safeText(payload.schema, '—', 100) || '—',
+        updated_at: payload.updated_at || '',
+        next_check_at: payload.next_check_at || '',
+        running: payload.running === true,
+        summary: {
+          providers: safeCount(summary.providers, 0),
+          accounts: safeCount(summary.accounts, records.length),
+          ok: safeCount(summary.ok, 0),
+          rate_limited: safeCount(summary.rate_limited, 0),
+          unauthorized: safeCount(summary.unauthorized, 0),
+          failed: safeCount(summary.failed, 0),
+          unknown: safeCount(summary.unknown, 0)
+        },
+        records: records
+      };
+    }
     function renderSummary(payload) {
       var summary = payload.summary;
       setText('totalCount', summary.total);
@@ -524,6 +654,109 @@
       setText('checkedAt', formatDate(payload.updated_at));
       setText('nextCheckAt', '下次检查：' + formatDate(payload.next_check_at));
       setText('schemaInfo', 'schema ' + payload.schema + (payload.running ? ' · 检查中' : ''));
+    }
+    function formatQuotaNumber(value) {
+      if (value == null) return '—';
+      return Number.isInteger(value) ? String(value) : value.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+    }
+    function formatQuotaUsage(record) {
+      if (record.provider === 'Cloudflare' && record.used == null && record.remaining == null && record.limit == null) return '暂无本地计量';
+      return '已用 ' + formatQuotaNumber(record.used) + ' · 剩余 ' + formatQuotaNumber(record.remaining) + ' · 总量 ' + formatQuotaNumber(record.limit);
+    }
+    function makeQuotaMetric(label, value) {
+      var element = document.createElement('div');
+      element.className = 'quota-usage';
+      var strong = document.createElement('strong');
+      strong.textContent = value;
+      element.appendChild(document.createTextNode(label + ' '));
+      element.appendChild(strong);
+      return element;
+    }
+    function renderQuotas() {
+      var list = byId('quotaList');
+      if (!list) return;
+      list.textContent = '';
+      var groups = {};
+      state.quota.records.forEach(function (record) {
+        if (!groups[record.provider]) groups[record.provider] = [];
+        groups[record.provider].push(record);
+      });
+      var providers = QUOTA_PROVIDERS.slice();
+      Object.keys(groups).forEach(function (provider) {
+        if (providers.indexOf(provider) < 0) providers.push(provider);
+      });
+      setText('quotaCount', state.quota.summary.accounts + ' ACCOUNTS');
+      if (!state.quota.records.length) {
+        var empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = '暂无可展示的额度状态。';
+        list.appendChild(empty);
+        return;
+      }
+      providers.forEach(function (provider) {
+        var records = groups[provider] || [];
+        var group = document.createElement('section');
+        group.className = 'quota-provider';
+        var heading = document.createElement('div');
+        heading.className = 'quota-provider-heading';
+        var title = document.createElement('h3');
+        title.className = 'quota-provider-title';
+        title.textContent = provider;
+        var count = document.createElement('span');
+        count.className = 'quota-provider-count';
+        count.textContent = records.length + ' ACCOUNTS';
+        heading.appendChild(title);
+        heading.appendChild(count);
+        group.appendChild(heading);
+        records.forEach(function (record) {
+          var row = document.createElement('article');
+          row.className = 'quota-account-row' + (state.quotaStale ? ' quota-stale' : '');
+          var account = document.createElement('div');
+          account.className = 'quota-account-name';
+          account.textContent = record.account_label;
+          var accountMeta = document.createElement('div');
+          accountMeta.className = 'quota-account-meta';
+          accountMeta.textContent = (state.quotaStale ? '已过期 · ' : '') + '更新时间 ' + formatDate(record.checked_at);
+          account.appendChild(accountMeta);
+          row.appendChild(account);
+          var status = document.createElement('div');
+          status.className = 'quota-status';
+          var dot = document.createElement('span');
+          dot.className = 'quota-status-dot ' + record.status;
+          dot.setAttribute('aria-hidden', 'true');
+          var statusLabel = document.createElement('span');
+          statusLabel.className = 'quota-status-label';
+          statusLabel.textContent = quotaStatusNames[record.status];
+          var accuracy = document.createElement('span');
+          accuracy.className = 'quota-accuracy';
+          accuracy.textContent = quotaAccuracyNames[record.accuracy];
+          status.appendChild(dot);
+          status.appendChild(statusLabel);
+          status.appendChild(accuracy);
+          row.appendChild(status);
+          row.appendChild(makeQuotaMetric('用量', formatQuotaUsage(record)));
+          row.appendChild(makeQuotaMetric('耗时', formatLatency(record.latency_ms)));
+          var meta = document.createElement('div');
+          meta.className = 'quota-meta';
+          meta.textContent = '重置 ' + formatDate(record.reset_at) + ' · 更新 ' + formatDate(record.checked_at);
+          row.appendChild(meta);
+          if (record.error) {
+            var error = document.createElement('div');
+            error.className = 'quota-error';
+            error.textContent = '服务端提示：' + record.error;
+            row.appendChild(error);
+          }
+          group.appendChild(row);
+        });
+        list.appendChild(group);
+      });
+    }
+    function renderQuotaMessage() {
+      if (state.quotaStale) {
+        setText('quotaMessage', state.quota.records.length ? '额度接口暂不可用，保留最近成功数据（已标记过期）。' : '额度接口暂不可用，暂无最近成功数据。');
+      } else {
+        setText('quotaMessage', '额度状态：公开接口在线，最近更新 ' + formatDate(state.quota.updated_at) + '。');
+      }
     }
     function makeMetric(label, value) {
       var element = document.createElement('div');
@@ -713,6 +946,36 @@
           }
         });
     }
+    function loadQuotas() {
+      if (state.quotaRequestInFlight) return Promise.resolve(null);
+      var requestId = ++state.quotaRequestSequence;
+      state.quotaRequestInFlight = true;
+      return fetchJson(QUOTA_API, { cache: 'no-store', headers: { Accept: 'application/json' } })
+        .then(function (result) {
+          if (!result.response.ok) throw new Error('quota unavailable');
+          return normaliseQuotaPayload(decodeJson(result));
+        })
+        .then(function (payload) {
+          if (requestId === state.quotaRequestSequence) {
+            state.quota = payload;
+            state.quotaStale = false;
+            renderQuotas();
+            renderQuotaMessage();
+          }
+          return true;
+        })
+        .catch(function () {
+          if (requestId === state.quotaRequestSequence) {
+            state.quotaStale = true;
+            renderQuotas();
+            renderQuotaMessage();
+          }
+          return false;
+        })
+        .finally(function () {
+          if (requestId === state.quotaRequestSequence) state.quotaRequestInFlight = false;
+        });
+    }
     function setRefreshButton() {
       var button = byId('refreshButton');
       if (!button) return;
@@ -740,8 +1003,9 @@
     function refreshNow() {
       if (state.requestInFlight || isCoolingDown()) return;
       setText('refreshNote', '正在读取最新公开状态……');
-      loadStatus()
-        .then(function (isLive) {
+      Promise.all([loadStatus(), loadQuotas()])
+        .then(function (results) {
+          var isLive = results[0];
           if (isLive === null) return;
           setText('refreshNote', isLive ? '已读取最新公开状态。' : '实时接口暂不可用，已保留历史快照展示。');
         })
@@ -765,8 +1029,10 @@
       byId('statusFilter').addEventListener('change', function (event) { state.status = event.target.value; renderModels(); });
       byId('refreshButton').addEventListener('click', refreshNow);
       loadStatus();
+      loadQuotas();
       window.setInterval(function () {
         if (!state.requestInFlight && !isCoolingDown()) loadStatus();
+        if (!state.quotaRequestInFlight) loadQuotas();
       }, 60000);
       setRefreshButton();
     }

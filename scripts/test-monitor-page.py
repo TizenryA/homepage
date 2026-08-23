@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 MONITOR = ROOT / "monitor.html"
 API_URL = "https://play.tizenry.xyz/monitor-api/v1/public/status"
+QUOTA_API_URL = "https://play.tizenry.xyz/monitor-api/v1/public/quotas"
 REFRESH_URL = "https://play.tizenry.xyz/monitor-api/v1/public/refresh"
 
 
@@ -85,10 +86,12 @@ def main() -> int:
         check(f'id="{element_id}"' in index_text, f"index.html: summary id {element_id} is missing")
 
     check(API_URL in monitor_text, "monitor.html: status API URL is missing")
+    check(QUOTA_API_URL in monitor_text, "monitor.html: quota API URL is missing")
     check(REFRESH_URL not in monitor_text, "monitor.html: public refresh endpoint must not be called")
     check("cache: 'no-store'" in monitor_text or 'cache: "no-store"' in monitor_text, "monitor.html: requests must use cache:no-store")
     check("method: 'POST'" not in monitor_text and 'method: "POST"' not in monitor_text, "monitor.html: manual refresh must not POST")
     check("function refreshNow" in monitor_text and "loadStatus()" in monitor_text, "monitor.html: manual GET refresh handler is missing")
+    check("loadQuotas()" in monitor_text, "monitor.html: quota refresh handler is missing")
     check("setInterval" in monitor_text and "60000" in monitor_text, "monitor.html: 60-second refresh interval is missing")
     check("monitor.json" in monitor_text, "monitor.html: historical snapshot fallback is missing")
     check("历史快照" in monitor_text, "monitor.html: fallback is not explicitly marked historical")
@@ -108,6 +111,14 @@ def main() -> int:
     check("MAX_NAME_LENGTH = 200" in monitor_text, "monitor.html: model name bound is missing")
     check("MAX_ERROR_LENGTH = 300" in monitor_text, "monitor.html: model error bound is missing")
     check("MAX_LATENCY_MS = 86400000" in monitor_text, "monitor.html: latency bound is missing")
+    check("MAX_QUOTA_RECORDS = 1000" in monitor_text, "monitor.html: quota record bound is missing")
+    check("MAX_PROVIDER_LENGTH = 80" in monitor_text, "monitor.html: quota provider bound is missing")
+    check("MAX_ACCOUNT_LABEL_LENGTH = 80" in monitor_text, "monitor.html: quota account bound is missing")
+    check("MAX_QUOTA_ERROR_LENGTH = 240" in monitor_text, "monitor.html: quota error bound is missing")
+    check("ALLOWED_QUOTA_STATUS" in monitor_text, "monitor.html: quota status allowlist is missing")
+    check("ALLOWED_QUOTA_ACCURACY" in monitor_text, "monitor.html: quota accuracy allowlist is missing")
+    check("暂无本地计量" in monitor_text, "monitor.html: Cloudflare missing usage label is missing")
+    check("仅状态" in monitor_text and "估算" in monitor_text and "精确" in monitor_text, "monitor.html: quota accuracy labels are incomplete")
     check("slice(0, MAX_MODELS)" in monitor_text, "monitor.html: model array is not capped")
     check("innerHTML" not in monitor_text, "monitor.html: unsafe innerHTML sink found")
     check(not re.search(r"(?i)\b\d+(?:\.\d+)?px\b", monitor_text), "monitor.html: newly added px unit found")
