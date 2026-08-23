@@ -29,6 +29,7 @@
 
 ```bash
 python3 scripts/test-monitor-page.py
+node scripts/test-monitor-behavior.js
 ```
 
-校验脚本会检查首页旧长列表与 embed 外链已移除、入口和独立页面存在、公开状态接口地址、公开刷新不使用 POST、无新增 `px`、HTML 结构与内嵌 JavaScript 语法。
+校验脚本会检查首页旧长列表与 embed 外链已移除、入口和独立页面存在、公开状态接口地址、公开刷新不使用 POST、无新增 `px`、HTML 结构与内嵌 JavaScript 语法；Node 行为测试会覆盖实时监控页面的请求协调、失败回退、边界值和限流冷却。
