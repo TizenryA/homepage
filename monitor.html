@@ -494,7 +494,8 @@
     var MAX_QUOTA_VALUE = 1000000000000000;
     var ALLOWED_QUOTA_STATUS = ['ok', 'rate_limited', 'unauthorized', 'server_error', 'timeout', 'error', 'unknown'];
     var ALLOWED_QUOTA_ACCURACY = ['exact', 'estimated', 'status_only', 'unknown'];
-    var QUOTA_PROVIDERS = ['OpenRouter', 'NVIDIA', 'Cloudflare'];
+    var QUOTA_PROVIDER_NAMES = { openrouter: 'OpenRouter', nvidia: 'NVIDIA', cloudflare: 'Cloudflare', other: '其他' };
+    var QUOTA_PROVIDERS = ['openrouter', 'nvidia', 'cloudflare'];
     var state = {
       models: [], status: 'all', query: '', live: false, refreshing: false,
       requestInFlight: false, requestSequence: 0, cooldownUntil: 0, cooldownTimer: null,
@@ -550,6 +551,10 @@
     }
     function quotaAccuracyOf(value) {
       return ALLOWED_QUOTA_ACCURACY.indexOf(value) >= 0 ? value : 'unknown';
+    }
+    function normaliseQuotaProvider(value) {
+      var provider = safeText(value, '', MAX_PROVIDER_LENGTH).trim().toLowerCase();
+      return Object.prototype.hasOwnProperty.call(QUOTA_PROVIDER_NAMES, provider) && provider !== 'other' ? provider : 'other';
     }
     function normaliseHttpStatus(value) {
       if (value == null || value === '') return null;
@@ -614,7 +619,7 @@
       var records = payload.records.slice(0, MAX_QUOTA_RECORDS).map(function (item) {
         item = item && typeof item === 'object' ? item : {};
         return {
-          provider: safeText(item.provider, '未知供应商', MAX_PROVIDER_LENGTH) || '未知供应商',
+          provider: normaliseQuotaProvider(item.provider),
           account_label: safeText(item.account_label, '未命名账号', MAX_ACCOUNT_LABEL_LENGTH) || '未命名账号',
           status: quotaStatusOf(item.status),
           used: safeQuotaNumber(item.used),
@@ -660,7 +665,8 @@
       return Number.isInteger(value) ? String(value) : value.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
     }
     function formatQuotaUsage(record) {
-      if (record.provider === 'Cloudflare' && record.used == null && record.remaining == null && record.limit == null) return '暂无本地计量';
+      if (record.accuracy === 'unknown') return '暂无用量';
+      if (record.accuracy === 'status_only') return '暂无本地计量';
       return '已用 ' + formatQuotaNumber(record.used) + ' · 剩余 ' + formatQuotaNumber(record.remaining) + ' · 总量 ' + formatQuotaNumber(record.limit);
     }
     function makeQuotaMetric(label, value) {
@@ -685,7 +691,7 @@
       Object.keys(groups).forEach(function (provider) {
         if (providers.indexOf(provider) < 0) providers.push(provider);
       });
-      setText('quotaCount', state.quota.summary.accounts + ' ACCOUNTS');
+      setText('quotaCount', safeCount(state.quota.summary.accounts, 0) + ' ACCOUNTS');
       if (!state.quota.records.length) {
         var empty = document.createElement('div');
         empty.className = 'empty';
@@ -701,7 +707,7 @@
         heading.className = 'quota-provider-heading';
         var title = document.createElement('h3');
         title.className = 'quota-provider-title';
-        title.textContent = provider;
+        title.textContent = QUOTA_PROVIDER_NAMES[provider] || QUOTA_PROVIDER_NAMES.other;
         var count = document.createElement('span');
         count.className = 'quota-provider-count';
         count.textContent = records.length + ' ACCOUNTS';
@@ -1001,7 +1007,7 @@
       state.cooldownTimer = window.setTimeout(tick, 1000);
     }
     function refreshNow() {
-      if (state.requestInFlight || isCoolingDown()) return;
+      if (state.requestInFlight || state.quotaRequestInFlight || isCoolingDown()) return;
       setText('refreshNote', '正在读取最新公开状态……');
       Promise.all([loadStatus(), loadQuotas()])
         .then(function (results) {

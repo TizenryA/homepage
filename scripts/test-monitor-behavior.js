@@ -153,6 +153,7 @@ function assertUnavailable(environment) {
   assert.strictEqual(elements.get('schemaInfo').textContent, 'schema —');
   assert.strictEqual(elements.get('sourceBadge').textContent, '不可用');
   assert(elements.get('sourceMessage').textContent.includes('实时接口与历史快照均暂不可用'));
+  assert.strictEqual(elements.get('quotaCount').textContent, '0 ACCOUNTS');
 }
 
 function treeText(element) {
@@ -196,25 +197,30 @@ async function main() {
     updated_at: '2026-08-23T00:00:00Z',
     next_check_at: '2026-08-23T00:01:00Z',
     running: false,
-    summary: { providers: 3, accounts: 4, ok: 2, rate_limited: 0, unauthorized: 0, failed: 0, unknown: 2 },
+    summary: { providers: 3, accounts: 3, ok: 1, rate_limited: 0, unauthorized: 0, failed: 0, unknown: 2 },
     records: [
-      { provider: 'OpenRouter', account_label: 'account-total', status: 'ok', used: 10, remaining: 90, limit: 100, reset_at: '2026-08-24T00:00:00Z', latency_ms: 31, accuracy: 'exact', checked_at: '2026-08-23T00:00:00Z' },
-      { provider: 'OpenRouter', account_label: 'account-N', status: 'ok', used: 2, remaining: 8, limit: 10, latency_ms: 32, accuracy: 'estimated', checked_at: '2026-08-23T00:00:00Z' },
-      { provider: 'NVIDIA', account_label: 'nvidia-key', status: 'unknown', used: null, remaining: null, limit: null, latency_ms: 40, accuracy: 'status_only', checked_at: '2026-08-23T00:00:00Z' },
-      { provider: 'Cloudflare', account_label: '<img src=x onerror=alert(1)>', status: 'unknown', used: null, remaining: null, limit: null, latency_ms: 41, accuracy: 'unknown', error: '<script>alert(1)</script>', checked_at: '2026-08-23T00:00:00Z' },
-      { provider: 'P'.repeat(100), account_label: 'A'.repeat(100), status: 'not-allowed', used: -2, remaining: 1e100, limit: Number.POSITIVE_INFINITY, accuracy: 'not-allowed', error: 'E'.repeat(400), checked_at: '2026-08-23T00:00:00Z' },
+      { provider: 'openrouter', account_label: 'account-total', status: 'ok', used: 10, remaining: 90, limit: 100, reset_at: '2026-08-24T00:00:00Z', latency_ms: 31, accuracy: 'exact', checked_at: '2026-08-23T00:00:00Z' },
+      { provider: 'nvidia', account_label: 'A'.repeat(100), status: 'unknown', used: 0, remaining: 0, limit: 0, latency_ms: 40, accuracy: 'unknown', checked_at: '2026-08-23T00:00:00Z' },
+      { provider: 'cloudflare', account_label: '<img src=x onerror=alert(1)>', status: 'unknown', used: -2, remaining: 1e100, limit: Number.POSITIVE_INFINITY, latency_ms: 41, accuracy: 'status_only', error: '<script>alert(1)</script>'.repeat(20), checked_at: '2026-08-23T00:00:00Z' },
     ],
   }));
   await flush();
-  const quotaText = treeText(elements.get('quotaList'));
-  assert(quotaText.includes('account-total') && quotaText.includes('account-N'));
-  assert(quotaText.includes('精确') && quotaText.includes('估算') && quotaText.includes('仅状态'));
-  assert(quotaText.includes('暂无本地计量'), 'Cloudflare missing usage must not render zero remaining');
+  const quotaList = elements.get('quotaList');
+  const providerSections = quotaList.children.filter((child) => child.className === 'quota-provider');
+  assert.strictEqual(providerSections.length, 3, 'lowercase providers must render exactly three sections');
+  const providerTitles = providerSections.map((section) => section.children[0].children[0].textContent);
+  assert.deepStrictEqual(providerTitles, ['OpenRouter', 'NVIDIA', 'Cloudflare']);
+  assert.strictEqual(providerSections[0].children[0].children[1].textContent, '1 ACCOUNTS', 'OpenRouter should contain one account');
+  assert(!providerTitles.includes('openrouter'), 'lowercase provider must not become a duplicate title');
+  const quotaText = treeText(quotaList);
+  assert(quotaText.includes('account-total') && !quotaText.includes('account-N'));
+  assert(quotaText.includes('精确') && quotaText.includes('暂无用量') && quotaText.includes('仅状态'));
+  assert(quotaText.includes('暂无本地计量'), 'status-only usage must be explicitly unavailable');
+  assert(!quotaText.includes('已用 0'), 'unknown accuracy must not render zero usage');
+  assert(!quotaText.includes('1000000000000000'), 'status-only usage must hide numeric quota values');
   assert(quotaText.includes('<img src=x onerror=alert(1)>'), 'quota labels must be text content');
   assert(quotaText.includes('<script>alert(1)</script>'), 'quota errors must be text content');
-  assert(quotaText.includes('P'.repeat(80)) && !quotaText.includes('P'.repeat(81)), 'quota provider must be bounded');
   assert(quotaText.includes('A'.repeat(80)) && !quotaText.includes('A'.repeat(81)), 'quota account label must be bounded');
-  assert(quotaText.includes('1000000000000000'), 'quota numbers must have a finite upper bound');
   assert(!quotaText.includes('已用 -2') && !quotaText.includes('Infinity'), 'quota numbers must be non-negative and finite');
   assert(!quotaText.includes('E'.repeat(241)), 'quota error must be bounded');
 
@@ -239,8 +245,19 @@ async function main() {
       error: 'e'.repeat(400),
     }],
   }));
-  // Quota failure is isolated: model data above remains live, while last quota data is stale.
-  requests[6].resolve(response(503));
+  // The quota request remains in flight after the model response; refresh must still be fully deduplicated.
+  elements.get('refreshButton').dispatch('click');
+  assert.strictEqual(requests.length, 7, 'refresh must skip while quota request is still in flight');
+  requests[6].resolve(response(200, {
+    schema: 'quota-v1',
+    updated_at: '2026-08-23T00:00:00Z',
+    summary: { providers: 3, accounts: 3, ok: 1, rate_limited: 0, unauthorized: 0, failed: 0, unknown: 2 },
+    records: [
+      { provider: 'openrouter', account_label: 'account-total', status: 'ok', used: 1e100, remaining: 1e100, limit: Number.POSITIVE_INFINITY, accuracy: 'exact' },
+      { provider: 'nvidia', account_label: 'nvidia-key', status: 'unknown', used: 0, remaining: 0, limit: 0, accuracy: 'unknown' },
+      { provider: 'cloudflare', account_label: 'cloudflare-key', status: 'unknown', used: 5, remaining: 95, limit: 100, accuracy: 'status_only' },
+    ],
+  }));
   await flush();
   assert.strictEqual(elements.get('totalCount').textContent, 1000000);
   assert.strictEqual(elements.get('fullOkCount').textContent, 0);
@@ -248,8 +265,10 @@ async function main() {
   assert.strictEqual(elements.get('failedCount').textContent, 1000000);
   assert.strictEqual(elements.get('avgLatency').textContent, '86400s');
   assert(elements.get('modelList').children.length > 0, 'bounded model should still render');
-  assert(elements.get('quotaMessage').textContent.includes('保留最近成功数据'));
-  assert(elements.get('quotaList').children.length > 0, 'quota failure must preserve last successful records');
+  assert(elements.get('quotaList').children.length > 0, 'quota success must render records');
+  const boundedQuotaText = treeText(elements.get('quotaList'));
+  assert(boundedQuotaText.includes('1000000000000000'), 'quota numbers must have a finite upper bound');
+  assert(!boundedQuotaText.includes('Infinity'), 'quota numbers must be finite');
   const modelRowText = elements.get('modelList').children.at(-1).children
     .map((child) => child.textContent).join(' ');
   assert(!modelRowText.includes('undefined'));
@@ -266,7 +285,24 @@ async function main() {
   const requestCountDuringCooldown = requests.length;
   elements.get('refreshButton').dispatch('click');
   assert.strictEqual(requests.length, requestCountDuringCooldown, 'cooldown must skip refresh');
-  assert(elements.get('refreshButton').disabled, 'refresh button should be disabled during cooldown');
+  assert.strictEqual(elements.get('refreshButton').disabled, true, 'refresh button should be disabled during cooldown');
+
+  // Unknown providers must be grouped under the allowlisted fallback, not rendered as arbitrary titles.
+  const unknownEnvironment = makeEnvironment();
+  loadMonitor(unknownEnvironment);
+  unknownEnvironment.requests[0].resolve(response(503));
+  unknownEnvironment.requests[1].resolve(response(200, {
+    summary: { accounts: 1 },
+    records: [{ provider: 'arbitrary-provider', account_label: 'unknown-key', status: 'unknown', accuracy: 'unknown' }],
+  }));
+  await flush();
+  unknownEnvironment.requests[2].resolve(response(503));
+  await flush();
+  const unknownSections = unknownEnvironment.elements.get('quotaList').children
+    .filter((child) => child.className === 'quota-provider');
+  const unknownTitles = unknownSections.map((section) => section.children[0].children[0].textContent);
+  assert(unknownTitles.includes('其他'));
+  assert(!unknownTitles.includes('arbitrary-provider'));
 
   console.log('monitor behavior: PASS');
 }
